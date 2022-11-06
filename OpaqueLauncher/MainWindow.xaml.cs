@@ -24,5 +24,21 @@ namespace OpaqueLauncher
         {
             InitializeComponent();
         }
+
+        private void debugJavaButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var javaFinder = new JavaFinder();
+                debugJavaButton.Content = javaFinder.FindAbsoluteJavaExePath();
+            }
+            catch (JavaNotFoundException er)
+            {
+                debugJavaButton.Content = er.Message;
+                
+            }
+
+            
+        }
     }
 }
