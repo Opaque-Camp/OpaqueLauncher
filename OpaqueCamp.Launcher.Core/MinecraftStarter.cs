@@ -10,14 +10,16 @@ public sealed class MinecraftStarter
     private readonly LauncherInfoProvider _launcherVersionProvider;
     private readonly DirectoryPathProvider _directoryPathProvider;
     private readonly ClasspathProvider _classpathProvider;
+    private readonly JVMMemoryProvider _jvmMemoryProvider;
 
     public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider,
-        DirectoryPathProvider directoryPathProvider, ClasspathProvider classpathProvider)
+        DirectoryPathProvider directoryPathProvider, ClasspathProvider classpathProvider, JVMMemoryProvider jvmMemoryProvider)
     {
         _javaFinder = javaFinder;
         _launcherVersionProvider = launcherVersionProvider;
         _directoryPathProvider = directoryPathProvider;
         _classpathProvider = classpathProvider;
+        _jvmMemoryProvider = jvmMemoryProvider;
     }
 
     void StartMinecraft()
@@ -75,5 +77,12 @@ public sealed class MinecraftStarter
     {
         "-DFabricMcEmu=net.minecraft.client.main.Main",
         "net.fabricmc.loader.impl.launch.knot.KnotClient",
+    };
+
+    // Adds OptiFine Tweak for future
+    private static readonly List<string> optfineArgs = new()
+    {
+        "--tweakClass",
+        "optifine.OptiFineTweaker"
     };
 }
