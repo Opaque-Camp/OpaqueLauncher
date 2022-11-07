@@ -1,7 +1,5 @@
 ﻿namespace OpaqueCamp.Launcher.Core;
 
-using System.Diagnostics;
-
 public sealed class JavaFinder
 {
     /// <summary>
@@ -16,52 +14,40 @@ public sealed class JavaFinder
     /// </exception>
     public string GetJavawExePath()
     {
-        try
+        var result = GetJavawExePathByJavaHome() ?? FindJavaInPath();
+        if (result == null)
         {
-            return GetJavawExePathByJavaHome();
+            throw new JavaNotFoundException();
         }
-        catch (JavaNotFoundException)
-        {
-            return GetJavawExePathByJavaVersionQuery();
-        }
+        return result;
     }
 
-    private string GetJavawExePathByJavaHome()
+    private string? GetJavawExePathByJavaHome()
     {
         var javaHome = GetJavaHome();
         var javawExe = Path.Join(javaHome, "bin", "javaw.exe");
         if (!File.Exists(javawExe))
         {
-            throw new JavaNotFoundException(JavaHomeProblem.JavawExeMissing, javawExe);
+            return null;
         }
 
         return javawExe;
     }
 
-    private string GetJavaHome()
+    private string? GetJavaHome() => Environment.GetEnvironmentVariable("JAVA_HOME");
+
+    private string? FindJavaInPath()
     {
-        var javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
-        if (string.IsNullOrEmpty(javaHome))
+        var path = Environment.GetEnvironmentVariable("PATH")!;
+        var pathEntries = path.Split(Path.PathSeparator);
+        foreach (var entry in pathEntries)
         {
-            throw new JavaNotFoundException(JavaHomeProblem.NotSet);
+            var javawExe = Path.Join(entry, "javaw.exe");
+            if (File.Exists(javawExe))
+            {
+                return javawExe;
+            }
         }
-
-        return javaHome;
-    }
-
-    private string GetJavawExePathByJavaVersionQuery()
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "java.exe",
-            Arguments = " -version",
-            RedirectStandardError = true,
-            UseShellExecute = false
-        };
-
-        var pr = Process.Start(psi);
-        var strOutput = pr.StandardError.ReadLine().Split(' ')[2].Replace("\"", "");
-
-        return strOutput;
+        return null;
     }
 }

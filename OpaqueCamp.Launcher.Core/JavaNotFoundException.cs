@@ -4,17 +4,7 @@ using System;
 
 public sealed class JavaNotFoundException : Exception
 {
-    public JavaHomeProblem ProblemKind { get; }
-
-    /// <summary>
-    /// Expected path to <c>javaw.exe</c> based on <c>JAVA_HOME</c> environment variable.
-    /// If <c>JAVA_HOME</c> is not set, this property is set to <c>null</c>.
-    /// </summary>
-    public string? ExpectedJavawPath { get; }
-
-    public JavaNotFoundException(JavaHomeProblem problem, string? expectedJavawPath = null) : base($"There is a problem with JAVA_HOME: {problem} (expected javaw.exe path: {expectedJavawPath})")
+    public JavaNotFoundException() : base($"javaw.exe was not found because JAVA_HOME is not set or set incorrectly and javaw.exe is missing in PATH.")
     {
-        ProblemKind = problem;
-        ExpectedJavawPath = expectedJavawPath;
     }
 }
