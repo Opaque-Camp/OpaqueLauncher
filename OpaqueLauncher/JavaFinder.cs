@@ -17,24 +17,17 @@ public sealed class JavaFinder
         var javawExe = Path.Join(javaHome, "bin", "javaw.exe");
         if (!File.Exists(javawExe))
         {
-            throw new JavaNotFoundException($"javaw.exe not found - {javawExe} does not exist");
+            throw new JavaNotFoundException(JavaHomeProblem.JavawExeMissing, javawExe);
         }
         return javawExe;
     }
 
     private string? GetJavaHome()
     {
-        string? javaHome = string.Empty;
-        try
+        var javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
+        if (string.IsNullOrEmpty(javaHome))
         {
-            javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
-        }
-        catch (ArgumentNullException e)
-        {
-        }
-        if (javaHome == string.Empty)
-        {
-            throw new JavaNotFoundException("JAVA_HOME not set");
+            throw new JavaNotFoundException(JavaHomeProblem.NotSet);
         }
         return javaHome;
     }
