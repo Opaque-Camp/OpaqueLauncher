@@ -32,19 +32,18 @@ public sealed class MinecraftStarter
         var list = new List<string> { _javaFinder.GetJavawExePath() };
         list.AddRange(jvmArgs);
         list.AddRange(launcherArgs);
-        list.AddRange(new List<string> { "-cp", _classpathProvider.GetClasspath() });
+        list.AddMany("-cp", _classpathProvider.GetClasspath());
         list.AddRange(fabricArgs);
-        list.AddRange(new List<string> { "--username", credentials.UserName });
-        list.AddRange(new List<string>
-            { "--version", $"{_launcherVersionProvider.LauncherName} {_launcherVersionProvider.LauncherVersion}" });
-        list.AddRange(new List<string> { "--gameDir", _directoryPathProvider.GameDirectoryPath });
-        list.AddRange(new List<string> { "--assetsDir", _directoryPathProvider.AssetsDirectoryPath });
-        list.AddRange(new List<string>
-            { "--assetIndex", _launcherVersionProvider.LauncherVersion.MajorAndMinorString });
-        list.AddRange(new List<string> { "--uuid", credentials.Uuid });
-        list.AddRange(new List<string> { "--accessToken", credentials.AccessToken });
-        list.AddRange(new List<string> { "--userType", "mojang" });
-        list.AddRange(new List<string> { "--versionType", "release" });
+        list.AddMany("--username", credentials.UserName);
+        list.AddMany("--version",
+            $"{_launcherVersionProvider.LauncherName} {_launcherVersionProvider.LauncherVersion}");
+        list.AddMany("--gameDir", _directoryPathProvider.GameDirectoryPath);
+        list.AddMany("--assetsDir", _directoryPathProvider.AssetsDirectoryPath);
+        list.AddMany("--assetIndex", _launcherVersionProvider.LauncherVersion.MajorAndMinorString);
+        list.AddMany("--uuid", credentials.Uuid);
+        list.AddMany("--accessToken", credentials.AccessToken);
+        list.AddMany("--userType", "mojang");
+        list.AddMany("--versionType", "release");
 
         return list;
     }
