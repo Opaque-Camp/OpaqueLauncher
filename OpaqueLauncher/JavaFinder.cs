@@ -11,7 +11,7 @@ public sealed class JavaFinder
     /// <exception cref="JavaNotFoundException">
     /// Thrown when <c>javaw.exe</c> was not found due to JAVA_HOME not being set or being set incorrectly.
     /// </exception>
-    public string? FindAbsoluteJavaExePath()
+    public string FindAbsoluteJavaExePath()
     {
         var javaHome = GetJavaHome();
         var javawExe = Path.Join(javaHome, "bin", "javaw.exe");
@@ -22,7 +22,7 @@ public sealed class JavaFinder
         return javawExe;
     }
 
-    private string? GetJavaHome()
+    private string GetJavaHome()
     {
         var javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
         if (string.IsNullOrEmpty(javaHome))
