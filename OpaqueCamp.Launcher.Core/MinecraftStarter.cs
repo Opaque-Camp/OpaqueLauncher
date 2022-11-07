@@ -11,7 +11,8 @@ public sealed class MinecraftStarter
     private readonly DirectoryPathProvider _directoryPathProvider;
     private readonly ClasspathProvider _classpathProvider;
 
-    public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider, DirectoryPathProvider directoryPathProvider, ClasspathProvider classpathProvider)
+    public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider,
+        DirectoryPathProvider directoryPathProvider, ClasspathProvider classpathProvider)
     {
         _javaFinder = javaFinder;
         _launcherVersionProvider = launcherVersionProvider;
@@ -21,22 +22,25 @@ public sealed class MinecraftStarter
 
     void StartMinecraft()
     {
-        var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401", "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
+        var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
+            "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
         Process.Start("", string.Join(' ', Args(creds)));
     }
 
     private IEnumerable<string> Args(PlayerCredentials credentials)
     {
-        var list = new List<string> { _javaFinder.FindAbsoluteJavaExePath() };
+        var list = new List<string> { _javaFinder.GetJavawExePath() };
         list.AddRange(jvmArgs);
         list.AddRange(launcherArgs);
         list.AddRange(new List<string> { "-cp", _classpathProvider.GetClasspath() });
         list.AddRange(fabricArgs);
         list.AddRange(new List<string> { "--username", credentials.UserName });
-        list.AddRange(new List<string> { "--version", $"{_launcherVersionProvider.LauncherName} {_launcherVersionProvider.LauncherVersion}" });
+        list.AddRange(new List<string>
+            { "--version", $"{_launcherVersionProvider.LauncherName} {_launcherVersionProvider.LauncherVersion}" });
         list.AddRange(new List<string> { "--gameDir", _directoryPathProvider.GameDirectoryPath });
         list.AddRange(new List<string> { "--assetsDir", _directoryPathProvider.AssetsDirectoryPath });
-        list.AddRange(new List<string> { "--assetIndex", _launcherVersionProvider.LauncherVersion.MajorAndMinorString });
+        list.AddRange(new List<string>
+            { "--assetIndex", _launcherVersionProvider.LauncherVersion.MajorAndMinorString });
         list.AddRange(new List<string> { "--uuid", credentials.Uuid });
         list.AddRange(new List<string> { "--accessToken", credentials.AccessToken });
         list.AddRange(new List<string> { "--userType", "mojang" });
