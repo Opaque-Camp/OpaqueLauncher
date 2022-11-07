@@ -1,5 +1,5 @@
 ﻿using System;
-namespace OpaqueLauncher.Application;
+namespace OpaqueCamp.Launcher.Application;
 
 using System.Collections.Generic;
 using System.Configuration;

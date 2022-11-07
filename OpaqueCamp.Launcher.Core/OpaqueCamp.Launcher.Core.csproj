@@ -4,8 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>OpaqueLauncher.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <AssemblyName>OpaqueLauncher.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
 </Project>

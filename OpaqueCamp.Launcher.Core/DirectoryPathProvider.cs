@@ -1,4 +1,4 @@
-﻿namespace OpaqueLauncher.Core;
+﻿namespace OpaqueCamp.Launcher.Core;
 
 public sealed class DirectoryPathProvider
 {
