@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace OpaqueLauncher;
@@ -30,5 +31,28 @@ public sealed class JavaFinder
             throw new JavaNotFoundException(JavaHomeProblem.NotSet);
         }
         return javaHome;
+    }
+
+    // Alternative method if JAVA_HOME doesn't exist.
+    // TODO: made this method more pretty
+    public string GetJavaVersion()
+    {
+        try
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = "java.exe";
+            psi.Arguments = " -version";
+            psi.RedirectStandardError = true;
+            psi.UseShellExecute = false;
+
+            Process pr = Process.Start(psi);
+            string strOutput = pr.StandardError.ReadLine().Split(' ')[2].Replace("\"", "");
+
+            return strOutput;
+        }
+        catch (Exception ex)
+        {
+            return "Exception is " + ex.Message;
+        }
     }
 }

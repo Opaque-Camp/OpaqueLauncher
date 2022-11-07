@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DirectoryProvider.cs" />
+    <Compile Remove="LauncherVersionProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="NewFile1.txt" />
   </ItemGroup>
 

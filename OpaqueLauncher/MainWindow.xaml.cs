@@ -30,7 +30,7 @@ namespace OpaqueLauncher
             try
             {
                 var javaFinder = new JavaFinder();
-                debugJavaButton.Content = javaFinder.FindAbsoluteJavaExePath();
+                debugJavaButton.Content = javaFinder.GetJavaVersion();
             }
             catch (JavaNotFoundException er)
             {
