@@ -5,6 +5,8 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <RootNamespace>OpaqueLauncher.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>OpaqueLauncher.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

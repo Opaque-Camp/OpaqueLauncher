@@ -1,4 +1,4 @@
-﻿namespace OpaqueLauncher;
+﻿namespace OpaqueLauncher.Core;
 
 using System;
 

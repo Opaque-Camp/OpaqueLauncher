@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace OpaqueLauncher;
+namespace OpaqueLauncher.Core;
 
 public sealed class JavaFinder
 {

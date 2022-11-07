@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace OpaqueLauncher;
+namespace OpaqueLauncher.Core;
 
 public sealed class MinecraftStarter
 {

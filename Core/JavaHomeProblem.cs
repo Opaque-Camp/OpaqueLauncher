@@ -1,4 +1,4 @@
-﻿namespace OpaqueLauncher;
+﻿namespace OpaqueLauncher.Core;
 
 /// <summary>
 /// Represents the kind of <c>JAVA_HOME</c> related problem.

@@ -1,7 +1,6 @@
-﻿<Application x:Class="OpaqueLauncher.App"
+﻿<Application x:Class="OpaqueLauncher.Application.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:OpaqueLauncher"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

@@ -1,4 +1,7 @@
 ﻿using System;
+namespace OpaqueLauncher.Application;
+
+using OpaqueLauncher.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,32 +16,30 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OpaqueLauncher
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
+        InitializeComponent();
+    }
+
+    private void debugJavaButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            InitializeComponent();
+            var javaFinder = new JavaFinder();
+            debugJavaButton.Content = javaFinder.GetJavaVersion();
         }
-
-        private void debugJavaButton_Click(object sender, RoutedEventArgs e)
+        catch (JavaNotFoundException er)
         {
-            try
-            {
-                var javaFinder = new JavaFinder();
-                debugJavaButton.Content = javaFinder.GetJavaVersion();
-            }
-            catch (JavaNotFoundException er)
-            {
-                debugJavaButton.Content = er.Message;
-                
-            }
-
+            debugJavaButton.Content = er.Message;
             
         }
+
+        
     }
 }

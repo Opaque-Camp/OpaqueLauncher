@@ -1,4 +1,4 @@
-﻿namespace OpaqueLauncher;
+﻿namespace OpaqueLauncher.Core;
 
 public sealed record Version(int Major, int Minor, int Patch)
 {
