@@ -3,6 +3,5 @@
 public sealed class LauncherInfoProvider
 {
     public string LauncherName { get; } = "Opaque Vanilla";
-    public string LauncherVersion { get; } = "1.19.2";
+    public Version LauncherVersion { get; } = new Version(1, 19, 2);
 }
-
