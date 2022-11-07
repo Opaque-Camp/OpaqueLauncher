@@ -1,7 +1,7 @@
 ﻿using System;
 namespace OpaqueCamp.Launcher.Application;
 
-using OpaqueLauncher.Core;
+using OpaqueCamp.Launcher.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +32,7 @@ public partial class MainWindow : Window
         try
         {
             var javaFinder = new JavaFinder();
-            debugJavaButton.Content = javaFinder.GetJavaVersion();
+            debugJavaButton.Content = javaFinder.GetJavawExePath();
         }
         catch (JavaNotFoundException er)
         {
@@ -41,5 +41,12 @@ public partial class MainWindow : Window
         }
 
         
+    }
+
+    private void debugWMI_Click(object sender, RoutedEventArgs e)
+    {
+        var jvmMP = new JVMMemoryProvider();
+        jvmMP.AutoMaxMemory();
+        debugWMI.Content = jvmMP.MaxMemoryAllocation;
     }
 }

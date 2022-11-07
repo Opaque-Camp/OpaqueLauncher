@@ -13,6 +13,7 @@
         <Label Content="__cryence_" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
         <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
         <Button x:Name="debugJavaButton" Content="DebugFUCKINGJava" HorizontalAlignment="Left" Margin="610,134,0,0" VerticalAlignment="Top" Click="debugJavaButton_Click"/>
+        <Button x:Name="debugWMI" Content="Debug WMI SHIT" HorizontalAlignment="Left" Margin="610,169,0,0" VerticalAlignment="Top" Click="debugWMI_Click"/>
 
     </Grid>
 </Window>
