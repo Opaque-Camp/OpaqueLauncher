@@ -33,6 +33,8 @@ public sealed class MinecraftStarter
     {
         var list = new List<string> { _javaFinder.GetJavawExePath() };
         list.AddRange(jvmArgs);
+        list.Add($"-Xms{_jvmMemoryProvider.InitialMemoryAllocation}M");
+        list.Add($"-Xmx{_jvmMemoryProvider.MaxMemoryAllocation}M");
         list.AddRange(launcherArgs);
         list.AddMany("-cp", _classpathProvider.GetClasspath());
         list.AddRange(fabricArgs);
@@ -61,8 +63,6 @@ public sealed class MinecraftStarter
         "-XX:+DisableExplicitGC",
         "-XX:+AlwaysPreTouch",
         "-XX:+ParallelRefProcEnabled",
-        "-Xms2048M",
-        "-Xmx4096M",
         "-Dfile.encoding = UTF-8",
         "-Xss1M",
     };
