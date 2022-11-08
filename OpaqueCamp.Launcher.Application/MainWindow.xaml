@@ -24,7 +24,7 @@
         <Label Content="__cryence_" HorizontalAlignment="Left" Margin="200,0,50,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14" FontFamily="./Fonts/#Monocraft"/>
         <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14" FontFamily="./Fonts/#Monocraft"/>
 
-        <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,0" VerticalAlignment="Top" FontStyle="Italic" MouseDoubleClick="OpenDebugWIndow" Foreground="White"/>
+        <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,0" VerticalAlignment="Top" FontStyle="Italic" MouseDoubleClick="OpenDebugWIndow" Foreground="White" Visibility="Hidden"/>
 
         <Wpf:WebView2 Margin="200,80,0,39" Source="https://opaque-camp.gitbook.io/"/>
         <TextBox HorizontalAlignment="Left" Margin="141,87,0,0" TextWrapping="Wrap" Text="4096" VerticalAlignment="Top" Width="50" PreviewTextInput="NumberValidationTextBox" Background="#FF181C1F" FontSize="14" Foreground="#c5e7ff" FontFamily="./Fonts/#Monocraft" BorderBrush="#FF53616B" BorderThickness="2" Padding="2,2,0,2"/>
