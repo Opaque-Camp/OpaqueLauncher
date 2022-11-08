@@ -8,12 +8,12 @@ public sealed class MinecraftStarter
 {
     private readonly JavaFinder _javaFinder;
     private readonly LauncherInfoProvider _launcherVersionProvider;
-    private readonly PathProvider _directoryPathProvider;
+    private readonly IPathProvider _directoryPathProvider;
     private readonly ClasspathProvider _classpathProvider;
     private readonly JVMMemoryProvider _jvmMemoryProvider;
 
     public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider,
-        PathProvider directoryPathProvider, ClasspathProvider classpathProvider, JVMMemoryProvider jvmMemoryProvider)
+        IPathProvider directoryPathProvider, ClasspathProvider classpathProvider, JVMMemoryProvider jvmMemoryProvider)
     {
         _javaFinder = javaFinder;
         _launcherVersionProvider = launcherVersionProvider;

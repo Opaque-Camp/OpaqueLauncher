@@ -4,13 +4,13 @@ namespace OpaqueCamp.Launcher.Core;
 
 public sealed class ClasspathProvider
 {
-    private readonly IClasspathJsonProvider _classpathJsonProvider;
     private readonly IPathProvider _pathProvider;
+    private readonly IFileSystem _fileSystem;
 
-    public ClasspathProvider(IClasspathJsonProvider classpathJsonProvider, IPathProvider pathProvider)
+    public ClasspathProvider(IPathProvider pathProvider, IFileSystem fileSystem)
     {
-        _classpathJsonProvider = classpathJsonProvider;
         _pathProvider = pathProvider;
+        _fileSystem = fileSystem;
     }
 
     /// <summary>
@@ -34,8 +34,9 @@ public sealed class ClasspathProvider
         string json;
         try
         {
-            json = _classpathJsonProvider.GetClasspathJson();
-        } catch(IOException e)
+            json = _fileSystem.ReadAllText(_pathProvider.ClasspathJsonPath);
+        }
+        catch (IOException e)
         {
             throw new ClasspathGenerationException($"Failed to open classpath JSON file - {e.Message}", e);
         }
@@ -43,14 +44,17 @@ public sealed class ClasspathProvider
         ClasspathJson libraries;
         try
         {
-            libraries = JsonSerializer.Deserialize<ClasspathJson>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+            libraries = JsonSerializer.Deserialize<ClasspathJson>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
             if (libraries is null)
             {
-                throw new ClasspathGenerationException($"Failed to parse classpath JSON file - whole file object is null");
+                throw new ClasspathGenerationException(
+                    "Failed to parse classpath JSON file - whole file object is null");
             }
+
             if (libraries.Libraries is null)
             {
-                throw new ClasspathGenerationException($"Failed to parse classpath JSON file - libraries is null");
+                throw new ClasspathGenerationException("Failed to parse classpath JSON file - libraries is null");
             }
         }
         catch (JsonException e)

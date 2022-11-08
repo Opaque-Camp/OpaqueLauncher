@@ -1,15 +1,22 @@
-using Moq;
-
 namespace OpaqueCamp.Launcher.Core.Tests;
 
 public class ClasspathProviderTest
 {
+    private readonly Mock<IPathProvider> _pathProvider = new();
+    private readonly Mock<IFileSystem> _fs = new();
+    private const string ConfigPath = @"C:\OpaqueVanilla\config.json";
+
+    public ClasspathProviderTest()
+    {
+        _pathProvider.Setup(p => p.LibraryDirectoryPath).Returns(@"C:\OpaqueVanilla\game\libraries");
+        _pathProvider.Setup(p => p.ClasspathJsonPath).Returns(ConfigPath);
+    }
+        
     [Fact]
     public void GetClasspath_GivenJsonWithFewLibraries_ReturnClasspathString()
     {
         // Given
-        var jsonProvider = new Mock<IClasspathJsonProvider>();
-        jsonProvider.Setup(p => p.GetClasspathJson()).Returns("""
+        _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("""
             {
                 "libraries": [
                     {
@@ -23,9 +30,7 @@ public class ClasspathProviderTest
                 ]
             }
             """);
-        var pathProvider = new Mock<IPathProvider>();
-        pathProvider.Setup(p => p.LibraryDirectoryPath).Returns(@"C:\OpaqueVanilla\game\libraries");
-        var provider = new ClasspathProvider(jsonProvider.Object, pathProvider.Object);
+        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
         var classpath = provider.GetClasspath();
@@ -41,14 +46,12 @@ public class ClasspathProviderTest
     public void GetClasspath_OnClasspathJsonProviderIOException_ThrowClasspathGenerationException()
     {
         // Given
-        var jsonProvider = new Mock<IClasspathJsonProvider>();
-        jsonProvider.Setup(p => p.GetClasspathJson()).Throws<IOException>();
-        var pathProvider = new Mock<IPathProvider>();
-        var provider = new ClasspathProvider(jsonProvider.Object, pathProvider.Object);
+        _fs.Setup(f => f.ReadAllText(ConfigPath)).Throws<IOException>();
+        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
         var action = () => provider.GetClasspath();
-        
+
         // Then
         action.Should().Throw<ClasspathGenerationException>();
     }
@@ -57,10 +60,8 @@ public class ClasspathProviderTest
     public void GetClasspath_OnInvalidClasspathJson_ThrowClasspathGenerationException()
     {
         // Given
-        var jsonProvider = new Mock<IClasspathJsonProvider>();
-        jsonProvider.Setup(p => p.GetClasspathJson()).Returns(@"wtf");
-        var pathProvider = new Mock<IPathProvider>();
-        var provider = new ClasspathProvider(jsonProvider.Object, pathProvider.Object);
+        _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("wtf");
+        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
         var action = () => provider.GetClasspath();
@@ -73,10 +74,8 @@ public class ClasspathProviderTest
     public void GetClasspath_OnMalformedClasspathJson_ThrowClasspathGenerationException()
     {
         // Given
-        var jsonProvider = new Mock<IClasspathJsonProvider>();
-        jsonProvider.Setup(p => p.GetClasspathJson()).Returns("""{"libraries": null}""");
-        var pathProvider = new Mock<IPathProvider>();
-        var provider = new ClasspathProvider(jsonProvider.Object, pathProvider.Object);
+        _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("""{"libraries": null}""");
+        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
         var action = () => provider.GetClasspath();
