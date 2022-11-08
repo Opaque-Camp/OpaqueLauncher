@@ -1,10 +1,10 @@
 ﻿namespace OpaqueCamp.Launcher.Core;
 
-public sealed class DirectoryPathProvider
+public sealed class PathProvider
 {
     private readonly IApplicationPathProvider _appPathProvider;
 
-    public DirectoryPathProvider(IApplicationPathProvider appPathProvider)
+    public PathProvider(IApplicationPathProvider appPathProvider)
     {
         _appPathProvider = appPathProvider;
     }
