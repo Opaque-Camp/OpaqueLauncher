@@ -36,10 +36,7 @@ namespace OpaqueCamp.Launcher.Application
             catch (JavaNotFoundException er)
             {
                 debugJavaLabel.Content = $"Java path: {er.Message}";
-
             }
-
-
         }
 
         private void debugWMI_Click(object sender, RoutedEventArgs e)
