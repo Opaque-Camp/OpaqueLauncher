@@ -27,26 +27,11 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void debugJavaButton_Click(object sender, RoutedEventArgs e)
+    
+    // Double-click
+    private void OpenDebugWIndow(object sender, MouseButtonEventArgs e)
     {
-        try
-        {
-            var javaFinder = new JavaFinder();
-            debugJavaButton.Content = javaFinder.GetJavawExePath();
-        }
-        catch (JavaNotFoundException er)
-        {
-            debugJavaButton.Content = er.Message;
-            
-        }
-
-        
-    }
-
-    private void debugWMI_Click(object sender, RoutedEventArgs e)
-    {
-        var jvmMP = new JVMMemoryProvider();
-        jvmMP.AutoMaxMemory();
-        debugWMI.Content = jvmMP.MaxMemoryAllocation;
+        var debugWindow = new DebugWindow();
+        debugWindow.Show();
     }
 }

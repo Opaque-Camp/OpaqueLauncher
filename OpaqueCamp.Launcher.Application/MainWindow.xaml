@@ -9,11 +9,11 @@
         <Rectangle x:Name="rectangle" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Fill="Black" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
         <Label Content="Opaque Launcher" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="36"/>
         <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Bottom" Fill="Black" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
-        <Button Content="Играть" HorizontalAlignment="Center" Margin="0,20" VerticalAlignment="Bottom" Background="LightGreen" BorderBrush="Green" Foreground="White" Padding="10,1,10,1" FontSize="36"/>
+        <Button Content="Играть" HorizontalAlignment="Center" Margin="0,20" VerticalAlignment="Bottom" Background="LightGreen" BorderBrush="Green" Foreground="White" Padding="10,1,10,1" FontSize="36" FontWeight="Bold"/>
         <Label Content="__cryence_" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
         <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
-        <Button x:Name="debugJavaButton" Content="DebugFUCKINGJava" HorizontalAlignment="Left" Margin="610,134,0,0" VerticalAlignment="Top" Click="debugJavaButton_Click"/>
-        <Button x:Name="debugWMI" Content="Debug WMI SHIT" HorizontalAlignment="Left" Margin="610,169,0,0" VerticalAlignment="Top" Click="debugWMI_Click"/>
+        
+        <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,0,10,50" VerticalAlignment="Bottom" FontStyle="Italic" MouseDoubleClick="OpenDebugWIndow"/>
 
     </Grid>
 </Window>
