@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33027.239
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpaqueCamp.Launcher.Application", "OpaqueCamp.Launcher.Application\OpaqueCamp.Launcher.Application.csproj", "{3699371B-840D-4C12-98DC-1B3B45C5641C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueCamp.Launcher.Core", "OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj", "{04A4B6F3-8760-4A9E-B721-7C38D8B9C03F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpaqueCamp.Launcher.Core", "OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj", "{04A4B6F3-8760-4A9E-B721-7C38D8B9C03F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueCamp.Launcher.Core.Tests", "OpaqueCamp.Launcher.Core.Tests\OpaqueCamp.Launcher.Core.Tests.csproj", "{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{04A4B6F3-8760-4A9E-B721-7C38D8B9C03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04A4B6F3-8760-4A9E-B721-7C38D8B9C03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04A4B6F3-8760-4A9E-B721-7C38D8B9C03F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
