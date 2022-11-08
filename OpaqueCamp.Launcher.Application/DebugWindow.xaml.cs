@@ -29,7 +29,7 @@ namespace OpaqueCamp.Launcher.Application
         {
             try
             {
-                var javaFinder = new JavaFinder();
+                var javaFinder = new JavaFinder(new EnvironmentService(), new FileSystem());
                 
                 debugJavaLabel.Content = $"Java path: {javaFinder.GetJavawExePath()}";
             }
