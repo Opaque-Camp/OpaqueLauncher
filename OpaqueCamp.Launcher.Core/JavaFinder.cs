@@ -2,6 +2,15 @@
 
 public sealed class JavaFinder
 {
+    private readonly IEnvironmentService _environmentService;
+    private readonly IFileSystem _fileSystem;
+
+    public JavaFinder(IEnvironmentService environmentService, IFileSystem fileSystem)
+    {
+        _environmentService = environmentService;
+        _fileSystem = fileSystem;
+    }
+    
     /// <summary>
     /// Returns the absolute path to <c>javaw.exe</c>.
     /// First, the <c>JAVA_HOME</c> environment variable is checked. If it is not set or set incorrectly,
@@ -26,28 +35,16 @@ public sealed class JavaFinder
     {
         var javaHome = GetJavaHome();
         var javawExe = Path.Join(javaHome, "bin", "javaw.exe");
-        if (!File.Exists(javawExe))
-        {
-            return null;
-        }
-
-        return javawExe;
+        return _fileSystem.FileExists(javawExe) ? javawExe : null;
     }
 
-    private string? GetJavaHome() => Environment.GetEnvironmentVariable("JAVA_HOME");
+    private string? GetJavaHome() => _environmentService.GetEnvironmentVariable("JAVA_HOME");
 
     private string? FindJavaInPath()
     {
-        var path = Environment.GetEnvironmentVariable("PATH")!;
-        var pathEntries = path.Split(Path.PathSeparator);
-        foreach (var entry in pathEntries)
-        {
-            var javawExe = Path.Join(entry, "javaw.exe");
-            if (File.Exists(javawExe))
-            {
-                return javawExe;
-            }
-        }
-        return null;
+        var path = _environmentService.GetEnvironmentVariable("PATH");
+        var pathEntries = path?.Split(Path.PathSeparator);
+        return pathEntries?.Select(entry => Path.Join(entry, "javaw.exe"))
+            .FirstOrDefault(_fileSystem.FileExists);
     }
 }
