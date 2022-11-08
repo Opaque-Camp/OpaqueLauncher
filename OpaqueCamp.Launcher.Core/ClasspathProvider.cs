@@ -5,10 +5,12 @@ namespace OpaqueCamp.Launcher.Core;
 public sealed class ClasspathProvider
 {
     private readonly PathProvider _pathProvider;
+    private readonly IClasspathJsonProvider _classpathJsonProvider;
 
-    public ClasspathProvider(PathProvider pathProvider)
+    public ClasspathProvider(PathProvider pathProvider, IClasspathJsonProvider classpathJsonProvider)
     {
         _pathProvider = pathProvider;
+        _classpathJsonProvider = classpathJsonProvider;
     }
 
     /// <summary>
@@ -19,22 +21,19 @@ public sealed class ClasspathProvider
     /// </exception>
     public string GetClasspath()
     {
-        ClasspathJson libraries = ParseClasspathJson();
-
+        var libraries = ParseClasspathJson();
         return string.Join(';', libraries.Libraries.Select(l => l.Name).Select(LibraryNameToRelativePath));
     }
 
     private ClasspathJson ParseClasspathJson()
     {
         string json;
-        string classpathJsonPath = _pathProvider.ClasspathJsonPath;
         try
         {
-            json = File.ReadAllText(classpathJsonPath);
-        }
-        catch (IOException e)
+            json = _classpathJsonProvider.GetClasspathJson();
+        } catch(IOException e)
         {
-            throw new ClasspathGenerationException($"Failed to open {classpathJsonPath} - {e.Message}", e);
+            throw new ClasspathGenerationException($"Failed to open classpath JSON file - {e.Message}", e);
         }
 
         ClasspathJson libraries;
@@ -43,12 +42,12 @@ public sealed class ClasspathProvider
             libraries = JsonSerializer.Deserialize<ClasspathJson>(json)!;
             if (libraries is null)
             {
-                throw new ClasspathGenerationException($"Failed to parse {classpathJsonPath} - libraries is null");
+                throw new ClasspathGenerationException($"Failed to parse classpath JSON file - libraries is null");
             }
         }
         catch (JsonException e)
         {
-            throw new ClasspathGenerationException($"Failed to parse {classpathJsonPath} - {e.Message}", e);
+            throw new ClasspathGenerationException($"Failed to parse classpath JSON file - {e.Message}", e);
         }
 
         return libraries;
