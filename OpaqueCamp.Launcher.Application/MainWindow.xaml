@@ -6,18 +6,30 @@
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Name="window" x:Class="OpaqueCamp.Launcher.Application.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinWidth="400" MinHeight="400">
-    <Grid>
-        <Rectangle x:Name="rectangle" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Fill="Black" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
-        <Label Content="Opaque Launcher" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="36"/>
-        <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Bottom" Fill="Black" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
-        <Button Content="Играть" HorizontalAlignment="Left" Margin="20,20" VerticalAlignment="Bottom" Background="LightGreen" BorderBrush="Green" Foreground="White" Padding="10,1,10,1" FontSize="36" FontWeight="Bold"/>
-        <Label Content="__cryence_" HorizontalAlignment="Left" Margin="180,0,50,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
-        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14"/>
+    <Grid Background="#181c1f">
+        <Rectangle x:Name="rectangle" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Fill="#0a0b0c" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
+        <Label Content="Opaque Launcher" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Foreground="White" FontSize="36" FontFamily="./Fonts/#Monocraft"/>
+        <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Bottom" Fill="#0a0b0c" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}"/>
+
+        <Button Content="Запустить" HorizontalAlignment="Left" Margin="20,20" VerticalAlignment="Bottom" Background="#0a944e" BorderBrush="#066133" Foreground="White" Padding="10,5,10,5" FontSize="24" FontFamily="./Fonts/#Monocraft">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+
+
+
+        <Label Content="__cryence_" HorizontalAlignment="Left" Margin="200,0,50,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14" FontFamily="./Fonts/#Monocraft"/>
+        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom" Foreground="White" FontSize="14" FontFamily="./Fonts/#Monocraft"/>
 
         <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,0" VerticalAlignment="Top" FontStyle="Italic" MouseDoubleClick="OpenDebugWIndow" Foreground="White"/>
 
 
-        <Wpf:WebView2 Margin="185,80,0,39" Source="https://opaque-camp.gitbook.io/"/>
+        <Wpf:WebView2 Margin="200,80,0,39" Source="https://opaque-camp.gitbook.io/"/>
 
 
     </Grid>
