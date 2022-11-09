@@ -5,11 +5,13 @@ public class ClasspathProviderTest
     private readonly Mock<IPathProvider> _pathProvider = new();
     private readonly Mock<IFileSystem> _fs = new();
     private const string ConfigPath = @"C:\OpaqueVanilla\config.json";
+    private readonly ClasspathProvider _provider;
 
     public ClasspathProviderTest()
     {
         _pathProvider.Setup(p => p.LibraryDirectoryPath).Returns(@"C:\OpaqueVanilla\game\libraries");
         _pathProvider.Setup(p => p.ClasspathJsonPath).Returns(ConfigPath);
+        _provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
     }
         
     [Fact]
@@ -30,10 +32,9 @@ public class ClasspathProviderTest
                 ]
             }
             """);
-        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
-        var classpath = provider.GetClasspath();
+        var classpath = _provider.GetClasspath();
 
         // Then
         classpath.Should().Be(
@@ -47,10 +48,9 @@ public class ClasspathProviderTest
     {
         // Given
         _fs.Setup(f => f.ReadAllText(ConfigPath)).Throws<IOException>();
-        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
-        var action = () => provider.GetClasspath();
+        var action = () => _provider.GetClasspath();
 
         // Then
         action.Should().Throw<ClasspathGenerationException>();
@@ -61,10 +61,9 @@ public class ClasspathProviderTest
     {
         // Given
         _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("wtf");
-        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
-        var action = () => provider.GetClasspath();
+        var action = () => _provider.GetClasspath();
 
         // Then
         action.Should().Throw<ClasspathGenerationException>();
@@ -75,10 +74,9 @@ public class ClasspathProviderTest
     {
         // Given
         _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("null");
-        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
-        var action = () => provider.GetClasspath();
+        var action = () => _provider.GetClasspath();
 
         // Then
         action.Should().Throw<ClasspathGenerationException>();
@@ -89,10 +87,9 @@ public class ClasspathProviderTest
     {
         // Given
         _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("""{"libraries": null}""");
-        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
 
         // When
-        var action = () => provider.GetClasspath();
+        var action = () => _provider.GetClasspath();
 
         // Then
         action.Should().Throw<ClasspathGenerationException>();
