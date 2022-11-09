@@ -27,7 +27,7 @@
         <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,0" VerticalAlignment="Top" FontStyle="Italic" MouseDoubleClick="OpenDebugWIndow" Foreground="White" Visibility="Hidden"/>
         <Label Content="Загрузка вики..." HorizontalAlignment="Right" Margin="0,244,330,0" VerticalAlignment="Top" Height="40" Width="190" FontSize="16" FontFamily="./Fonts/#Monocraft" Foreground="#c5e7ff"/>
         <Label Content="Если вики не загрузилась&#10;установите WebView2." HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,299,265,0" VerticalAlignment="Top" Height="74" Width="315" FontSize="16" FontFamily="./Fonts/#Monocraft" Foreground="#c5e7ff"/>
-        <Wpf:WebView2 Margin="200,80,0,39" Source="https://opaque-camp.gitbook.io/" DefaultBackgroundColor="#181c1f"/>
+        <Wpf:WebView2 Margin="200,80,0,39" Source="https://opaque-camp.gitbook.io/wiki/" DefaultBackgroundColor="#181c1f"/>
         <TextBox HorizontalAlignment="Left" Margin="141,87,0,0" TextWrapping="Wrap" Text="4096" VerticalAlignment="Top" Width="50" PreviewTextInput="NumberValidationTextBox" Background="#FF181C1F" FontSize="14" Foreground="#c5e7ff" FontFamily="./Fonts/#Monocraft" BorderBrush="#FF53616B" BorderThickness="2" Padding="2,2,0,2"/>
         <Label Content="Память (ОЗУ):" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top" Foreground="#c5e7ff" FontSize="14" FontFamily="./Fonts/#Monocraft"/>
         <CheckBox Content="Перекачать сборку" HorizontalAlignment="Left" Margin="10,0,0,70" VerticalAlignment="Bottom" Foreground="#c5e7ff" BorderBrush="#FF53616B" BorderThickness="2" FontSize="14" FontFamily="./Fonts/#Monocraft" Background="#FF181C1F">
