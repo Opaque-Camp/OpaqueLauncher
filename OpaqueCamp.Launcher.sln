@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpaqueCamp.Launcher.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueCamp.Launcher.Core.Tests", "OpaqueCamp.Launcher.Core.Tests\OpaqueCamp.Launcher.Core.Tests.csproj", "{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueCamp.Launcher.Infrastructure", "OpaqueCamp.Launcher.Infrastructure\OpaqueCamp.Launcher.Infrastructure.csproj", "{BF3A98FD-B190-4D08-8B61-9277D084DA84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD609EF1-9B3C-419E-B421-0D8905A3E4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3A98FD-B190-4D08-8B61-9277D084DA84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3A98FD-B190-4D08-8B61-9277D084DA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3A98FD-B190-4D08-8B61-9277D084DA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3A98FD-B190-4D08-8B61-9277D084DA84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
