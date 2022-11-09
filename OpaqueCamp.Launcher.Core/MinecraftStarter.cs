@@ -10,16 +10,16 @@ public sealed class MinecraftStarter
     private readonly LauncherInfoProvider _launcherVersionProvider;
     private readonly IPathProvider _directoryPathProvider;
     private readonly ClasspathProvider _classpathProvider;
-    private readonly JVMMemoryProvider _jvmMemoryProvider;
+    private readonly IJvmMemorySettings _jvmMemorySettings;
 
     public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider,
-        IPathProvider directoryPathProvider, ClasspathProvider classpathProvider, JVMMemoryProvider jvmMemoryProvider)
+        IPathProvider directoryPathProvider, ClasspathProvider classpathProvider, IJvmMemorySettings jvmMemorySettings)
     {
         _javaFinder = javaFinder;
         _launcherVersionProvider = launcherVersionProvider;
         _directoryPathProvider = directoryPathProvider;
         _classpathProvider = classpathProvider;
-        _jvmMemoryProvider = jvmMemoryProvider;
+        _jvmMemorySettings = jvmMemorySettings;
     }
 
     void StartMinecraft()
@@ -33,8 +33,8 @@ public sealed class MinecraftStarter
     {
         var list = new List<string> { _javaFinder.GetJavawExePath() };
         list.AddRange(jvmArgs);
-        list.Add($"-Xms{_jvmMemoryProvider.InitialMemoryAllocation}M");
-        list.Add($"-Xmx{_jvmMemoryProvider.MaxMemoryAllocation}M");
+        list.Add($"-Xms{_jvmMemorySettings.InitialMemoryAllocation}M");
+        list.Add($"-Xmx{_jvmMemorySettings.MaximumMemoryAllocation}M");
         list.AddRange(launcherArgs);
         list.AddMany("-cp", _classpathProvider.GetClasspath());
         list.AddRange(fabricArgs);

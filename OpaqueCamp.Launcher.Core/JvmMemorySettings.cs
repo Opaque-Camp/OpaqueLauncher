@@ -1,6 +1,6 @@
 ﻿namespace OpaqueCamp.Launcher.Core;
 
-class JvmMemorySettings : IJvmMemorySettings
+public class JvmMemorySettings : IJvmMemorySettings
 {
     public JvmMemorySettings(IJvmMemorySettingsRepository memSettingsRepo, ISystemMemoryDetector systemMemoryDetector)
     {

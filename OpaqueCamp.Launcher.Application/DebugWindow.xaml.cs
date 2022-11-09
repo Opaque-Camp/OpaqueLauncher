@@ -1,17 +1,6 @@
-﻿using OpaqueCamp.Launcher.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using OpaqueCamp.Launcher.Core;
+using OpaqueCamp.Launcher.Infrastructure;
 
 namespace OpaqueCamp.Launcher.Application
 {
@@ -30,7 +19,7 @@ namespace OpaqueCamp.Launcher.Application
             try
             {
                 var javaFinder = new JavaFinder(new EnvironmentService(), new FileSystem());
-                
+
                 debugJavaLabel.Content = $"Java path: {javaFinder.GetJavawExePath()}";
             }
             catch (JavaNotFoundException er)
@@ -41,11 +30,9 @@ namespace OpaqueCamp.Launcher.Application
 
         private void debugWMI_Click(object sender, RoutedEventArgs e)
         {
-            var jvmMP = new JVMMemoryProvider();
-            jvmMP.AutoMaxMemory();
+            var jvmMP = new JvmMemorySettings(new JvmMemorySettingsRepository(), new WindowsSystemMemoryDetector());
             
-
-            debugWMILabel.Content = $"Max memory: {jvmMP.MaxMemoryAllocation}";
+            debugWMILabel.Content = $"Max memory: {jvmMP.MaximumMemoryAllocation.RecommendedMegabytes}";
         }
     }
 }
