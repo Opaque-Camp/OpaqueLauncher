@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Management;
 using System.Runtime.Versioning;
-using OpaqueCamp.Launcher.Core;
+using OpaqueCamp.Launcher.Core.Memory;
 
-namespace OpaqueCamp.Launcher.Infrastructure;
+namespace OpaqueCamp.Launcher.Infrastructure.Memory;
 
 [SupportedOSPlatform("windows")]
 public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector

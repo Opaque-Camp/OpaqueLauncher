@@ -1,4 +1,5 @@
 ﻿using OpaqueCamp.Launcher.Core;
+using OpaqueCamp.Launcher.Core.Memory;
 
 namespace OpaqueCamp.Launcher.Application;
 

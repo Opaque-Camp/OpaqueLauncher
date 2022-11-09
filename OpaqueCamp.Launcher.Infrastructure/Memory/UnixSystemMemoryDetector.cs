@@ -1,8 +1,11 @@
 ﻿using System.Diagnostics;
-using OpaqueCamp.Launcher.Core;
+using System.Runtime.Versioning;
+using OpaqueCamp.Launcher.Core.Memory;
 
-namespace OpaqueCamp.Launcher.Infrastructure;
+namespace OpaqueCamp.Launcher.Infrastructure.Memory;
 
+[SupportedOSPlatform("linux")]
+[SupportedOSPlatform("macos")]
 public sealed class UnixSystemMemoryDetector : ISystemMemoryDetector
 {
     public int GetSystemMemoryMegabytes()

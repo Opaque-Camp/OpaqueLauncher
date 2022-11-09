@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpaqueCamp.Launcher.Core.Memory;
 
 namespace OpaqueCamp.Launcher.Core;
 
