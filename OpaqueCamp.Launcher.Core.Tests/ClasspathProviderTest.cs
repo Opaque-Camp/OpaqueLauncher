@@ -71,7 +71,21 @@ public class ClasspathProviderTest
     }
 
     [Fact]
-    public void GetClasspath_OnMalformedClasspathJson_ThrowClasspathGenerationException()
+    public void GetClasspath_OnWholeBodyBeingNull_ThrowClasspathGenerationException()
+    {
+        // Given
+        _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("null");
+        var provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
+
+        // When
+        var action = () => provider.GetClasspath();
+
+        // Then
+        action.Should().Throw<ClasspathGenerationException>();
+    }
+    
+    [Fact]
+    public void GetClasspath_OnLibrariesBeingNull_ThrowClasspathGenerationException()
     {
         // Given
         _fs.Setup(f => f.ReadAllText(ConfigPath)).Returns("""{"libraries": null}""");
