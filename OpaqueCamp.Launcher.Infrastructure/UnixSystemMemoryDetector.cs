@@ -25,6 +25,6 @@ public sealed class UnixSystemMemoryDetector : ISystemMemoryDetector
         var lines = output.Split("\n");
         var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-        return (int)(Int64.Parse(memory[1]) / (1024 * 1024) / 2);
+        return (int)Int64.Parse(memory[1]);
     }
 }
