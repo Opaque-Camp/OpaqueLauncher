@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj" />
 	<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
 	<ProjectReference Include="..\OpaqueCamp.Launcher.Infrastructure\OpaqueCamp.Launcher.Infrastructure.csproj" />
