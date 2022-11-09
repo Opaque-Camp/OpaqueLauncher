@@ -2,7 +2,7 @@
 
 namespace OpaqueCamp.Launcher.Application;
 
-public sealed class JvmMemorySettingsRepository : IJvmMemorySettingsRepository
+public sealed class JvmMemorySettingsStorage : IJvmMemorySettingsStorage
 {
     public int GetInitialMemoryAllocationMegabytes() => Properties.Settings.Default.JvmInitialMemoryAllocationMegabytes;
 

@@ -1,6 +1,6 @@
 ﻿namespace OpaqueCamp.Launcher.Core;
 
-public interface IJvmMemorySettingsRepository
+public interface IJvmMemorySettingsStorage
 {
     int GetInitialMemoryAllocationMegabytes();
     

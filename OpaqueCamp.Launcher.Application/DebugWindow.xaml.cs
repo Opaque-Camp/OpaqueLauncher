@@ -30,7 +30,7 @@ namespace OpaqueCamp.Launcher.Application
 
         private void debugWMI_Click(object sender, RoutedEventArgs e)
         {
-            var jvmMP = new JvmMemorySettings(new JvmMemorySettingsRepository(), new WindowsSystemMemoryDetector());
+            var jvmMP = new JvmMemorySettings(new JvmMemorySettingsStorage(), new WindowsSystemMemoryDetector());
             
             debugWMILabel.Content = $"Max memory: {jvmMP.MaximumMemoryAllocation.RecommendedMegabytes}";
         }

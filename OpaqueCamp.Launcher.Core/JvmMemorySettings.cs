@@ -2,7 +2,7 @@
 
 public class JvmMemorySettings : IJvmMemorySettings
 {
-    public JvmMemorySettings(IJvmMemorySettingsRepository memSettingsRepo, ISystemMemoryDetector systemMemoryDetector)
+    public JvmMemorySettings(IJvmMemorySettingsStorage memSettingsRepo, ISystemMemoryDetector systemMemoryDetector)
     {
         InitialMemoryAllocation =
             new InitialAllocationJvmMemorySetting(memSettingsRepo.GetInitialMemoryAllocationMegabytes());
