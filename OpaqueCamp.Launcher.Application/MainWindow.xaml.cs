@@ -28,6 +28,7 @@ public partial class MainWindow : Window
         InitializeComponent();
 
 #if DEBUG
+        window.Title += " [DEBUG]";
         debugWindowLabel.Visibility = Visibility.Visible;
 #endif
 
