@@ -31,6 +31,7 @@ public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector
         {
             FileName = "wmic",
             Arguments = "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value",
+            CreateNoWindow = true,
             RedirectStandardOutput = true
         };
 
