@@ -4,16 +4,18 @@ public class ClasspathProviderTest
 {
     private readonly Mock<IPathProvider> _pathProvider = new();
     private readonly Mock<IFileSystem> _fs = new();
-    private const string ConfigPath = @"C:\OpaqueVanilla\config.json";
+    private readonly string ConfigPath = Path.Join("C:", "OpaqueVanilla", "config.json");
     private readonly ClasspathProvider _provider;
 
     public ClasspathProviderTest()
     {
-        _pathProvider.Setup(p => p.LibraryDirectoryPath).Returns(@"C:\OpaqueVanilla\game\libraries");
+        _pathProvider
+            .Setup(p => p.LibraryDirectoryPath)
+            .Returns(Path.Join("C:", "OpaqueVanilla", "game", "libraries"));
         _pathProvider.Setup(p => p.ClasspathJsonPath).Returns(ConfigPath);
         _provider = new ClasspathProvider(_pathProvider.Object, _fs.Object);
     }
-        
+
     [Fact]
     public void GetClasspath_GivenJsonWithFewLibraries_ReturnClasspathString()
     {
@@ -38,8 +40,10 @@ public class ClasspathProviderTest
 
         // Then
         classpath.Should().Be(
-            @"C:\OpaqueVanilla\game\libraries\net\fabricmc\tiny-mappings-parser\0.3.0+build.17\tiny-mappings-parser-0.3.0+build.17.jar;" +
-            @"C:\OpaqueVanilla\game\libraries\org\ow2\asm\asm\9.3\asm-9.3.jar"
+            Path.Join("C:", "OpaqueVanilla", "game", "libraries", "net", "fabricmc", "tiny-mappings-parser",
+                "0.3.0+build.17", "tiny-mappings-parser-0.3.0+build.17.jar") +
+            Path.PathSeparator +
+            Path.Join("C:", "OpaqueVanilla", "game", "libraries", "org", "ow2", "asm", "asm", "9.3", "asm-9.3.jar")
         );
     }
 
@@ -81,7 +85,7 @@ public class ClasspathProviderTest
         // Then
         action.Should().Throw<ClasspathGenerationException>();
     }
-    
+
     [Fact]
     public void GetClasspath_OnLibrariesBeingNull_ThrowClasspathGenerationException()
     {
