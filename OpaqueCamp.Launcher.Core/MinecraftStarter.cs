@@ -21,7 +21,15 @@ public sealed class MinecraftStarter
         _jvmMemorySettings = jvmMemorySettings;
     }
 
-    void StartMinecraft()
+    /// <summary>
+    /// Starts the Minecraft client.
+    /// </summary>
+    /// <exception cref="MinecraftStartFailureException">
+    /// Thrown when the Minecraft client could not be started due to various Java-related problems,
+    /// such as missing Java installation or classpath generation problems.
+    /// The inner exception will contain the error that caused the startup to fail.
+    /// </exception>
+    public void StartMinecraft()
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
             "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
@@ -35,7 +43,7 @@ public sealed class MinecraftStarter
         list.Add($"-Xms{_jvmMemorySettings.InitialMemoryAllocation}M");
         list.Add($"-Xmx{_jvmMemorySettings.MaximumMemoryAllocation}M");
         list.AddRange(launcherArgs);
-        list.AddMany("-cp", _classpathProvider.GetClasspath());
+        list.AddMany("-cp", GetClasspath());
         list.AddRange(fabricArgs);
         list.AddMany("--username", credentials.UserName);
         list.AddMany("--version",
@@ -49,6 +57,18 @@ public sealed class MinecraftStarter
         list.AddMany("--versionType", "release");
 
         return list;
+    }
+
+    private string GetClasspath()
+    {
+        try
+        {
+            return _classpathProvider.GetClasspath();
+        }
+        catch (ClasspathGenerationException e)
+        {
+            throw new MinecraftStartFailureException(e);
+        }
     }
 
     private static readonly List<string> jvmArgs = new()

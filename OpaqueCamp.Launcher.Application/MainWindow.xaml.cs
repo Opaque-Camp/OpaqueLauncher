@@ -38,5 +38,13 @@ public partial class MainWindow : Window
 
     private void OnLaunchButtonClick(object sender, RoutedEventArgs e)
     {
+        try
+        {
+            _minecraftStarter.StartMinecraft();
+        }
+        catch (MinecraftStartFailureException ex)
+        {
+            MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
