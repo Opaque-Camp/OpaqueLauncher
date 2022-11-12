@@ -2,7 +2,8 @@
 
 public sealed class MinecraftStartFailureException : Exception
 {
-    public MinecraftStartFailureException(Exception? innerException) : base("", innerException)
+    public MinecraftStartFailureException(string message = "", Exception? innerException = null) : base(message,
+        innerException)
     {
     }
 

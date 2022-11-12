@@ -3,6 +3,7 @@ using OpaqueCamp.Launcher.Core.Memory;
 
 namespace OpaqueCamp.Launcher.Core;
 
+// TODO: Refactor and write tests
 public sealed class MinecraftStarter
 {
     private readonly JavaFinder _javaFinder;
@@ -29,11 +30,25 @@ public sealed class MinecraftStarter
     /// such as missing Java installation or classpath generation problems.
     /// The inner exception will contain the error that caused the startup to fail.
     /// </exception>
-    public void StartMinecraft()
+    public RunningMinecraft StartMinecraft()
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
             "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
-        Process.Start(_javaFinder.GetJavawExePath(), string.Join(' ', Args(creds)));  // TODO: handle JVM start failure
+        var startInfo = new ProcessStartInfo
+        {
+            FileName = GetJavawExePath(),
+            Arguments = string.Join(' ', Args(creds)),
+            ErrorDialog = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+        var process = Process.Start(startInfo);
+        if (process is null)
+        {
+            throw new MinecraftStartFailureException("Не удалось запустить Minecraft по неизвестной причине.");
+        }
+
+        return new RunningMinecraft(process);
     }
 
     private IEnumerable<string> Args(PlayerCredentials credentials)
@@ -59,6 +74,18 @@ public sealed class MinecraftStarter
         return list;
     }
 
+    private string GetJavawExePath()
+    {
+        try
+        {
+            return _javaFinder.GetJavawExePath();
+        }
+        catch (JavaNotFoundException e)
+        {
+            throw new MinecraftStartFailureException(innerException: e);
+        }
+    }
+
     private string GetClasspath()
     {
         try
@@ -67,7 +94,7 @@ public sealed class MinecraftStarter
         }
         catch (ClasspathGenerationException e)
         {
-            throw new MinecraftStartFailureException(e);
+            throw new MinecraftStartFailureException(innerException: e);
         }
     }
 
