@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using OpaqueCamp.Launcher.Core;
 using OpaqueCamp.Launcher.Core.Memory;
-using OpaqueCamp.Launcher.Infrastructure;
 using OpaqueCamp.Launcher.Infrastructure.Memory;
 
 namespace OpaqueCamp.Launcher.Application
