@@ -39,7 +39,9 @@ public sealed class ClasspathProvider
         }
         catch (IOException e)
         {
-            throw new ClasspathGenerationException($"Failed to open classpath JSON file - {e.Message}", e);
+            throw new ClasspathGenerationException(
+                "Не удалось открыть файл со списком компонентов сборки. Попробуйте скачать лаунчер заново.",
+                $"Failed to open classpath JSON file - {e.Message}", e);
         }
 
         ClasspathJson libraries;
@@ -50,17 +52,22 @@ public sealed class ClasspathProvider
             if (libraries is null)
             {
                 throw new ClasspathGenerationException(
+                    "Файл со списком компонентов сборки поврежден. Попробуйте скачать лаунчер заново.",
                     "Failed to parse classpath JSON file - whole file object is null");
             }
 
             if (libraries.Libraries is null)
             {
-                throw new ClasspathGenerationException("Failed to parse classpath JSON file - libraries is null");
+                throw new ClasspathGenerationException(
+                    "Файл со списком компонентов сборки поврежден. Попробуйте скачать лаунчер заново.",
+                    "Failed to parse classpath JSON file - libraries is null");
             }
         }
         catch (JsonException e)
         {
-            throw new ClasspathGenerationException($"Failed to parse classpath JSON file - {e.Message}", e);
+            throw new ClasspathGenerationException(
+                "Файл со списком компонентов сборки поврежден. Попробуйте скачать лаунчер заново.",
+                $"Failed to parse classpath JSON file - {e.Message}", e);
         }
 
         return libraries;

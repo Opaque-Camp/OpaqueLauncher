@@ -1,12 +1,9 @@
 ﻿namespace OpaqueCamp.Launcher.Core;
 
-public class ClasspathGenerationException : Exception
+public class ClasspathGenerationException : UserFriendlyException
 {
-    public ClasspathGenerationException(string? message) : base(message)
-    {
-    }
-
-    public ClasspathGenerationException(string? message, Exception? innerException) : base(message, innerException)
+    public ClasspathGenerationException(string? friendlyMessage = null, string? verboseMessage = null,
+        Exception? innerException = null) : base(friendlyMessage, verboseMessage, innerException)
     {
     }
 }
