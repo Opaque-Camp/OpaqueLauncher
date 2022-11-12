@@ -12,7 +12,16 @@ public sealed class PathProvider : IPathProvider
     }
 
     public string GameDirectoryPath => Path.Join(_appPathProvider.ApplicationPath, "game");
+
     public string LibraryDirectoryPath => Path.Join(GameDirectoryPath, "libraries");
+
     public string AssetsDirectoryPath => Path.Join(GameDirectoryPath, "assets");
-    public string ClasspathJsonPath => Path.Join(GameDirectoryPath, "versions", _launcherInfoProvider.LauncherNameAndVersion, $"{_launcherInfoProvider.LauncherNameAndVersion}.json");
+
+    private string VersionDirectoryPath =>
+        Path.Join(GameDirectoryPath, "versions", _launcherInfoProvider.LauncherNameAndVersion);
+
+    public string ClasspathJsonPath =>
+        Path.Join(VersionDirectoryPath, $"{_launcherInfoProvider.LauncherNameAndVersion}.json");
+
+    public string GameJarPath => Path.Join(VersionDirectoryPath, $"{_launcherInfoProvider.LauncherNameAndVersion}.jar");
 }

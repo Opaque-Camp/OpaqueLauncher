@@ -26,7 +26,8 @@ public sealed class ClasspathProvider
             .Select(l => l.Name)
             .Select(LibraryNameToRelativePath)
             .Select(p => Path.Join(_pathProvider.LibraryDirectoryPath, p));
-        return string.Join(Path.PathSeparator, libPaths);
+        var classpath = libPaths.Append(_pathProvider.GameJarPath);
+        return string.Join(Path.PathSeparator, classpath);
     }
 
     private ClasspathJson ParseClasspathJson()

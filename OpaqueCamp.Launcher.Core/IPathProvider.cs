@@ -6,5 +6,6 @@
         string ClasspathJsonPath { get; }
         string GameDirectoryPath { get; }
         string LibraryDirectoryPath { get; }
+        string GameJarPath { get; }
     }
 }
