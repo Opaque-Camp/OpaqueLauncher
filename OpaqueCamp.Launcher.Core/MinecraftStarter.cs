@@ -33,7 +33,7 @@ public sealed class MinecraftStarter
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
             "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
-        Process.Start("", string.Join(' ', Args(creds)));  // TODO: handle JVM start failure
+        Process.Start(_javaFinder.GetJavawExePath(), string.Join(' ', Args(creds)));  // TODO: handle JVM start failure
     }
 
     private IEnumerable<string> Args(PlayerCredentials credentials)
