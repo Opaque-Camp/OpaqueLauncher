@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpaqueCamp.Launcher.Core;
@@ -47,5 +49,19 @@ public partial class App : System.Windows.Application
     private async void OnExit(object sender, ExitEventArgs e)
     {
         await _host.StopAsync();
+    }
+
+    private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        // TODO: Move
+        MessageBox.Show(
+            "К нашему сожалению, лаунчер наткнулся на непредвиденную ошибку.\n\n" +
+            "Просим сообщить об этой оказии @Protocs в нашем сервере Discord. В папке с лаунчером будет создан файл \"crash-info.txt\" с деталями ошибки, который стоит прикрепить к сообщению.",
+            "Упс...",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error
+        );
+        _host.Services.GetRequiredService<IFileSystem>()
+            .WriteAllText($"crash-info-{DateTime.Now:yyyy-MM-dd-hh-mm-ss}.txt", e.Exception.ToString());
     }
 }
