@@ -1,42 +1,30 @@
-﻿using System;
-namespace OpaqueCamp.Launcher.Application;
-
-using OpaqueCamp.Launcher.Core;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using OpaqueCamp.Launcher.Core;
 
+namespace OpaqueCamp.Launcher.Application;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    private readonly MinecraftStarter _minecraftStarter;
+
+    public MainWindow(MinecraftStarter minecraftStarter)
     {
+        _minecraftStarter = minecraftStarter;
         InitializeComponent();
 
 #if DEBUG
-        window.Title += " [DEBUG]";
+        Window.Title += " [DEBUG]";
         debugWindowLabel.Visibility = Visibility.Visible;
 #endif
-
     }
 
-    
     // Double-click
-    private void OpenDebugWIndow(object sender, MouseButtonEventArgs e)
+    private void OpenDebugWindow(object sender, MouseButtonEventArgs e)
     {
         var debugWindow = new DebugWindow();
         debugWindow.Show();
@@ -44,7 +32,11 @@ public partial class MainWindow : Window
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^0-9]+");
+        var regex = new Regex("[^0-9]+");
         e.Handled = regex.IsMatch(e.Text);
+    }
+
+    private void OnLaunchButtonClick(object sender, RoutedEventArgs e)
+    {
     }
 }

@@ -1,16 +1,51 @@
-﻿using System;
-namespace OpaqueCamp.Launcher.Application;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using OpaqueCamp.Launcher.Core;
+using OpaqueCamp.Launcher.Core.Memory;
+using OpaqueCamp.Launcher.Infrastructure.Memory;
 
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+namespace OpaqueCamp.Launcher.Application;
 
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
+    private readonly IHost _host;
+
+    public App()
+    {
+        _host = new HostBuilder()
+            .ConfigureServices((_, services) =>
+            {
+                services
+                    .AddTransient<IEnvironmentService, EnvironmentService>()
+                    .AddTransient<IFileSystem, FileSystem>()
+                    .AddTransient<ILauncherInfoProvider, LauncherInfoProvider>()
+                    .AddTransient<IApplicationPathProvider, ApplicationPathProvider>()
+                    .AddTransient<ISystemMemoryDetector, WindowsSystemMemoryDetector>()
+                    .AddTransient<IJvmMemorySettings, JvmMemorySettings>()
+                    .AddTransient<IJvmMemorySettingsStorage, JvmMemorySettingsStorage>()
+                    .AddTransient<ClasspathProvider>()
+                    .AddTransient<IPathProvider, PathProvider>()
+                    .AddTransient<JavaFinder>()
+                    .AddTransient<MinecraftStarter>()
+                    .AddTransient<MainWindow>();
+            })
+            .Build();
+    }
+
+    private async void OnStartup(object sender, StartupEventArgs e)
+    {
+        await _host.StartAsync();
+
+        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+        mainWindow.Show();
+    }
+
+    private async void OnExit(object sender, ExitEventArgs e)
+    {
+        await _host.StopAsync();
+    }
 }
