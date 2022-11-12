@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using OpaqueCamp.Launcher.Core.Memory;
 
 namespace OpaqueCamp.Launcher.Core;
@@ -8,17 +6,17 @@ namespace OpaqueCamp.Launcher.Core;
 public sealed class MinecraftStarter
 {
     private readonly JavaFinder _javaFinder;
-    private readonly LauncherInfoProvider _launcherVersionProvider;
-    private readonly IPathProvider _directoryPathProvider;
+    private readonly ILauncherInfoProvider _launcherInfoProvider;
+    private readonly IPathProvider _pathProvider;
     private readonly ClasspathProvider _classpathProvider;
     private readonly IJvmMemorySettings _jvmMemorySettings;
 
-    public MinecraftStarter(JavaFinder javaFinder, LauncherInfoProvider launcherVersionProvider,
-        IPathProvider directoryPathProvider, ClasspathProvider classpathProvider, IJvmMemorySettings jvmMemorySettings)
+    public MinecraftStarter(JavaFinder javaFinder, ILauncherInfoProvider launcherInfoProvider,
+        IPathProvider pathProvider, ClasspathProvider classpathProvider, IJvmMemorySettings jvmMemorySettings)
     {
         _javaFinder = javaFinder;
-        _launcherVersionProvider = launcherVersionProvider;
-        _directoryPathProvider = directoryPathProvider;
+        _launcherInfoProvider = launcherInfoProvider;
+        _pathProvider = pathProvider;
         _classpathProvider = classpathProvider;
         _jvmMemorySettings = jvmMemorySettings;
     }
@@ -41,10 +39,10 @@ public sealed class MinecraftStarter
         list.AddRange(fabricArgs);
         list.AddMany("--username", credentials.UserName);
         list.AddMany("--version",
-            $"{_launcherVersionProvider.LauncherName} {_launcherVersionProvider.LauncherVersion}");
-        list.AddMany("--gameDir", _directoryPathProvider.GameDirectoryPath);
-        list.AddMany("--assetsDir", _directoryPathProvider.AssetsDirectoryPath);
-        list.AddMany("--assetIndex", _launcherVersionProvider.LauncherVersion.MajorAndMinorString);
+            $"{_launcherInfoProvider.LauncherName} {_launcherInfoProvider.LauncherVersion}");
+        list.AddMany("--gameDir", _pathProvider.GameDirectoryPath);
+        list.AddMany("--assetsDir", _pathProvider.AssetsDirectoryPath);
+        list.AddMany("--assetIndex", _launcherInfoProvider.LauncherVersion.MajorAndMinorString);
         list.AddMany("--uuid", credentials.Uuid);
         list.AddMany("--accessToken", credentials.AccessToken);
         list.AddMany("--userType", "mojang");
