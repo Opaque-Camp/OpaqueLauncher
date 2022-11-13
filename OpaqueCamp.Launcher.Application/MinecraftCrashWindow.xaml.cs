@@ -10,4 +10,9 @@ public partial class MinecraftCrashWindow : Window
         InitializeComponent();
         DataContext = crashLogs;
     }
+
+    private void OnOkClick(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
 }

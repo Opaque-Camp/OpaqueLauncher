@@ -10,12 +10,12 @@ namespace OpaqueCamp.Launcher.Application;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly MinecraftStarter _minecraftStarter;
+    private readonly MinecraftRunner _minecraftRunner;
     private readonly MinecraftCrashHandler _crashHandler;
 
-    public MainWindow(MinecraftStarter minecraftStarter, MinecraftCrashHandler crashHandler)
+    public MainWindow(MinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler)
     {
-        _minecraftStarter = minecraftStarter;
+        _minecraftRunner = minecraftRunner;
         _crashHandler = crashHandler;
 
         InitializeComponent();
@@ -39,11 +39,15 @@ public partial class MainWindow : Window
         e.Handled = regex.IsMatch(e.Text);
     }
 
-    private void OnLaunchButtonClick(object sender, RoutedEventArgs e)
+    private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
     {
         try
         {
-            _minecraftStarter.StartMinecraft(() => MessageBox.Show("Все ок"), _crashHandler.HandleCrash);
+            var crashLogs = await _minecraftRunner.RunMinecraftAsync();
+            if (crashLogs is not null)
+            {
+                _crashHandler.HandleCrash(crashLogs);
+            }
         }
         catch (MinecraftStartFailureException ex)
         {

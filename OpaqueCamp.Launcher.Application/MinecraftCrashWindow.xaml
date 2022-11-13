@@ -6,16 +6,15 @@
         xmlns:super="clr-namespace:OpaqueCamp.Launcher.Application"
         xmlns:draw="clr-namespace:System.Drawing;assembly=System.Drawing"
         mc:Ignorable="d"
-        Title="MinecraftCrashWindow" Height="450" Width="800"
+        Title="Minecraft завершился аварийно" Height="450" Width="500"
         ResizeMode="NoResize">
     <Window.Resources>
         <super:IconToImageSourceConverter x:Key="IconToImageSourceConverterKey"/>
     </Window.Resources>
     <Grid>
-        <Image Source="{Binding Source={x:Static draw:SystemIcons.Error},
-        Converter={StaticResource IconToImageSourceConverterKey},
-        Mode=OneWay}" Margin="10,10,740,374" Width="50" Height="50" />
+        <Image Margin="10,10,0,0" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Source="/Icons/minecraft-crash.png" />
         <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Left" Margin="65,17,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="{Binding Path=StandardError}" VerticalAlignment="Top"/>
+        <Button Content="OK" Margin="0,0,10,10" Click="OnOkClick" HorizontalAlignment="Right" Width="73" Height="29" VerticalAlignment="Bottom" IsDefault="True" IsCancel="True"/>
     </Grid>
 </Window>

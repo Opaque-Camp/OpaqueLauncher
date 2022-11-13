@@ -4,7 +4,7 @@ using OpaqueCamp.Launcher.Core.Memory;
 namespace OpaqueCamp.Launcher.Core;
 
 // TODO: Refactor and write tests
-public sealed class MinecraftStarter
+public sealed class MinecraftRunner
 {
     private readonly JavaFinder _javaFinder;
     private readonly ILauncherInfoProvider _launcherInfoProvider;
@@ -12,7 +12,7 @@ public sealed class MinecraftStarter
     private readonly ClasspathProvider _classpathProvider;
     private readonly IJvmMemorySettings _jvmMemorySettings;
 
-    public MinecraftStarter(JavaFinder javaFinder, ILauncherInfoProvider launcherInfoProvider,
+    public MinecraftRunner(JavaFinder javaFinder, ILauncherInfoProvider launcherInfoProvider,
         IPathProvider pathProvider, ClasspathProvider classpathProvider, IJvmMemorySettings jvmMemorySettings)
     {
         _javaFinder = javaFinder;
@@ -23,14 +23,19 @@ public sealed class MinecraftStarter
     }
 
     /// <summary>
-    /// Starts the Minecraft client.
+    /// Runs the Minecraft client asynchronously.
     /// </summary>
+    /// <returns>
+    /// A <see cref="Task"/> which completes right after Minecraft exits.
+    /// The task contains <c>null</c> if Minecraft exited successfully,
+    /// or a <see cref="MinecraftCrashLogs"/> instance if it crashed.
+    /// </returns>
     /// <exception cref="MinecraftStartFailureException">
     /// Thrown when the Minecraft client could not be started due to various Java-related problems,
     /// such as missing Java installation or classpath generation problems.
     /// The inner exception will contain the error that caused the startup to fail.
     /// </exception>
-    public void StartMinecraft(Action onSuccessfulExit, Action<MinecraftCrashLogs> onCrash)
+    public async Task<MinecraftCrashLogs?> RunMinecraftAsync()
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
             "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
@@ -47,13 +52,15 @@ public sealed class MinecraftStarter
         {
             throw new MinecraftStartFailureException("Не удалось запустить Minecraft по неизвестной причине.");
         }
-        process.WaitForExit();
+
+        await process.WaitForExitAsync();
         if (process.ExitCode == 0)
         {
-            onSuccessfulExit();
-            return;
+            return null;
         }
-        onCrash(new MinecraftCrashLogs(process.StandardOutput.ReadToEnd(), process.StandardError.ReadToEnd()));
+
+        return new MinecraftCrashLogs(await process.StandardOutput.ReadToEndAsync(),
+            await process.StandardError.ReadToEndAsync());
     }
 
     private IEnumerable<string> Args(PlayerCredentials credentials)
