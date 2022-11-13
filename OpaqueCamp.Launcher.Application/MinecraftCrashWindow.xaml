@@ -14,7 +14,7 @@
     <Grid>
         <Image Margin="10,10,0,0" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Source="/Icons/minecraft-crash.png" />
         <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Left" Margin="65,17,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="{Binding Path=StandardError}" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="{Binding Path=JoinedLogs}" VerticalAlignment="Top"/>
         <Button Content="OK" Margin="0,0,10,10" Click="OnOkClick" HorizontalAlignment="Right" Width="73" Height="29" VerticalAlignment="Bottom" IsDefault="True" IsCancel="True"/>
     </Grid>
 </Window>

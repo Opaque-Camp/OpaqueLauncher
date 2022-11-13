@@ -67,16 +67,16 @@ public sealed class MinecraftRunner
     {
         var list = new List<string>();
         list.AddRange(jvmArgs);
-        list.Add($"-Xms{_jvmMemorySettings.InitialMemoryAllocation}M");
-        list.Add($"-Xmx{_jvmMemorySettings.MaximumMemoryAllocation}M");
+        list.Add($"-Xms{_jvmMemorySettings.InitialMemoryAllocation.Megabytes}M");
+        list.Add($"-Xmx{_jvmMemorySettings.MaximumMemoryAllocation.Megabytes}M");
         list.AddRange(launcherArgs);
         list.AddMany("-cp", GetClasspath());
         list.AddRange(fabricArgs);
         list.AddMany("--username", credentials.UserName);
         list.AddMany("--version",
-            $"{_launcherInfoProvider.LauncherName} {_launcherInfoProvider.LauncherVersion}");
-        list.AddMany("--gameDir", _pathProvider.GameDirectoryPath);
-        list.AddMany("--assetsDir", _pathProvider.AssetsDirectoryPath);
+            $"{_launcherInfoProvider.LauncherName} {_launcherInfoProvider.LauncherVersion}".Quoted());
+        list.AddMany("--gameDir", _pathProvider.GameDirectoryPath.Quoted());
+        list.AddMany("--assetsDir", _pathProvider.AssetsDirectoryPath.Quoted());
         list.AddMany("--assetIndex", _launcherInfoProvider.LauncherVersion.MajorAndMinorString);
         list.AddMany("--uuid", credentials.Uuid);
         list.AddMany("--accessToken", credentials.AccessToken);
@@ -102,7 +102,7 @@ public sealed class MinecraftRunner
     {
         try
         {
-            return _classpathProvider.GetClasspath();
+            return _classpathProvider.GetClasspath().Quoted();
         }
         catch (ClasspathGenerationException e)
         {
@@ -114,21 +114,21 @@ public sealed class MinecraftRunner
     {
         "-XX:+UnlockExperimentalVMOptions",
         "-XX:+UseG1GC",
-        "-XX:G1NewSizePercent = 20",
-        "-XX:G1ReservePercent = 20",
-        "-XX:MaxGCPauseMillis = 50",
-        "-XX:G1HeapRegionSize = 32M",
+        "-XX:G1NewSizePercent=20",
+        "-XX:G1ReservePercent=20",
+        "-XX:MaxGCPauseMillis=50",
+        "-XX:G1HeapRegionSize=32M",
         "-XX:+DisableExplicitGC",
         "-XX:+AlwaysPreTouch",
         "-XX:+ParallelRefProcEnabled",
-        "-Dfile.encoding = UTF-8",
+        "-Dfile.encoding=UTF-8",
         "-Xss1M",
     };
 
     private static readonly List<string> launcherArgs = new()
     {
-        "-Dminecraft.launcher.brand = java-minecraft-launcher",
-        "-Dminecraft.launcher.version = 1.6.93",
+        "-Dminecraft.launcher.brand=java-minecraft-launcher",
+        "-Dminecraft.launcher.version=1.6.93",
     };
 
     private static readonly List<string> fabricArgs = new()
