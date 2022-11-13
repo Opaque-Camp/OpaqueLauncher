@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AdonisUI.Controls;
 using OpaqueCamp.Launcher.Core;
 using OpaqueCamp.Launcher.Core.Memory;
 using OpaqueCamp.Launcher.Infrastructure.Memory;
@@ -8,7 +9,7 @@ namespace OpaqueCamp.Launcher.Application
     /// <summary>
     /// Логика взаимодействия для DebugWindow.xaml
     /// </summary>
-    public partial class DebugWindow : Window
+    public partial class DebugWindow : AdonisWindow
     {
         public DebugWindow()
         {
