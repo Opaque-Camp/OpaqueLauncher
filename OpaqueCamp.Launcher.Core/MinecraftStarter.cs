@@ -30,7 +30,7 @@ public sealed class MinecraftStarter
     /// such as missing Java installation or classpath generation problems.
     /// The inner exception will contain the error that caused the startup to fail.
     /// </exception>
-    public RunningMinecraft StartMinecraft()
+    public void StartMinecraft(Action onSuccessfulExit, Action<MinecraftCrashLogs> onCrash)
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
             "eyJhbGciOiJIUzI1NiJ9.eyJ4dWlkIjoiMjUzNTQyNDU2NDIyNDA5OCIsImFnZyI6IkFkdWx0Iiwic3ViIjoiZjFkNTgxZmYtN2NlZS00ZjZiLThlN2MtMTFmNjVjZmFhMWYzIiwibmJmIjoxNjY3NzM4MjM0LCJhdXRoIjoiWEJPWCIsInJvbGVzIjpbXSwiaXNzIjoiYXV0aGVudGljYXRpb24iLCJleHAiOjE2Njc4MjQ2MzQsImlhdCI6MTY2NzczODIzNCwicGxhdGZvcm0iOiJVTktOT1dOIiwieXVpZCI6Ijg0MzAxZjU1ODZhYmQyZGFjMDIxYmNkZWRiMDc3NjI0In0.oEU-cDcc0ps0AMZHEesPfeEqs4aDlJ2CBm6B4c16DRI");
@@ -47,8 +47,13 @@ public sealed class MinecraftStarter
         {
             throw new MinecraftStartFailureException("Не удалось запустить Minecraft по неизвестной причине.");
         }
-
-        return new RunningMinecraft(process);
+        process.WaitForExit();
+        if (process.ExitCode == 0)
+        {
+            onSuccessfulExit();
+            return;
+        }
+        onCrash(new MinecraftCrashLogs(process.StandardOutput.ReadToEnd(), process.StandardError.ReadToEnd()));
     }
 
     private IEnumerable<string> Args(PlayerCredentials credentials)

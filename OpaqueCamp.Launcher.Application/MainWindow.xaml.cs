@@ -11,10 +11,13 @@ namespace OpaqueCamp.Launcher.Application;
 public partial class MainWindow : Window
 {
     private readonly MinecraftStarter _minecraftStarter;
+    private readonly MinecraftCrashHandler _crashHandler;
 
-    public MainWindow(MinecraftStarter minecraftStarter)
+    public MainWindow(MinecraftStarter minecraftStarter, MinecraftCrashHandler crashHandler)
     {
         _minecraftStarter = minecraftStarter;
+        _crashHandler = crashHandler;
+
         InitializeComponent();
 
 #if DEBUG
@@ -40,7 +43,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            _minecraftStarter.StartMinecraft();
+            _minecraftStarter.StartMinecraft(() => MessageBox.Show("Все ок"), _crashHandler.HandleCrash);
         }
         catch (MinecraftStartFailureException ex)
         {

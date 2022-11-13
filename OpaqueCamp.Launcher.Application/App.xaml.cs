@@ -33,6 +33,7 @@ public partial class App : System.Windows.Application
                     .AddTransient<IPathProvider, PathProvider>()
                     .AddTransient<JavaFinder>()
                     .AddTransient<MinecraftStarter>()
+                    .AddTransient<MinecraftCrashHandler>()
                     .AddTransient<MainWindow>();
             })
             .Build();
