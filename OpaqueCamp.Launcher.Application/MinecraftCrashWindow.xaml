@@ -9,9 +9,7 @@
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         mc:Ignorable="d"
         Title="Кажется, у вас есть краш" Height="450" Width="500">
-    <Window.Resources>
-        <super:IconToImageSourceConverter x:Key="IconToImageSourceConverterKey"/>
-    </Window.Resources>
+    
     <Grid>
         
         <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
