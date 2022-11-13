@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using AdonisUI.Controls;
 using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Application;
@@ -8,7 +9,7 @@ namespace OpaqueCamp.Launcher.Application;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : AdonisWindow
 {
     private readonly MinecraftRunner _minecraftRunner;
     private readonly MinecraftCrashHandler _crashHandler;
@@ -51,7 +52,7 @@ public partial class MainWindow : Window
         }
         catch (MinecraftStartFailureException ex)
         {
-            MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", MessageBoxButton.OK, MessageBoxImage.Error);
+            AdonisUI.Controls.MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
         }
     }
 }
