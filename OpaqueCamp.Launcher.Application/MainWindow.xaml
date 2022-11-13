@@ -15,7 +15,7 @@
     
     <Grid Background="#181c1f">
 
-        <wpf:WebView2 Margin="0,0,0,70" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"/>
+        <wpf:WebView2 Margin="0,0,0,70" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0" DefaultBackgroundColor="#181c1f"/>
         
 
         <Button Content="Запустить" HorizontalAlignment="Center" Margin="0,15" VerticalAlignment="Bottom"
