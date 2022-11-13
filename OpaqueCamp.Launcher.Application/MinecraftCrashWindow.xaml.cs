@@ -13,6 +13,12 @@ public partial class MinecraftCrashWindow : Window
 
     private void OnOkClick(object sender, RoutedEventArgs e)
     {
+        
         Close();
+    }
+
+    private void copy_Click(object sender, RoutedEventArgs e)
+    {
+        Clipboard.SetText(errorBox.Text);
     }
 }

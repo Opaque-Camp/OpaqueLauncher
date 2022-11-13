@@ -35,5 +35,12 @@ namespace OpaqueCamp.Launcher.Application
             
             debugWMILabel.Content = $"Max memory: {jvmMP.MaximumMemoryAllocation.RecommendedMegabytes}";
         }
+
+        private void debugCrashHandler_Click(object sender, RoutedEventArgs e)
+        {
+            var crashLogs = new MinecraftCrashLogs("This is debug", "Sample text");
+            var mcw = new MinecraftCrashWindow(crashLogs);
+            mcw.Show();
+        }
     }
 }

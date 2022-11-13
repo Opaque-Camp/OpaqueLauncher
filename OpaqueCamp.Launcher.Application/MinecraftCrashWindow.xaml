@@ -1,4 +1,4 @@
-﻿<Window x:Class="OpaqueCamp.Launcher.Application.MinecraftCrashWindow"
+﻿<Window x:Name="window" x:Class="OpaqueCamp.Launcher.Application.MinecraftCrashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,15 +6,19 @@
         xmlns:super="clr-namespace:OpaqueCamp.Launcher.Application"
         xmlns:draw="clr-namespace:System.Drawing;assembly=System.Drawing"
         mc:Ignorable="d"
-        Title="Minecraft завершился аварийно" Height="450" Width="500"
-        ResizeMode="NoResize">
+        Title="Minecraft завершился аварийно" Height="450" Width="500">
     <Window.Resources>
         <super:IconToImageSourceConverter x:Key="IconToImageSourceConverterKey"/>
     </Window.Resources>
-    <Grid>
-        <Image Margin="10,10,0,0" Width="50" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Source="/Icons/minecraft-crash.png" />
-        <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Left" Margin="65,17,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="{Binding Path=JoinedLogs}" VerticalAlignment="Top"/>
-        <Button Content="OK" Margin="0,0,10,10" Click="OnOkClick" HorizontalAlignment="Right" Width="73" Height="29" VerticalAlignment="Bottom" IsDefault="True" IsCancel="True"/>
+    <Grid Background="#181c1f" >
+        <Rectangle HorizontalAlignment="Center" Height="60" VerticalAlignment="Top" Fill="#0a0b0c" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" />
+        <Image Margin="10,10,0,0" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Source="/Icons/minecraft-crash.png" />
+        <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Foreground="#c5e7ff" FontSize="16" FontFamily="./Fonts/#Monocraft" />
+        <TextBox x:Name="errorBox" Margin="10,75,10,55" TextWrapping="Wrap" Text="{Binding Path=JoinedLogs, Mode=OneWay}" IsReadOnly="True" Background="#0a0b0c" Foreground="White"/>
+        
+        <Grid Width="180" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <Button x:Name="copy" HorizontalAlignment="Left" Content="Скопировать" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="100" Height="30" Background="#0a0b0c" BorderBrush="#0a0b0c" Foreground="#c5e7ff" FontFamily="./Fonts/#Monocraft" Click="copy_Click"></Button>
+            <Button Content="OK" HorizontalAlignment="Right" Margin="0,0,0,0" Click="OnOkClick" Width="70" Height="30" VerticalAlignment="Bottom" IsDefault="True" IsCancel="True" Background="#0a0b0c" BorderBrush="#0a0b0c" Foreground="#c5e7ff" FontFamily="./Fonts/#Monocraft"/>
+        </Grid>
     </Grid>
 </Window>
