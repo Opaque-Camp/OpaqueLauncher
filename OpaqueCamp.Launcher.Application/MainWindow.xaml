@@ -25,9 +25,6 @@
         <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,25"
                VerticalAlignment="Bottom"
                FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-        <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,50"
-               VerticalAlignment="Bottom" FontStyle="Italic" MouseDoubleClick="OpenDebugWindow" Foreground="White"
-               Visibility="Hidden" />
         <Label x:Name="DownloadProgressLabel" Content="" HorizontalAlignment="Left" Margin="732,0,0,44" VerticalAlignment="Bottom"/>
         <Label x:Name="CurrentlyDownloadedFileLabel" Content="" Margin="732,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
     </Grid>

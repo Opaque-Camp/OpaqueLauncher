@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using OpaqueCamp.Launcher.Core;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
@@ -25,21 +23,7 @@ public partial class MainWindow
 
 #if DEBUG
         Window.Title += " [DEBUG]";
-        debugWindowLabel.Visibility = Visibility.Visible;
 #endif
-    }
-
-    // Double-click
-    private void OpenDebugWindow(object sender, MouseButtonEventArgs e)
-    {
-        var debugWindow = new DebugWindow();
-        debugWindow.Show();
-    }
-
-    private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-    {
-        var regex = new Regex("[^0-9]+");
-        e.Handled = regex.IsMatch(e.Text);
     }
 
     private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
