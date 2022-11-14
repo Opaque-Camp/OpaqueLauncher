@@ -32,7 +32,7 @@ public partial class App : System.Windows.Application
                     .AddTransient<ClasspathProvider>()
                     .AddTransient<IPathProvider, PathProvider>()
                     .AddTransient<JavaFinder>()
-                    .AddTransient<MinecraftRunner>()
+                    .AddTransient<IMinecraftRunner, MinecraftRunner>()
                     .AddTransient<MinecraftCrashHandler>()
                     .AddTransient<MainWindow>();
             })

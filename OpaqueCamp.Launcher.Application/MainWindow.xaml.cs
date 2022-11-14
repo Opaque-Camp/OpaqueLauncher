@@ -11,10 +11,10 @@ namespace OpaqueCamp.Launcher.Application;
 /// </summary>
 public partial class MainWindow : AdonisWindow
 {
-    private readonly MinecraftRunner _minecraftRunner;
+    private readonly IMinecraftRunner _minecraftRunner;
     private readonly MinecraftCrashHandler _crashHandler;
 
-    public MainWindow(MinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler)
+    public MainWindow(IMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler)
     {
         _minecraftRunner = minecraftRunner;
         _crashHandler = crashHandler;

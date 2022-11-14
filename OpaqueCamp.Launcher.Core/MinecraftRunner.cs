@@ -4,7 +4,8 @@ using OpaqueCamp.Launcher.Core.Memory;
 namespace OpaqueCamp.Launcher.Core;
 
 // TODO: Refactor and write tests
-public sealed class MinecraftRunner
+
+public sealed class MinecraftRunner : IMinecraftRunner
 {
     private readonly JavaFinder _javaFinder;
     private readonly ILauncherInfoProvider _launcherInfoProvider;
@@ -22,19 +23,7 @@ public sealed class MinecraftRunner
         _jvmMemorySettings = jvmMemorySettings;
     }
 
-    /// <summary>
-    /// Runs the Minecraft client asynchronously.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="Task"/> which completes right after Minecraft exits.
-    /// The task contains <c>null</c> if Minecraft exited successfully,
-    /// or a <see cref="MinecraftCrashLogs"/> instance if it crashed.
-    /// </returns>
-    /// <exception cref="MinecraftStartFailureException">
-    /// Thrown when the Minecraft client could not be started due to various Java-related problems,
-    /// such as missing Java installation or classpath generation problems.
-    /// The inner exception will contain the error that caused the startup to fail.
-    /// </exception>
+    /// <inheritdoc/>
     public async Task<MinecraftCrashLogs?> RunMinecraftAsync()
     {
         var creds = new PlayerCredentials("lectureNice", "22d5ed98cb934e279b94eaa26f2ba401",
