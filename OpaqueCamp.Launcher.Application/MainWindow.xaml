@@ -4,39 +4,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Name="Window"
-    xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
     xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
     xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
     x:Class="OpaqueCamp.Launcher.Application.MainWindow"
     mc:Ignorable="d"
     TitleBarBackground="#181c1f"
     Title="Opaque Launcher" Height="720" Width="800" MinWidth="1280" MinHeight="400" Icon="Icons/favicon.ico">
-    
-    
+
     <Grid Background="#181c1f">
-
-        <wpf:WebView2 Margin="0,0,0,70" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0" DefaultBackgroundColor="#181c1f"/>
-        
-
+        <wpf:WebView2 Margin="0,0,0,70" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"
+                      DefaultBackgroundColor="#181c1f" />
         <Button Content="Запустить" HorizontalAlignment="Center" Margin="0,15" VerticalAlignment="Bottom"
                 Background="#066133" BorderBrush="#0a944e" Foreground="White" Padding="15,10,15,10" FontSize="24"
                 FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
                 adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
-                adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e">
-
-        </Button>
+                adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e" />
 
         <Label Content="__cryence_" HorizontalAlignment="Left" Margin="10,0,50,25" VerticalAlignment="Bottom"
                FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,25" VerticalAlignment="Bottom"
+        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,25"
+               VerticalAlignment="Bottom"
                FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-
         <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,50"
                VerticalAlignment="Bottom" FontStyle="Italic" MouseDoubleClick="OpenDebugWindow" Foreground="White"
                Visibility="Hidden" />
-
-
     </Grid>
-
-
 </adonisControls:AdonisWindow>
