@@ -40,16 +40,12 @@
                 </StackPanel>
                 
             </Grid>
-            <Button Width="180" Height="50" HorizontalAlignment="Center" Margin="0,0" VerticalAlignment="Center"
+            <Button Content="Запустить" Width="180" Height="50" HorizontalAlignment="Center" Margin="0,0" VerticalAlignment="Center"
                 Background="#066133" BorderBrush="#0a944e" Foreground="White" FontSize="24"
                 FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
                 adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
                 adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e">
-                <ContentControl ContentTemplate="{DynamicResource {x:Static adonisUi:Templates.LoadingDots}}"
-                Foreground="{DynamicResource {x:Static adonisUi:Brushes.ForegroundBrush}}"
-                Width="24"
-                Height="24"
-                Focusable="False"/>
+                
             </Button>
 
 
