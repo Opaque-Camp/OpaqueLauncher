@@ -1,7 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using AdonisUI.Controls;
 using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Application;
@@ -9,7 +8,7 @@ namespace OpaqueCamp.Launcher.Application;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : AdonisWindow
+public partial class MainWindow
 {
     private readonly IMinecraftRunner _minecraftRunner;
     private readonly MinecraftCrashHandler _crashHandler;
