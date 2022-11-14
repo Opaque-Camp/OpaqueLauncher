@@ -12,6 +12,16 @@
     TitleBarBackground="#181c1f"
     Title="Opaque Launcher" Height="720" Width="800" MinWidth="1280" MinHeight="400" Icon="Icons/favicon.ico">
 
+    <adonisControls:AdonisWindow.TitleBarContent>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="?"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}"
+                    FontFamily="Segoe UI"
+                    FontSize="14" Click="openAboutWIndow"/>
+        </StackPanel>
+    </adonisControls:AdonisWindow.TitleBarContent>
+    
     <Grid Background="#181c1f">
         <wpf:WebView2 Margin="0,0,0,80" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"
                       DefaultBackgroundColor="#181c1f" />

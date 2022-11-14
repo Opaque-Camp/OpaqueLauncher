@@ -54,4 +54,10 @@ public partial class MainWindow
             AdonisUI.Controls.MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
         }
     }
+
+    private void openAboutWIndow(object sender, RoutedEventArgs e)
+    {
+        var aboutWindow = new AboutWindow();
+        aboutWindow.Show();
+    }
 }
