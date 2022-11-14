@@ -20,9 +20,9 @@
                 adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
                 adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e" />
 
-        <Label Content="__cryence_" HorizontalAlignment="Left" Margin="10,0,50,25" VerticalAlignment="Bottom"
+        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Left" Margin="10,0,50,25" VerticalAlignment="Bottom"
                FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-        <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Right" Margin="0,0,10,25"
+        <Label Content="username" HorizontalAlignment="Right" Margin="0,0,10,25"
                VerticalAlignment="Bottom"
                FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
         <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,25,10,50"
