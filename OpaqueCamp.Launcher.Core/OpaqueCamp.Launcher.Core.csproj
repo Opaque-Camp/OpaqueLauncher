@@ -10,4 +10,8 @@
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CmlLib.Core\CmlLib\CmlLib.csproj" />
+  </ItemGroup>
+
 </Project>

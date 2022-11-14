@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CmlLib.Core\CmlLib\CmlLib.csproj" />
     <ProjectReference Include="..\OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj" />
     <PackageReference Include="AdonisUI" Version="1.17.1" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />

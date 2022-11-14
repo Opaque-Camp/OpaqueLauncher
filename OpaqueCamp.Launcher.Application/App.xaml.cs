@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpaqueCamp.Launcher.Core;
 using OpaqueCamp.Launcher.Core.Memory;
+using OpaqueCamp.Launcher.Infrastructure;
 using OpaqueCamp.Launcher.Infrastructure.Memory;
 
 namespace OpaqueCamp.Launcher.Application;
@@ -22,17 +23,15 @@ public partial class App
             .ConfigureServices((_, services) =>
             {
                 services
-                    .AddTransient<IEnvironmentService, EnvironmentService>()
                     .AddTransient<IFileSystem, FileSystem>()
-                    .AddTransient<ILauncherInfoProvider, LauncherInfoProvider>()
-                    .AddTransient<IApplicationPathProvider, ApplicationPathProvider>()
+                    .AddTransient<IModPackInfoProvider, ModPackInfoProvider>()
                     .AddTransient<ISystemMemoryDetector, WindowsSystemMemoryDetector>()
                     .AddTransient<IJvmMemorySettings, JvmMemorySettings>()
                     .AddTransient<IJvmMemorySettingsStorage, JvmMemorySettingsStorage>()
-                    .AddTransient<ClasspathProvider>()
-                    .AddTransient<IPathProvider, PathProvider>()
-                    .AddTransient<JavaFinder>()
-                    .AddTransient<IMinecraftRunner, MinecraftRunner>()
+                    .AddTransient<IDownloadSpeedupService, DownloadSpeedupService>()
+                    .AddTransient<IServerConfigProvider, ServerConfigProvider>()
+                    .AddTransient<IMinecraftFilesDirProvider, MinecraftFilesDirProvider>()
+                    .AddTransient<CmlLibMinecraftRunner>()
                     .AddTransient<MinecraftCrashHandler>()
                     .AddTransient<MainWindow>();
             })

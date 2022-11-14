@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Application;
@@ -10,10 +8,10 @@ namespace OpaqueCamp.Launcher.Application;
 /// </summary>
 public partial class MainWindow
 {
-    private readonly IMinecraftRunner _minecraftRunner;
+    private readonly CmlLibMinecraftRunner _minecraftRunner;
     private readonly MinecraftCrashHandler _crashHandler;
 
-    public MainWindow(IMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler)
+    public MainWindow(CmlLibMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler)
     {
         _minecraftRunner = minecraftRunner;
         _crashHandler = crashHandler;
@@ -22,36 +20,19 @@ public partial class MainWindow
 
 #if DEBUG
         Window.Title += " [DEBUG]";
-        debugWindowLabel.Visibility = Visibility.Visible;
 #endif
-    }
-
-    // Double-click
-    private void OpenDebugWindow(object sender, MouseButtonEventArgs e)
-    {
-        var debugWindow = new DebugWindow();
-        debugWindow.Show();
-    }
-
-    private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-    {
-        var regex = new Regex("[^0-9]+");
-        e.Handled = regex.IsMatch(e.Text);
     }
 
     private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
     {
-        try
+        var crashLogs = await _minecraftRunner.RunMinecraftAsync(
+            e => CurrentlyDownloadedFileLabel.Content =
+                $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}",
+            i => DownloadProgressLabel.Content = $"{i}%"
+        );
+        if (crashLogs != null)
         {
-            var crashLogs = await _minecraftRunner.RunMinecraftAsync();
-            if (crashLogs is not null)
-            {
-                _crashHandler.HandleCrash(crashLogs);
-            }
-        }
-        catch (MinecraftStartFailureException ex)
-        {
-            AdonisUI.Controls.MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
+            _crashHandler.HandleCrash(crashLogs);
         }
     }
 

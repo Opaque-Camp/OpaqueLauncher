@@ -18,51 +18,56 @@
             <Button Content="?"
                     Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}"
                     FontFamily="Segoe UI"
-                    FontSize="14" Click="openAboutWIndow"/>
+                    FontSize="14" Click="openAboutWIndow" />
         </StackPanel>
     </adonisControls:AdonisWindow.TitleBarContent>
-    
+
     <Grid Background="#181c1f">
         <wpf:WebView2 Margin="0,0,0,80" Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"
                       DefaultBackgroundColor="#181c1f" />
 
 
         <Grid Height="80" VerticalAlignment="Bottom" Background="#FF15181C">
-            <ProgressBar VerticalAlignment="Top" Value="70" adonisExtensions:ProgressBarExtension.ProgressAnimationForeground="Green" adonisExtensions:ProgressBarExtension.Foreground="#0a944e" BorderBrush="#FF15181C">
-                
+            <ProgressBar VerticalAlignment="Top" Value="70"
+                         adonisExtensions:ProgressBarExtension.ProgressAnimationForeground="Green"
+                         adonisExtensions:ProgressBarExtension.Foreground="#0a944e" BorderBrush="#FF15181C">
+
             </ProgressBar>
             <Grid Width="250" HorizontalAlignment="Left">
-                <StackPanel VerticalAlignment="Center" >
-                    <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"
-               FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Center" Margin="0,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
                     <Separator Opacity="0"></Separator>
-                    <Button Content="Настроить" Width="120" Height="25" VerticalAlignment="Center" FontSize="16" FontFamily="./Fonts/#Monocraft"></Button>
+                    <Button Content="Настроить" Width="120" Height="25" VerticalAlignment="Center" FontSize="16"
+                            FontFamily="./Fonts/#Monocraft">
+                    </Button>
                 </StackPanel>
-                
+
             </Grid>
             <Grid Width="200" HorizontalAlignment="Right">
                 <StackPanel VerticalAlignment="Center">
                     <Label Content="Привет, username!" HorizontalAlignment="Center" Margin="0,0,0,0"
-               VerticalAlignment="Center"
-               FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
+                           VerticalAlignment="Center"
+                           FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
                     <Separator Opacity="0"></Separator>
-                    <Button Content="Сменить аккаунт" Width="175" Height="25" VerticalAlignment="Center" FontSize="16" FontFamily="./Fonts/#Monocraft"></Button>
+                    <Button Content="Сменить аккаунт" Width="175" Height="25" VerticalAlignment="Center" FontSize="16"
+                            FontFamily="./Fonts/#Monocraft">
+                    </Button>
                 </StackPanel>
-                
+
             </Grid>
-            <Button Content="Запустить" Width="180" Height="50" HorizontalAlignment="Center" Margin="0,0" VerticalAlignment="Center"
-                Background="#066133" BorderBrush="#0a944e" Foreground="White" FontSize="24"
-                FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
-                adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
-                adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e">
-                
-            </Button>
-
-
-
-            <Label x:Name="debugWindowLabel" Content="Debug Window" HorizontalAlignment="Right" Margin="0,0,0,0"
-               VerticalAlignment="Bottom" FontStyle="Italic" MouseDoubleClick="OpenDebugWindow" Foreground="White"
-               Visibility="Hidden" />
+            <Button Content="Запустить" Width="180" Height="50" HorizontalAlignment="Center" Margin="0,0"
+                    VerticalAlignment="Center"
+                    Background="#066133" BorderBrush="#0a944e" Foreground="White" FontSize="24"
+                    FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
+                    adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
+                    adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e" />
+            <Label x:Name="DownloadProgressLabel" Content="" HorizontalAlignment="Left" Margin="732,0,0,44"
+                   VerticalAlignment="Bottom" />
+            <Label x:Name="CurrentlyDownloadedFileLabel" Content="" Margin="732,0,0,15" VerticalAlignment="Bottom"
+                   HorizontalAlignment="Left" />
         </Grid>
+
     </Grid>
 </adonisControls:AdonisWindow>
