@@ -1,5 +1,4 @@
-﻿using System.Net;
-using CmlLib.Core;
+﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
 using CmlLib.Core.Downloader;
 using OpaqueCamp.Launcher.Core.Memory;
@@ -10,19 +9,27 @@ public sealed class CmlLibMinecraftRunner
 {
     private readonly IModPackInfoProvider _modPackInfoProvider;
     private readonly IJvmMemorySettings _jvmMemorySettings;
+    private readonly IServerConfigProvider _serverConfigProvider;
+    private readonly IDownloadSpeedupService _downloadSpeedupService;
+    private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
 
-    public CmlLibMinecraftRunner(IModPackInfoProvider modPackInfoProvider, IJvmMemorySettings jvmMemorySettings)
+    public CmlLibMinecraftRunner(IModPackInfoProvider modPackInfoProvider, IJvmMemorySettings jvmMemorySettings,
+        IServerConfigProvider serverConfigProvider, IDownloadSpeedupService downloadSpeedupService,
+        IMinecraftFilesDirProvider minecraftFilesDirProvider)
     {
         _modPackInfoProvider = modPackInfoProvider;
         _jvmMemorySettings = jvmMemorySettings;
+        _serverConfigProvider = serverConfigProvider;
+        _downloadSpeedupService = downloadSpeedupService;
+        _minecraftFilesDirProvider = minecraftFilesDirProvider;
     }
 
     public async Task<MinecraftCrashLogs?> RunMinecraftAsync(
         DownloadFileChangedHandler? onCurrentlyDownloadedFileChange,
         Action<int> onDownloadPercentageChange)
     {
-        ServicePointManager.DefaultConnectionLimit = 256;
-        var path = new MinecraftPath("opaque-vanilla");
+        _downloadSpeedupService.MakeDownloadsFaster();
+        var path = new MinecraftPath(_minecraftFilesDirProvider.DirPathForMinecraftFiles);
         var launcher = new CMLauncher(path);
         launcher.FileChanged += onCurrentlyDownloadedFileChange;
         launcher.ProgressChanged += (_, args) => onDownloadPercentageChange(args.ProgressPercentage);
@@ -32,7 +39,7 @@ public sealed class CmlLibMinecraftRunner
                 MinimumRamMb = _jvmMemorySettings.InitialMemoryAllocation.Megabytes,
                 MaximumRamMb = _jvmMemorySettings.MaximumMemoryAllocation.Megabytes,
                 Session = MSession.GetOfflineSession("OpaqueLauncher"),
-                ServerIp = "oc.aboba.host",
+                ServerIp = _serverConfigProvider.ServerAddress,
                 GameLauncherName = _modPackInfoProvider.ModPackName,
                 GameLauncherVersion = _modPackInfoProvider.UsedMinecraftVersion.ToString()
             });

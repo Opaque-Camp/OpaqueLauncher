@@ -8,5 +8,11 @@
     <Setting Name="JvmMaxMemoryAllocationMegabytes" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4096</Value>
     </Setting>
+    <Setting Name="ServerHostname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">oc.aboba.host</Value>
+    </Setting>
+    <Setting Name="MinecraftFilesDirName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">opaque-vanilla</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

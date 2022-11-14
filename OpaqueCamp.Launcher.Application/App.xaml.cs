@@ -28,6 +28,9 @@ public partial class App
                     .AddTransient<ISystemMemoryDetector, WindowsSystemMemoryDetector>()
                     .AddTransient<IJvmMemorySettings, JvmMemorySettings>()
                     .AddTransient<IJvmMemorySettingsStorage, JvmMemorySettingsStorage>()
+                    .AddTransient<IDownloadSpeedupService, DownloadSpeedupService>()
+                    .AddTransient<IServerConfigProvider, ServerConfigProvider>()
+                    .AddTransient<IMinecraftFilesDirProvider, MinecraftFilesDirProvider>()
                     .AddTransient<CmlLibMinecraftRunner>()
                     .AddTransient<MinecraftCrashHandler>()
                     .AddTransient<MainWindow>();
