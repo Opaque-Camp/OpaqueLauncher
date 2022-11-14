@@ -28,17 +28,21 @@ public partial class MainWindow
         var crashLogs = await _minecraftRunner.RunMinecraftAsync(
             e => CurrentlyDownloadedFileLabel.Content =
                 $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}",
-            i => DownloadProgressLabel.Content = $"{i}%"
-        );
+            OnDownloadPercentageChange);
         if (crashLogs != null)
         {
             _crashHandler.HandleCrash(crashLogs);
         }
     }
 
-    private void openAboutWIndow(object sender, RoutedEventArgs e)
+    private void OnDownloadPercentageChange(int i)
     {
-        var aboutWindow = new AboutWindow();
-        aboutWindow.Show();
+        DownloadProgressBar.Visibility = i == 100 ? Visibility.Hidden : Visibility.Visible;
+        DownloadProgressBar.Value = i;
+    }
+
+    private void OpenAboutWindow(object sender, RoutedEventArgs e)
+    {
+        new AboutWindow().Show();
     }
 }
