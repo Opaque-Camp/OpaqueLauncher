@@ -2,6 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 using OpaqueCamp.Launcher.Core;
+using CmlLib.Core;
+using CmlLib.Core.Auth;
+using System;
 
 namespace OpaqueCamp.Launcher.Application;
 
@@ -41,17 +44,23 @@ public partial class MainWindow
 
     private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
     {
-        try
+        System.Net.ServicePointManager.DefaultConnectionLimit = 256;
+        var path = new MinecraftPath("opaque-vanilla");
+        var launcher = new CMLauncher(path);
+        launcher.FileChanged += (e) =>
         {
-            var crashLogs = await _minecraftRunner.RunMinecraftAsync();
-            if (crashLogs is not null)
-            {
-                _crashHandler.HandleCrash(crashLogs);
-            }
-        }
-        catch (MinecraftStartFailureException ex)
+            CurrentlyDownloadedFileLabel.Content = $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}";
+        };
+        launcher.ProgressChanged += (s, e) =>
         {
-            AdonisUI.Controls.MessageBox.Show(this, ex.Message, "Ошибка запуска Minecraft", AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
-        }
+            DownloadProgressLabel.Content = $"{e.ProgressPercentage}%";
+        };
+        var process = await launcher.CreateProcessAsync("1.19.2", new MLaunchOption
+        {
+            MaximumRamMb = 2048,
+            Session = MSession.GetOfflineSession("OpaqueLauncher"),
+            ServerIp = "oc.aboba.host"
+        });
+        process.Start();
     }
 }
