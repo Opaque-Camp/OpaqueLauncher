@@ -7,6 +7,10 @@
     <UseWPF>true</UseWPF>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>Icons/favicon.ico</ApplicationIcon>
+    <Company>Opaque Camp</Company>
+    <Product>Opaque Launcher WPF Application</Product>
+    <AssemblyVersion>0.2.0</AssemblyVersion>
+    <FileVersion>0.2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
