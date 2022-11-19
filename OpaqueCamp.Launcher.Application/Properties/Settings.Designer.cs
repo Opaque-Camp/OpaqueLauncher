@@ -64,5 +64,26 @@ namespace OpaqueCamp.Launcher.Application.Properties {
                 return ((string)(this["MinecraftFilesDirName"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00000000-0000-0000-0000-000000000000")]
+        public global::System.Guid CurrentAccountId {
+            get {
+                return ((global::System.Guid)(this["CurrentAccountId"]));
+            }
+            set {
+                this["CurrentAccountId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("accounts.json")]
+        public string AccountJsonPath {
+            get {
+                return ((string)(this["AccountJsonPath"]));
+            }
+        }
     }
 }

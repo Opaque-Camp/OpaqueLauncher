@@ -33,7 +33,12 @@ public partial class App
                     .AddTransient<IMinecraftFilesDirProvider, MinecraftFilesDirProvider>()
                     .AddTransient<CmlLibMinecraftRunner>()
                     .AddTransient<MinecraftCrashHandler>()
-                    .AddTransient<MainWindow>();
+                    .AddTransient<MainWindow>()
+                    .AddTransient<AccountsWindowFactory>()
+                    .AddTransient<AccountsViewModel>()
+                    .AddTransient<IAccountRepository, JsonAccountRepository>()
+                    .AddTransient<IAccountJsonPathProvider, SettingsAccountJsonPathProvider>()
+                    .AddTransient<ICurrentAccountProvider, SettingsCurrentAccountProvider>();
             })
             .Build();
     }

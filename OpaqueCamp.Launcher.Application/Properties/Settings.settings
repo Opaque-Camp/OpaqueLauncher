@@ -14,5 +14,11 @@
     <Setting Name="MinecraftFilesDirName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">opaque-vanilla</Value>
     </Setting>
+    <Setting Name="CurrentAccountId" Type="System.Guid" Scope="User">
+      <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
+    </Setting>
+    <Setting Name="AccountJsonPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">accounts.json</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

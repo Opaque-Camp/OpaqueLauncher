@@ -10,6 +10,7 @@ public sealed class JvmMemorySettingsStorage : IJvmMemorySettingsStorage
     public void SetInitialMemoryAllocationMegabytes(int value)
     {
         Settings.Default.JvmInitialMemoryAllocationMegabytes = value;
+        Settings.Default.Save();
     }
 
     public int GetMaxMemoryAllocationMegabytes() => Settings.Default.JvmMaxMemoryAllocationMegabytes;
@@ -17,5 +18,6 @@ public sealed class JvmMemorySettingsStorage : IJvmMemorySettingsStorage
     public void SetMaxMemoryAllocationMegabytes(int value)
     {
         Settings.Default.JvmMaxMemoryAllocationMegabytes = value;
+        Settings.Default.Save();
     }
 }

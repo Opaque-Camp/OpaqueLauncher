@@ -12,16 +12,18 @@ public sealed class CmlLibMinecraftRunner
     private readonly IServerConfigProvider _serverConfigProvider;
     private readonly IDownloadSpeedupService _downloadSpeedupService;
     private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
+    private readonly ICurrentAccountProvider _currentAccountProvider;
 
     public CmlLibMinecraftRunner(IModPackInfoProvider modPackInfoProvider, IJvmMemorySettings jvmMemorySettings,
         IServerConfigProvider serverConfigProvider, IDownloadSpeedupService downloadSpeedupService,
-        IMinecraftFilesDirProvider minecraftFilesDirProvider)
+        IMinecraftFilesDirProvider minecraftFilesDirProvider, ICurrentAccountProvider currentAccountProvider)
     {
         _modPackInfoProvider = modPackInfoProvider;
         _jvmMemorySettings = jvmMemorySettings;
         _serverConfigProvider = serverConfigProvider;
         _downloadSpeedupService = downloadSpeedupService;
         _minecraftFilesDirProvider = minecraftFilesDirProvider;
+        _currentAccountProvider = currentAccountProvider;
     }
 
     public async Task<MinecraftCrashLogs?> RunMinecraftAsync(
@@ -38,7 +40,7 @@ public sealed class CmlLibMinecraftRunner
             {
                 MinimumRamMb = _jvmMemorySettings.InitialMemoryAllocation.Megabytes,
                 MaximumRamMb = _jvmMemorySettings.MaximumMemoryAllocation.Megabytes,
-                Session = MSession.GetOfflineSession("OpaqueLauncher"),
+                Session = MSession.GetOfflineSession(GetAccountUsername()),
                 ServerIp = _serverConfigProvider.ServerAddress,
                 GameLauncherName = _modPackInfoProvider.ModPackName,
                 GameLauncherVersion = _modPackInfoProvider.UsedMinecraftVersion.ToString()
@@ -50,4 +52,6 @@ public sealed class CmlLibMinecraftRunner
             : new MinecraftCrashLogs(await process.StandardOutput.ReadToEndAsync(),
                 await process.StandardError.ReadToEndAsync());
     }
+
+    private string GetAccountUsername() => (_currentAccountProvider.CurrentAccount ?? throw new CurrentAccountIsNullException()).Username;
 }
