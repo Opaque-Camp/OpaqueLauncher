@@ -11,7 +11,7 @@
     <Grid>
         <StackPanel Height="100" Orientation="Horizontal" VerticalAlignment="Top">
             <Image Source="./Icons/favicon.ico" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"></Image>
-            <Label Content="Opaque Launcher ui-dev" Margin="0,0" FontSize="36" VerticalAlignment="Center" FontFamily="./Fonts/#Monocraft"></Label>
+            <Label Name="LauncherNameLabel" Margin="0,0" FontSize="36" VerticalAlignment="Center" FontFamily="./Fonts/#Monocraft"></Label>
         </StackPanel>
 
         <TextBlock Margin="10,100,10,50" FontSize="16" TextWrapping="Wrap" FontFamily="./Fonts/#Monocraft">

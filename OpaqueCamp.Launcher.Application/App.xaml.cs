@@ -34,11 +34,13 @@ public partial class App
                     .AddTransient<CmlLibMinecraftRunner>()
                     .AddTransient<MinecraftCrashHandler>()
                     .AddTransient<MainWindow>()
+                    .AddTransient<AboutWindowFactory>()
                     .AddTransient<AccountsWindowFactory>()
                     .AddTransient<AccountsViewModel>()
                     .AddTransient<IAccountRepository, JsonAccountRepository>()
                     .AddTransient<IAccountJsonPathProvider, SettingsAccountJsonPathProvider>()
-                    .AddTransient<ICurrentAccountProvider, SettingsCurrentAccountProvider>();
+                    .AddTransient<ICurrentAccountProvider, SettingsCurrentAccountProvider>()
+                    .AddTransient<LauncherVersionProvider>();
             })
             .Build();
     }

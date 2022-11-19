@@ -14,17 +14,19 @@ public partial class MainWindow
     private readonly MinecraftCrashHandler _crashHandler;
     private readonly AccountsWindowFactory _accountsWindowFactory;
     private readonly IAccountRepository _accountRepository;
+    private readonly AboutWindowFactory _aboutWindowFactory;
     private readonly ICurrentAccountProvider _currentAccountProvider;
 
     public MainWindow(CmlLibMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler,
         AccountsWindowFactory accountsWindowFactory, ICurrentAccountProvider currentAccountProvider,
-        IAccountRepository accountRepository)
+        IAccountRepository accountRepository, AboutWindowFactory aboutWindowFactory)
     {
         _minecraftRunner = minecraftRunner;
         _crashHandler = crashHandler;
         _accountsWindowFactory = accountsWindowFactory;
         _currentAccountProvider = currentAccountProvider;
         _accountRepository = accountRepository;
+        _aboutWindowFactory = aboutWindowFactory;
 
         InitializeComponent();
         PopulateCurrentAccountComboBox();
@@ -42,17 +44,19 @@ public partial class MainWindow
         {
             CurrentAccountComboBox.Items.Add(account);
         }
+
         if (_currentAccountProvider.CurrentAccount == null && accounts.Count != 0)
         {
             _currentAccountProvider.CurrentAccount = accounts[0];
         }
+
         CurrentAccountComboBox.SelectedItem = _currentAccountProvider.CurrentAccount;
     }
 
     private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
     {
         DownloadFileChangedHandler downloadProgressHandler = e => CurrentlyDownloadedFileLabel.Content =
-                            $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}";
+            $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}";
         MinecraftCrashLogs? crashLogs;
         try
         {
@@ -60,7 +64,8 @@ public partial class MainWindow
         }
         catch (CurrentAccountIsNullException)
         {
-            MessageBox.Show(this, "Сначала создайте хотя бы одну учетную запись.", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(this, "Сначала создайте хотя бы одну учетную запись.", "", MessageBoxButton.OK,
+                MessageBoxImage.Information);
             return;
         }
 
@@ -78,7 +83,7 @@ public partial class MainWindow
 
     private void OpenAboutWindow(object sender, RoutedEventArgs e)
     {
-        new AboutWindow().ShowDialog();
+        _aboutWindowFactory.Create().ShowDialog();
     }
 
     private void OnChangeAccountButtonClick(object sender, RoutedEventArgs e)

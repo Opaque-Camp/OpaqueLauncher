@@ -1,33 +1,21 @@
-﻿using AdonisUI.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace OpaqueCamp.Launcher.Application;
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Core;
 
-namespace OpaqueCamp.Launcher.Application
+/// <summary>
+/// Логика взаимодействия для AboutWindow.xaml
+/// </summary>
+public partial class AboutWindow
 {
-    /// <summary>
-    /// Логика взаимодействия для AboutWindow.xaml
-    /// </summary>
-    public partial class AboutWindow : AdonisWindow
+    public AboutWindow(LauncherVersionProvider versionProvider)
     {
-        public AboutWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        LauncherNameLabel.Content = "Opaque Launcher " + versionProvider.LauncherVersion;
+    }
 
-        private void CloseWindow(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+    private void CloseWindow(object sender, RoutedEventArgs e)
+    {
+        Close();
     }
 }
