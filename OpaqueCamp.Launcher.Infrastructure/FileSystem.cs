@@ -18,4 +18,9 @@ public sealed class FileSystem : IFileSystem
     {
         return File.Exists(path);
     }
+
+    public bool IsDirectoryEmpty(string path)
+    {
+        return !Directory.EnumerateFileSystemEntries(path).Any();
+    }
 }
