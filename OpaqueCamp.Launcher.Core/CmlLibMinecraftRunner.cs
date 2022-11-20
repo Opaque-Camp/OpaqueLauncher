@@ -1,6 +1,8 @@
 ﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
 using CmlLib.Core.Downloader;
+using CmlLib.Core.Installer.FabricMC;
+using CmlLib.Core.VersionMetadata;
 using OpaqueCamp.Launcher.Core.Memory;
 
 namespace OpaqueCamp.Launcher.Core;
@@ -13,10 +15,12 @@ public sealed class CmlLibMinecraftRunner
     private readonly IDownloadSpeedupService _downloadSpeedupService;
     private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
     private readonly ICurrentAccountProvider _currentAccountProvider;
+    private readonly IModsInstaller _modsInstaller;
 
     public CmlLibMinecraftRunner(IModPackInfoProvider modPackInfoProvider, IJvmMemorySettings jvmMemorySettings,
         IServerConfigProvider serverConfigProvider, IDownloadSpeedupService downloadSpeedupService,
-        IMinecraftFilesDirProvider minecraftFilesDirProvider, ICurrentAccountProvider currentAccountProvider)
+        IMinecraftFilesDirProvider minecraftFilesDirProvider, ICurrentAccountProvider currentAccountProvider,
+        IModsInstaller modsInstaller)
     {
         _modPackInfoProvider = modPackInfoProvider;
         _jvmMemorySettings = jvmMemorySettings;
@@ -24,6 +28,7 @@ public sealed class CmlLibMinecraftRunner
         _downloadSpeedupService = downloadSpeedupService;
         _minecraftFilesDirProvider = minecraftFilesDirProvider;
         _currentAccountProvider = currentAccountProvider;
+        _modsInstaller = modsInstaller;
     }
 
     public async Task<MinecraftCrashLogs?> RunMinecraftAsync(
@@ -31,11 +36,16 @@ public sealed class CmlLibMinecraftRunner
         Action<int> onDownloadPercentageChange)
     {
         _downloadSpeedupService.MakeDownloadsFaster();
-        var path = new MinecraftPath(_minecraftFilesDirProvider.DirPathForMinecraftFiles);
-        var launcher = new CMLauncher(path);
+        var launcher = new CMLauncher(MinecraftPath);
         launcher.FileChanged += onCurrentlyDownloadedFileChange;
         launcher.ProgressChanged += (_, args) => onDownloadPercentageChange(args.ProgressPercentage);
-        var process = await launcher.CreateProcessAsync(_modPackInfoProvider.UsedMinecraftVersion.ToString(),
+
+        var fabricVersion = await GetFabricVersionForOurMinecraftVersion();
+        await fabricVersion.SaveAsync(MinecraftPath);
+
+        await _modsInstaller.InstallModsAsync();
+
+        var process = await launcher.CreateProcessAsync(fabricVersion.Name,
             new MLaunchOption
             {
                 MinimumRamMb = _jvmMemorySettings.InitialMemoryAllocation.Megabytes,
@@ -52,6 +62,17 @@ public sealed class CmlLibMinecraftRunner
             : new MinecraftCrashLogs(await process.StandardOutput.ReadToEndAsync(),
                 await process.StandardError.ReadToEndAsync());
     }
+
+    private async Task<MVersionMetadata> GetFabricVersionForOurMinecraftVersion()
+    {
+        var fabricVersionLoader = new FabricVersionLoader();
+        var fabricVersions = await fabricVersionLoader.GetVersionMetadatasAsync();
+        var fabricForOurMinecraftVersion = fabricVersions
+            .First(fabricVersion => fabricVersion.Name.Split('-').Last() == _modPackInfoProvider.UsedMinecraftVersion.ToString());
+        return fabricForOurMinecraftVersion;
+    }
+
+    private MinecraftPath MinecraftPath => new(_minecraftFilesDirProvider.DirPathForMinecraftFiles);
 
     private string GetAccountUsername() => (_currentAccountProvider.CurrentAccount ?? throw new CurrentAccountIsNullException()).Username;
 }

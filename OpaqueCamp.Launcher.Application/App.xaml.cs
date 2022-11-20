@@ -40,7 +40,9 @@ public partial class App
                     .AddTransient<IAccountRepository, JsonAccountRepository>()
                     .AddTransient<IAccountJsonPathProvider, SettingsAccountJsonPathProvider>()
                     .AddTransient<ICurrentAccountProvider, SettingsCurrentAccountProvider>()
-                    .AddTransient<LauncherVersionProvider>();
+                    .AddTransient<LauncherVersionProvider>()
+                    .AddTransient<IModsInstaller, BundledZipModsInstaller>()
+                    .AddTransient<IModZipBundlePathProvider, SettingsModZipBundlePathProvider>();
             })
             .Build();
     }
