@@ -20,8 +20,7 @@
         <Grid Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,10">
             <Button x:Name="copy" HorizontalAlignment="Left" Content="Скопировать" Margin="0,0,0,0"
                     VerticalAlignment="Bottom" Width="110" Height="30" FontFamily="./Fonts/#Monocraft"
-                    Click="copy_Click">
-            </Button>
+                    Click="copy_Click" />
             <Button Content="OK" HorizontalAlignment="Right" Margin="0,0,0,0" Click="OnOkClick" Width="70" Height="30"
                     VerticalAlignment="Bottom" IsDefault="True" IsCancel="True" FontFamily="./Fonts/#Monocraft" />
         </Grid>

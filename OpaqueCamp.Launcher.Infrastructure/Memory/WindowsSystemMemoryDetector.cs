@@ -13,7 +13,10 @@ public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector
         return IsWindows8OrNewer() ? GetMemoryForWindows8AndOlder() : GetMemoryForWindows7();
     }
 
-    private bool IsWindows8OrNewer() => OperatingSystem.IsWindowsVersionAtLeast(6, 3);
+    private bool IsWindows8OrNewer()
+    {
+        return OperatingSystem.IsWindowsVersionAtLeast(6, 3);
+    }
 
     private int GetMemoryForWindows8AndOlder()
     {
@@ -43,6 +46,6 @@ public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector
         var lines = output.Trim().Split("\n");
         var memory = lines[1].Split("=", StringSplitOptions.RemoveEmptyEntries);
 
-        return (int)(Math.Round(Double.Parse(memory[1])) / 1024);
+        return (int)(Math.Round(double.Parse(memory[1])) / 1024);
     }
 }

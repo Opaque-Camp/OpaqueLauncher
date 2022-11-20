@@ -1,8 +1,8 @@
-﻿namespace OpaqueCamp.Launcher.Application;
+﻿using System;
+using OpaqueCamp.Launcher.Application.Properties;
+using OpaqueCamp.Launcher.Core;
 
-using Core;
-using Application.Properties;
-using System;
+namespace OpaqueCamp.Launcher.Application;
 
 public sealed class SettingsCurrentAccountProvider : ICurrentAccountProvider
 {
@@ -13,7 +13,7 @@ public sealed class SettingsCurrentAccountProvider : ICurrentAccountProvider
         _accountRepository = accountRepository;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public Account? CurrentAccount
     {
         get
@@ -30,10 +30,7 @@ public sealed class SettingsCurrentAccountProvider : ICurrentAccountProvider
 
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            if (value == null) throw new ArgumentNullException(nameof(value));
             Settings.Default.CurrentAccountId = value.Id;
             Settings.Default.Save();
         }

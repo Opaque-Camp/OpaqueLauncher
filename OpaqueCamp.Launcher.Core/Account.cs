@@ -20,7 +20,13 @@ public sealed class Account
 
     public string Username { get; set; }
 
-    public override bool Equals(object? obj) => obj is Account account && Id.Equals(account.Id);
+    public override bool Equals(object? obj)
+    {
+        return obj is Account account && Id.Equals(account.Id);
+    }
 
-    public override int GetHashCode() => HashCode.Combine(Id);
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id);
+    }
 }

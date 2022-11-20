@@ -2,5 +2,7 @@
 
 public sealed class CurrentAccountIsNullException : Exception
 {
-    public CurrentAccountIsNullException() : base("Current account is null.") { }
+    public CurrentAccountIsNullException() : base("Current account is null.")
+    {
+    }
 }

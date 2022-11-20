@@ -17,7 +17,7 @@
             <TextBlock Text="{Binding Path=Username}" />
         </DataTemplate>
     </Window.Resources>
-    
+
     <adonisControls:AdonisWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right">
@@ -30,31 +30,32 @@
 
     <Grid Background="#181c1f">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="80"/>
+            <RowDefinition />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <wpf:WebView2 Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"
                       DefaultBackgroundColor="#181c1f" />
 
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF15181C" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="320" />
             </Grid.ColumnDefinitions>
 
             <ProgressBar x:Name="DownloadProgressBar" VerticalAlignment="Top" Visibility="Hidden"
                          adonisExtensions:ProgressBarExtension.ProgressAnimationForeground="Green"
-                         adonisExtensions:ProgressBarExtension.Foreground="#0a944e" BorderBrush="#FF15181C" Grid.ColumnSpan="2" Height="3"/>
+                         adonisExtensions:ProgressBarExtension.Foreground="#0a944e" BorderBrush="#FF15181C"
+                         Grid.ColumnSpan="2" Height="3" />
 
             <Grid>
                 <StackPanel VerticalAlignment="Center">
                     <Label Content="Opaque Vanilla 1.19.2" HorizontalAlignment="Center" Margin="0,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-                    <Separator Opacity="0"/>
+                    <Separator Opacity="0" />
                     <Button Content="Настроить" Width="120" Height="25" VerticalAlignment="Center" FontSize="16"
-                            FontFamily="./Fonts/#Monocraft"/>
+                            FontFamily="./Fonts/#Monocraft" />
                 </StackPanel>
             </Grid>
 
@@ -62,17 +63,19 @@
                 <StackPanel VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label Content="Привет, " HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-                        <ComboBox Width="200" Name="CurrentAccountComboBox" ItemTemplate="{StaticResource accountItemTemplate}" SelectionChanged="OnCurrentAccountComboBoxSelection" />
+                               VerticalAlignment="Center"
+                               FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
+                        <ComboBox Width="200" Name="CurrentAccountComboBox"
+                                  ItemTemplate="{StaticResource accountItemTemplate}"
+                                  SelectionChanged="OnCurrentAccountComboBoxSelection" />
                         <Label Content="!" HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
+                               VerticalAlignment="Center"
+                               FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
                     </StackPanel>
-                    <Separator Opacity="0"/>
+                    <Separator Opacity="0" />
                     <Button Content="Сменить аккаунт" Width="175" Height="25" VerticalAlignment="Center" FontSize="16"
                             Click="OnChangeAccountButtonClick"
-                            FontFamily="./Fonts/#Monocraft"/>
+                            FontFamily="./Fonts/#Monocraft" />
                 </StackPanel>
             </Grid>
 

@@ -1,10 +1,9 @@
-﻿namespace OpaqueCamp.Launcher.Application;
+﻿using System.Windows.Controls;
 
-using Core;
-using System.Windows.Controls;
+namespace OpaqueCamp.Launcher.Application;
 
 /// <summary>
-/// Interaction logic for OfflineAccountEditor.xaml
+///     Interaction logic for OfflineAccountEditor.xaml
 /// </summary>
 public partial class OfflineAccountEditor : UserControl
 {

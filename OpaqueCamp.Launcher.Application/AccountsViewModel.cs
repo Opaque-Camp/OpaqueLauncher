@@ -11,19 +11,6 @@ public sealed partial class AccountsViewModel : ObservableObject
 {
     private readonly IAccountRepository _accountRepository;
 
-    public AccountsViewModel(IAccountRepository accountRepository)
-    {
-        _accountRepository = accountRepository;
-    }
-
-    public IEnumerable<Account> Accounts => _accountRepository.GetAccounts();
-
-    public void AddAccount()
-    {
-        _accountRepository.AddAccount(new Account("Test"));
-        OnPropertyChanged(nameof(Accounts));
-    }
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAccountSelected))]
     [NotifyPropertyChangedFor(nameof(SelectAccountHintLabelVisiblilty))]
@@ -31,6 +18,13 @@ public sealed partial class AccountsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedAccountViewModel))]
     [NotifyCanExecuteChangedFor(nameof(DeleteSelectedAccountCommand))]
     private Account? _selectedAccount;
+
+    public AccountsViewModel(IAccountRepository accountRepository)
+    {
+        _accountRepository = accountRepository;
+    }
+
+    public IEnumerable<Account> Accounts => _accountRepository.GetAccounts();
 
     public bool IsAccountSelected => SelectedAccount is not null;
 
@@ -48,11 +42,15 @@ public sealed partial class AccountsViewModel : ObservableObject
                 viewModel.PropertyChanged += OnSelectedAccountViewModelPropertyChanged;
                 return viewModel;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
+    }
+
+    public void AddAccount()
+    {
+        _accountRepository.AddAccount(new Account("Test"));
+        OnPropertyChanged(nameof(Accounts));
     }
 
     private void OnSelectedAccountViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)

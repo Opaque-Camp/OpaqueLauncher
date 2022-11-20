@@ -6,16 +6,16 @@ using OpaqueCamp.Launcher.Core;
 namespace OpaqueCamp.Launcher.Application;
 
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+///     Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow
 {
-    private readonly CmlLibMinecraftRunner _minecraftRunner;
-    private readonly MinecraftCrashHandler _crashHandler;
-    private readonly AccountsWindowFactory _accountsWindowFactory;
-    private readonly IAccountRepository _accountRepository;
     private readonly AboutWindowFactory _aboutWindowFactory;
+    private readonly IAccountRepository _accountRepository;
+    private readonly AccountsWindowFactory _accountsWindowFactory;
+    private readonly MinecraftCrashHandler _crashHandler;
     private readonly ICurrentAccountProvider _currentAccountProvider;
+    private readonly CmlLibMinecraftRunner _minecraftRunner;
 
     public MainWindow(CmlLibMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler,
         AccountsWindowFactory accountsWindowFactory, ICurrentAccountProvider currentAccountProvider,
@@ -40,15 +40,10 @@ public partial class MainWindow
     {
         CurrentAccountComboBox.Items.Clear();
         var accounts = _accountRepository.GetAccounts().ToList();
-        foreach (var account in accounts)
-        {
-            CurrentAccountComboBox.Items.Add(account);
-        }
+        foreach (var account in accounts) CurrentAccountComboBox.Items.Add(account);
 
         if (_currentAccountProvider.CurrentAccount == null && accounts.Count != 0)
-        {
             _currentAccountProvider.CurrentAccount = accounts[0];
-        }
 
         CurrentAccountComboBox.SelectedItem = _currentAccountProvider.CurrentAccount;
     }
@@ -69,10 +64,7 @@ public partial class MainWindow
             return;
         }
 
-        if (crashLogs != null)
-        {
-            _crashHandler.HandleCrash(crashLogs);
-        }
+        if (crashLogs != null) _crashHandler.HandleCrash(crashLogs);
     }
 
     private void OnDownloadPercentageChange(int i)
@@ -96,9 +88,6 @@ public partial class MainWindow
     private void OnCurrentAccountComboBoxSelection(object sender, RoutedEventArgs e)
     {
         var newAccount = (Account?)CurrentAccountComboBox.SelectedItem;
-        if (newAccount != null)
-        {
-            _currentAccountProvider.CurrentAccount = newAccount;
-        }
+        if (newAccount != null) _currentAccountProvider.CurrentAccount = newAccount;
     }
 }

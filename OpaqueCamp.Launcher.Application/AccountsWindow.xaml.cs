@@ -1,7 +1,7 @@
-﻿namespace OpaqueCamp.Launcher.Application;
-
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+
+namespace OpaqueCamp.Launcher.Application;
 
 public partial class AccountsWindow
 {
@@ -11,12 +11,12 @@ public partial class AccountsWindow
         DataContext = viewModel;
     }
 
+    private AccountsViewModel ViewModel => (AccountsViewModel)DataContext;
+
     private void OnAddAccountButtonClick(object sender, RoutedEventArgs e)
     {
         ((Button)sender).ContextMenu.IsOpen = true;
     }
-
-    private AccountsViewModel ViewModel => (AccountsViewModel)DataContext;
 
     private void OnAddSimpleAccountMenuItemClick(object sender, RoutedEventArgs e)
     {

@@ -5,7 +5,10 @@ namespace OpaqueCamp.Launcher.Application;
 
 public sealed class JvmMemorySettingsStorage : IJvmMemorySettingsStorage
 {
-    public int GetInitialMemoryAllocationMegabytes() => Settings.Default.JvmInitialMemoryAllocationMegabytes;
+    public int GetInitialMemoryAllocationMegabytes()
+    {
+        return Settings.Default.JvmInitialMemoryAllocationMegabytes;
+    }
 
     public void SetInitialMemoryAllocationMegabytes(int value)
     {
@@ -13,7 +16,10 @@ public sealed class JvmMemorySettingsStorage : IJvmMemorySettingsStorage
         Settings.Default.Save();
     }
 
-    public int GetMaxMemoryAllocationMegabytes() => Settings.Default.JvmMaxMemoryAllocationMegabytes;
+    public int GetMaxMemoryAllocationMegabytes()
+    {
+        return Settings.Default.JvmMaxMemoryAllocationMegabytes;
+    }
 
     public void SetMaxMemoryAllocationMegabytes(int value)
     {

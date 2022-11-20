@@ -5,8 +5,8 @@ namespace OpaqueCamp.Launcher.Infrastructure;
 
 public sealed class BundledZipModsInstaller : IModsInstaller
 {
-    private readonly IModZipBundlePathProvider _modZipBundlePathProvider;
     private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
+    private readonly IModZipBundlePathProvider _modZipBundlePathProvider;
 
     public BundledZipModsInstaller(IModZipBundlePathProvider modZipBundlePathProvider,
         IMinecraftFilesDirProvider minecraftFilesDirProvider)

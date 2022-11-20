@@ -13,7 +13,6 @@ public partial class MinecraftCrashWindow
 
     private void OnOkClick(object sender, RoutedEventArgs e)
     {
-        
         Close();
     }
 

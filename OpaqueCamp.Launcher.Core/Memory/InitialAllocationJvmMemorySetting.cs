@@ -1,6 +1,6 @@
 ﻿namespace OpaqueCamp.Launcher.Core.Memory;
 
-class InitialAllocationJvmMemorySetting : JvmMemorySetting
+internal class InitialAllocationJvmMemorySetting : JvmMemorySetting
 {
     public InitialAllocationJvmMemorySetting(int currentValue) : base(currentValue)
     {

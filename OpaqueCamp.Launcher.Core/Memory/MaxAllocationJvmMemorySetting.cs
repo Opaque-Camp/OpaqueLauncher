@@ -1,6 +1,6 @@
 ﻿namespace OpaqueCamp.Launcher.Core.Memory;
 
-class MaxAllocationJvmMemorySetting : JvmMemorySetting
+internal class MaxAllocationJvmMemorySetting : JvmMemorySetting
 {
     private readonly ISystemMemoryDetector _memoryDetector;
 

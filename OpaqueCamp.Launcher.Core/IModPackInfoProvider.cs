@@ -1,9 +1,8 @@
-﻿namespace OpaqueCamp.Launcher.Core
-{
-    public interface IModPackInfoProvider
-    {
-        string ModPackName { get; }
+﻿namespace OpaqueCamp.Launcher.Core;
 
-        Version UsedMinecraftVersion { get; }
-    }
+public interface IModPackInfoProvider
+{
+    string ModPackName { get; }
+
+    Version UsedMinecraftVersion { get; }
 }

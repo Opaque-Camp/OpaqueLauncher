@@ -12,11 +12,11 @@ public sealed class AccountTest
 
         // When
         var guid = account.Id;
-        
+
         // Then
         guid.Should().NotBe(Guid.Empty);
     }
-    
+
     [Fact]
     public void Account_SerializesToJson()
     {
@@ -30,7 +30,7 @@ public sealed class AccountTest
         json.Should().Be(JsonSerializer.Serialize(new Dictionary<string, string>
             { { "Id", account.Id.ToString() }, { "Username", account.Username } }));
     }
-    
+
     [Fact]
     public void Account_DeserializesToJson()
     {
@@ -38,10 +38,10 @@ public sealed class AccountTest
         var id = Guid.NewGuid();
         var json = JsonSerializer.Serialize(new Dictionary<string, string>
             { { "Id", id.ToString() }, { "Username", "username" } });
-        
+
         // When
         var account = JsonSerializer.Deserialize<Account>(json)!;
-        
+
         // Then
         account.Should().NotBeNull();
         account.Id.Should().Be(id);

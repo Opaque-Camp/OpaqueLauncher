@@ -1,36 +1,39 @@
 ﻿<adonisControls:AdonisWindow x:Class="OpaqueCamp.Launcher.Application.AboutWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OpaqueCamp.Launcher.Application"
-        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
-        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
-        mc:Ignorable="d"
-        Title="О лаунчере" Height="380" Width="640">
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                             mc:Ignorable="d"
+                             Title="О лаунчере" Height="380" Width="640">
     <Grid>
         <StackPanel Height="100" Orientation="Horizontal" VerticalAlignment="Top">
-            <Image Source="./Icons/favicon.ico" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0"></Image>
-            <Label Name="LauncherNameLabel" Margin="0,0" FontSize="36" VerticalAlignment="Center" FontFamily="./Fonts/#Monocraft"></Label>
+            <Image Source="./Icons/favicon.ico" Width="50" Height="50" VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Margin="10,0" />
+            <Label Name="LauncherNameLabel" Margin="0,0" FontSize="36" VerticalAlignment="Center"
+                   FontFamily="./Fonts/#Monocraft" />
         </StackPanel>
 
         <TextBlock Margin="10,100,10,50" FontSize="16" TextWrapping="Wrap" FontFamily="./Fonts/#Monocraft">
-                Лаунчер для игры на приватном сервере Opaque Camp со сборкой Opaque Vanilla.
-                <LineBreak/>
-                Работает с аккаунтами Microsoft и offline-никами.
-                <LineBreak/>
-                <LineBreak/>
-                Использованные библиотеки:
-                <LineBreak/>
-                .NET 7 (WPF)
-                <LineBreak/>
-                Adonis UI 1.17.1
-                <LineBreak/>
-                WebWiew2 1.0.1418.22
-                <LineBreak/>
-                <LineBreak/>
-                Разработано Protoch и lectureNice (aka jeffors).
-            </TextBlock>
-        <Button Width="40" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,10" FontFamily="./Fonts/#Monocraft" Click="CloseWindow">OK</Button>
+            Лаунчер для игры на приватном сервере Opaque Camp со сборкой Opaque Vanilla.
+            <LineBreak />
+            Работает с аккаунтами Microsoft и offline-никами.
+            <LineBreak />
+            <LineBreak />
+            Использованные библиотеки:
+            <LineBreak />
+            .NET 7 (WPF)
+            <LineBreak />
+            Adonis UI 1.17.1
+            <LineBreak />
+            WebWiew2 1.0.1418.22
+            <LineBreak />
+            <LineBreak />
+            Разработано Protoch и lectureNice (aka jeffors).
+        </TextBlock>
+        <Button Width="40" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,10" FontFamily="./Fonts/#Monocraft"
+                Click="CloseWindow">
+            OK
+        </Button>
     </Grid>
 </adonisControls:AdonisWindow>

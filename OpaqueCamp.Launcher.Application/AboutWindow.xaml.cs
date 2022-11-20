@@ -1,10 +1,10 @@
-﻿namespace OpaqueCamp.Launcher.Application;
+﻿using System.Windows;
+using OpaqueCamp.Launcher.Core;
 
-using System.Windows;
-using Core;
+namespace OpaqueCamp.Launcher.Application;
 
 /// <summary>
-/// Логика взаимодействия для AboutWindow.xaml
+///     Логика взаимодействия для AboutWindow.xaml
 /// </summary>
 public partial class AboutWindow
 {

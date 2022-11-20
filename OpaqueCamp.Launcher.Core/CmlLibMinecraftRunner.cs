@@ -9,13 +9,13 @@ namespace OpaqueCamp.Launcher.Core;
 
 public sealed class CmlLibMinecraftRunner
 {
-    private readonly IModPackInfoProvider _modPackInfoProvider;
-    private readonly IJvmMemorySettings _jvmMemorySettings;
-    private readonly IServerConfigProvider _serverConfigProvider;
-    private readonly IDownloadSpeedupService _downloadSpeedupService;
-    private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
     private readonly ICurrentAccountProvider _currentAccountProvider;
+    private readonly IDownloadSpeedupService _downloadSpeedupService;
+    private readonly IJvmMemorySettings _jvmMemorySettings;
+    private readonly IMinecraftFilesDirProvider _minecraftFilesDirProvider;
+    private readonly IModPackInfoProvider _modPackInfoProvider;
     private readonly IModsInstaller _modsInstaller;
+    private readonly IServerConfigProvider _serverConfigProvider;
 
     public CmlLibMinecraftRunner(IModPackInfoProvider modPackInfoProvider, IJvmMemorySettings jvmMemorySettings,
         IServerConfigProvider serverConfigProvider, IDownloadSpeedupService downloadSpeedupService,
@@ -30,6 +30,8 @@ public sealed class CmlLibMinecraftRunner
         _currentAccountProvider = currentAccountProvider;
         _modsInstaller = modsInstaller;
     }
+
+    private MinecraftPath MinecraftPath => new(_minecraftFilesDirProvider.DirPathForMinecraftFiles);
 
     public async Task<MinecraftCrashLogs?> RunMinecraftAsync(
         DownloadFileChangedHandler? onCurrentlyDownloadedFileChange,
@@ -68,11 +70,13 @@ public sealed class CmlLibMinecraftRunner
         var fabricVersionLoader = new FabricVersionLoader();
         var fabricVersions = await fabricVersionLoader.GetVersionMetadatasAsync();
         var fabricForOurMinecraftVersion = fabricVersions
-            .First(fabricVersion => fabricVersion.Name.Split('-').Last() == _modPackInfoProvider.UsedMinecraftVersion.ToString());
+            .First(fabricVersion =>
+                fabricVersion.Name.Split('-').Last() == _modPackInfoProvider.UsedMinecraftVersion.ToString());
         return fabricForOurMinecraftVersion;
     }
 
-    private MinecraftPath MinecraftPath => new(_minecraftFilesDirProvider.DirPathForMinecraftFiles);
-
-    private string GetAccountUsername() => (_currentAccountProvider.CurrentAccount ?? throw new CurrentAccountIsNullException()).Username;
+    private string GetAccountUsername()
+    {
+        return (_currentAccountProvider.CurrentAccount ?? throw new CurrentAccountIsNullException()).Username;
+    }
 }

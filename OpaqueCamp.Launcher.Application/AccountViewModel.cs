@@ -1,9 +1,9 @@
-﻿namespace OpaqueCamp.Launcher.Application;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using OpaqueCamp.Launcher.Core;
 
-using CommunityToolkit.Mvvm.ComponentModel;
-using Core;
+namespace OpaqueCamp.Launcher.Application;
 
-public sealed partial class AccountViewModel : ObservableObject
+public sealed class AccountViewModel : ObservableObject
 {
     private readonly Account _account;
 
@@ -18,7 +18,7 @@ public sealed partial class AccountViewModel : ObservableObject
         set
         {
             _account.Username = value;
-            OnPropertyChanged(nameof(Username));
+            OnPropertyChanged();
         }
     }
 }

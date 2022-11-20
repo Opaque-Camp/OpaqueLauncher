@@ -27,13 +27,14 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
-            <ListBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" ItemTemplate="{StaticResource itemTemplate}" Grid.Column="0" Grid.Row="0" Margin="10,10,0,0"
+            <ListBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}"
+                     ItemTemplate="{StaticResource itemTemplate}" Grid.Column="0" Grid.Row="0" Margin="10,10,0,0"
                      BorderThickness="1" />
             <Grid Grid.Column="0" Grid.Row="2" Margin="10,0,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
                 <Button Content="+" Click="OnAddAccountButtonClick">
                     <Button.ContextMenu>
@@ -44,7 +45,7 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <Button Content="-" Grid.Column="2" Command="{Binding DeleteSelectedAccountCommand}"/>
+                <Button Content="-" Grid.Column="2" Command="{Binding DeleteSelectedAccountCommand}" />
             </Grid>
         </Grid>
 
@@ -57,7 +58,9 @@
             FontStyle="Italic"
             Foreground="#B2FFFFFF" Grid.Column="2" Visibility="{Binding Path=SelectAccountHintLabelVisiblilty}" />
 
-        <local:OfflineAccountEditor Grid.Column="2" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type Window}}, Path=DataContext.AccountEditorVisiblilty}" DataContext="{Binding SelectedAccountViewModel}" />
+        <local:OfflineAccountEditor Grid.Column="2"
+                                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type Window}}, Path=DataContext.AccountEditorVisiblilty}"
+                                    DataContext="{Binding SelectedAccountViewModel}" />
     </Grid>
 </controls:AdonisWindow>
