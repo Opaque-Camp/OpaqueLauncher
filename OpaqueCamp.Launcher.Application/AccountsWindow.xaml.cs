@@ -22,4 +22,14 @@ public sealed partial class AccountsWindow
     {
         ViewModel.AddSimpleAccount();
     }
+
+    private void OnRemoveAccountButtonClick(object sender, RoutedEventArgs e)
+    {
+        ViewModel.DeleteSelectedAccount();
+    }
+
+    private void OnAddMicrosoftAccountMenuItemClick(object sender, RoutedEventArgs e)
+    {
+        ViewModel.AddMicrosoftAccount();
+    }
 }

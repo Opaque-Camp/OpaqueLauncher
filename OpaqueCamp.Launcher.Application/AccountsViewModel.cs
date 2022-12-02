@@ -71,4 +71,10 @@ public sealed partial class AccountsViewModel : ObservableObject
         _accountRepository.DeleteAccount(SelectedAccount!);
         OnPropertyChanged(nameof(Accounts));
     }
+
+    public void AddMicrosoftAccount()
+    {
+        _accountRepository.AddAccount(new Account("New account", AccountType.Microsoft));
+        OnPropertyChanged(nameof(Accounts));
+    }
 }

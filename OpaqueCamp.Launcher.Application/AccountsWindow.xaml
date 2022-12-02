@@ -41,7 +41,7 @@
                         <ContextMenu>
                             <MenuItem Header="Пиратский" Click="OnAddSimpleAccountMenuItemClick" />
                             <!-- <MenuItem Header="Mojang" /> -->
-                            <!-- <MenuItem Header="Microsoft" /> -->
+                            <MenuItem Header="Microsoft" Click="OnAddMicrosoftAccountMenuItemClick" />
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
@@ -61,6 +61,10 @@
         <local:OfflineAccountEditor Grid.Column="2"
                                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
             AncestorType={x:Type Window}}, Path=DataContext.OfflineAccountEditorVisibility}"
+                                    DataContext="{Binding SelectedAccountViewModel}" />
+        <local:MicrosoftAccountEditor Grid.Column="2"
+                                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type Window}}, Path=DataContext.MicrosoftAccountEditorVisibility}"
                                     DataContext="{Binding SelectedAccountViewModel}" />
     </Grid>
 </controls:AdonisWindow>
