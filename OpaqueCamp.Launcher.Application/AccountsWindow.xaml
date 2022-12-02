@@ -60,7 +60,7 @@
 
         <local:OfflineAccountEditor Grid.Column="2"
                                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type Window}}, Path=DataContext.AccountEditorVisibility}"
+            AncestorType={x:Type Window}}, Path=DataContext.OfflineAccountEditorVisibility}"
                                     DataContext="{Binding SelectedAccountViewModel}" />
     </Grid>
 </controls:AdonisWindow>

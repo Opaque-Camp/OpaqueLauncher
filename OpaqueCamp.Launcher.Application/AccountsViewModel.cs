@@ -14,7 +14,8 @@ public sealed partial class AccountsViewModel : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAccountSelected))]
     [NotifyPropertyChangedFor(nameof(SelectAccountHintLabelVisibility))]
-    [NotifyPropertyChangedFor(nameof(AccountEditorVisibility))]
+    [NotifyPropertyChangedFor(nameof(OfflineAccountEditorVisibility))]
+    [NotifyPropertyChangedFor(nameof(MicrosoftAccountEditorVisibility))]
     [NotifyPropertyChangedFor(nameof(SelectedAccountViewModel))]
     [NotifyCanExecuteChangedFor(nameof(DeleteSelectedAccountCommand))]
     private Account? _selectedAccount;
@@ -30,13 +31,22 @@ public sealed partial class AccountsViewModel : ObservableObject
 
     public Visibility SelectAccountHintLabelVisibility => IsAccountSelected ? Visibility.Collapsed : Visibility.Visible;
 
-    public Visibility AccountEditorVisibility => IsAccountSelected ? Visibility.Visible : Visibility.Collapsed;
+    // TODO: Following two properties are not pretty
+    // Maybe extract this to some kind of "AccountEditor" custom widget for editing all kinds of accounts
+
+    public Visibility OfflineAccountEditorVisibility => SelectedAccount?.Type == AccountType.Offline
+        ? Visibility.Visible
+        : Visibility.Collapsed;
+
+    public Visibility MicrosoftAccountEditorVisibility => SelectedAccount?.Type == AccountType.Microsoft
+        ? Visibility.Visible
+        : Visibility.Collapsed;
 
     public AccountViewModel? SelectedAccountViewModel
     {
         get
         {
-            if (SelectedAccount is null) return null;
+            if (SelectedAccount == null) return null;
             var viewModel = new AccountViewModel(SelectedAccount);
             viewModel.PropertyChanged += OnSelectedAccountViewModelPropertyChanged;
             return viewModel;
