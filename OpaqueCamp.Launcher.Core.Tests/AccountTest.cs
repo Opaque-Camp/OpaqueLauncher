@@ -8,7 +8,7 @@ public sealed class AccountTest
     public void Account_HasNonEmptyGuidAfterCreation()
     {
         // Given
-        var account = new Account("username");
+        var account = new Account("username", AccountType.Offline);
 
         // When
         var guid = account.Id;
@@ -21,14 +21,18 @@ public sealed class AccountTest
     public void Account_SerializesToJson()
     {
         // Given
-        var account = new Account("username");
+        var account = new Account("username", AccountType.Microsoft);
 
         // When
         var json = JsonSerializer.Serialize(account);
 
         // Then
-        json.Should().Be(JsonSerializer.Serialize(new Dictionary<string, string>
-            { { "Id", account.Id.ToString() }, { "Username", account.Username } }));
+        json.Should().Be(JsonSerializer.Serialize(new Dictionary<string, object>
+        {
+            { "Id", account.Id.ToString() },
+            { "Username", account.Username },
+            { "Type", (int)AccountType.Microsoft }
+        }));
     }
 
     [Fact]
@@ -36,8 +40,12 @@ public sealed class AccountTest
     {
         // Given
         var id = Guid.NewGuid();
-        var json = JsonSerializer.Serialize(new Dictionary<string, string>
-            { { "Id", id.ToString() }, { "Username", "username" } });
+        var json = JsonSerializer.Serialize(new Dictionary<string, object>
+        {
+            { "Id", id.ToString() },
+            { "Username", "username" },
+            { "Type", (int)AccountType.Microsoft }
+        });
 
         // When
         var account = JsonSerializer.Deserialize<Account>(json)!;
@@ -47,6 +55,7 @@ public sealed class AccountTest
         account.Id.Should().Be(id);
         account.Id.Should().NotBe(Guid.Empty);
         account.Username.Should().Be("username");
+        account.Type.Should().Be(AccountType.Microsoft);
     }
 
 
@@ -55,8 +64,8 @@ public sealed class AccountTest
     {
         // Given
         var id = Guid.NewGuid();
-        var acc1 = new Account(id, "username1");
-        var acc2 = new Account(id, "username2");
+        var acc1 = new Account(id, "username1", AccountType.Offline);
+        var acc2 = new Account(id, "username2", AccountType.Microsoft);
 
         // When
         var equal = acc1.Equals(acc2);

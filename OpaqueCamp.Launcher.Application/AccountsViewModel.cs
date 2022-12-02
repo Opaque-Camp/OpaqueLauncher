@@ -43,9 +43,9 @@ public sealed partial class AccountsViewModel : ObservableObject
         }
     }
 
-    public void AddAccount()
+    public void AddSimpleAccount()
     {
-        _accountRepository.AddAccount(new Account("Test"));
+        _accountRepository.AddAccount(new Account("New account", AccountType.Offline));
         OnPropertyChanged(nameof(Accounts));
     }
 

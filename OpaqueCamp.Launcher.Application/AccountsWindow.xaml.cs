@@ -20,6 +20,6 @@ public sealed partial class AccountsWindow
 
     private void OnAddSimpleAccountMenuItemClick(object sender, RoutedEventArgs e)
     {
-        ViewModel.AddAccount();
+        ViewModel.AddSimpleAccount();
     }
 }
