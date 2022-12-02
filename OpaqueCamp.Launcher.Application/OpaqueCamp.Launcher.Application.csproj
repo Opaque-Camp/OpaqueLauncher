@@ -28,6 +28,7 @@
         <ProjectReference Include="..\OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj" />
         <PackageReference Include="AdonisUI" Version="1.17.1" />
         <PackageReference Include="AdonisUI.ClassicTheme" Version="1.17.1" />
+        <PackageReference Include="CmlLib.Core.Auth.Microsoft.UI.Wpf" Version="2.0.2" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
