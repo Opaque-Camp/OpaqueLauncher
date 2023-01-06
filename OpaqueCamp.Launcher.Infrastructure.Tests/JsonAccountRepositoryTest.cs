@@ -22,14 +22,14 @@ public class JsonAccountRepositoryTest
         // Given
         var accountId = "07bfccfb-08b8-4b79-bbf4-11a8de062691";
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
-        _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(string.Format("""
+        _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns($$"""
         [
-            {{
-                "Id": "{0}",
+            {
+                "Id": "{{accountId}}",
                 "Username": "User"
-            }}
+            }
         ]
-        """, accountId));
+        """);
 
         // When
         var accounts = _repo.GetAccounts().ToList();
@@ -88,18 +88,18 @@ public class JsonAccountRepositoryTest
         // Given
         var accountId = "07bfccfb-08b8-4b79-bbf4-11a8de062691";
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
-        _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(string.Format("""
+        _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns($$"""
         [
-            {{
-                "Id": "{0}",
+            {
+                "Id": "{{accountId}}",
                 "Username": "User"
-            }},
-            {{
+            },
+            {
                 "Id": "07bfccfb-08b8-4b79-bbf4-11a8de062692",
                 "Username": "User2"
-            }}
+            }
         ]
-        """, accountId));
+        """);
 
         // When
         var account = _repo.GetAccountById(new Guid(accountId));
