@@ -27,6 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\OpaqueCamp.Launcher.Core\OpaqueCamp.Launcher.Core.csproj" />
+      <ProjectReference Include="..\OpaqueCamp.Launcher.Infrastructure\OpaqueCamp.Launcher.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

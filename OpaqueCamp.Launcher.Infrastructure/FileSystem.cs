@@ -4,23 +4,15 @@ namespace OpaqueCamp.Launcher.Infrastructure;
 
 public sealed class FileSystem : IFileSystem
 {
-    public string ReadAllText(string path)
-    {
-        return File.ReadAllText(path);
-    }
+    public string ReadAllText(string path) => File.ReadAllText(path);
 
-    public void WriteAllText(string path, string contents)
-    {
-        File.WriteAllText(path, contents);
-    }
+    public void WriteAllText(string path, string contents) => File.WriteAllText(path, contents);
 
-    public bool FileExists(string path)
-    {
-        return File.Exists(path);
-    }
+    public bool FileExists(string path) => File.Exists(path);
 
-    public bool IsDirectoryEmpty(string path)
-    {
-        return !Directory.EnumerateFileSystemEntries(path).Any();
-    }
+    public bool IsDirectoryEmptyOrMissing(string path) =>
+        !Directory.Exists(path) || !Directory.EnumerateFileSystemEntries(path).Any();
+
+    public string[] GetFilesInDirectory(string path) => Directory.GetFiles(path);
+    public DateTime GetFileCreationTime(string path) => File.GetCreationTime(path);
 }

@@ -64,4 +64,21 @@ public sealed class AccountTest
         // Then
         equal.Should().BeTrue();
     }
+
+    [Fact]
+    public void DictionaryWithAccounts_CorrectlyHashable()
+    {
+        // Given
+        var acc1 = new Account("P1");
+        var acc2 = new Account("P2");
+        var dict = new Dictionary<Account, int> { { acc1, 1 }, { acc2, 2 } };
+        
+        // When
+        var one = dict[acc1];
+        var two = dict[acc2];
+        
+        // Then
+        one.Should().Be(1);
+        two.Should().Be(2);
+    }
 }

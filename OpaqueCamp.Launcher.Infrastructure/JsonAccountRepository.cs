@@ -14,13 +14,28 @@ public sealed class JsonAccountRepository : IAccountRepository
         _accountJsonPathProvider = accountJsonPathProvider;
     }
 
+    /// <summary>
+    ///     Reads the list of accounts from the account JSON file.
+    /// </summary>
+    /// <returns>Deserialized list of accounts.</returns>
+    /// <exception cref="AccountRepositoryException">
+    ///     thrown when reading from JSON fails due to a corrupted JSON file.
+    /// </exception>
     public IEnumerable<Account> GetAccounts()
     {
         var path = _accountJsonPathProvider.AccountJsonPath;
         if (!_fileSystem.FileExists(path)) return Enumerable.Empty<Account>();
 
         var json = _fileSystem.ReadAllText(path);
-        return JsonSerializer.Deserialize<IEnumerable<Account>>(json);
+        try
+        {
+            return JsonSerializer.Deserialize<IEnumerable<Account>>(json) ??
+                   throw new AccountRepositoryException("Deserialized accounts list is null.");
+        }
+        catch (JsonException e)
+        {
+            throw new AccountRepositoryException("Account storage JSON is corrupted.", e);
+        }
     }
 
     public Account GetAccountById(Guid id)
@@ -31,6 +46,11 @@ public sealed class JsonAccountRepository : IAccountRepository
     public void AddAccount(Account account)
     {
         var accounts = GetAccounts().ToList();
+        if (accounts.Contains(account))
+        {
+            throw new AccountAlreadyExistsException(account);
+        }
+
         accounts.Add(account);
         SaveAccounts(accounts);
     }
@@ -45,6 +65,7 @@ public sealed class JsonAccountRepository : IAccountRepository
 
     public void DeleteAccount(Account account)
     {
+        if (!GetAccounts().Any(a => a.Equals(account))) throw new AccountNotFoundException(account);
         SaveAccounts(GetAccounts().Where(a => !a.Equals(account)));
     }
 

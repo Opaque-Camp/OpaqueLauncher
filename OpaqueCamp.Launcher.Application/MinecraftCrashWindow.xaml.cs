@@ -1,14 +1,13 @@
 ﻿using System.Windows;
-using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Application;
 
 public partial class MinecraftCrashWindow
 {
-    public MinecraftCrashWindow(MinecraftCrashLogs crashLogs)
+    public MinecraftCrashWindow(string crashLogs)
     {
         InitializeComponent();
-        DataContext = crashLogs;
+        CrashTextBlock.Text = crashLogs;
     }
 
     private void OnOkClick(object sender, RoutedEventArgs e)
@@ -18,6 +17,6 @@ public partial class MinecraftCrashWindow
 
     private void copy_Click(object sender, RoutedEventArgs e)
     {
-        Clipboard.SetText(errorBox.Text);
+        Clipboard.SetText(CrashTextBlock.Text);
     }
 }

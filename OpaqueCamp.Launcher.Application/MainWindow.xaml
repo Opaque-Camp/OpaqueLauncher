@@ -28,25 +28,29 @@
         </StackPanel>
     </adonisControls:AdonisWindow.TitleBarContent>
 
-    <Grid Background="#181c1f">
+    <Grid Background="#181c1f" x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition Height="0" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
+
         <wpf:WebView2 Source="https://opaque-camp.gitbook.io/wiki/" Panel.ZIndex="0"
                       DefaultBackgroundColor="#181c1f" />
 
-        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF15181C" Grid.Row="1">
+        <ProgressBar x:Name="DownloadProgressBar"
+                     adonisExtensions:ProgressBarExtension.Content="{Binding DownloadProgressString, 
+                         RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                     adonisExtensions:ProgressBarExtension.ProgressAnimationForeground="White"
+                     adonisExtensions:ProgressBarExtension.Foreground="White" BorderBrush="#FF15181C"
+                     Grid.Row="1" />
+
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF15181C" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="320" />
             </Grid.ColumnDefinitions>
-
-            <ProgressBar x:Name="DownloadProgressBar" VerticalAlignment="Top" Visibility="Hidden"
-                         adonisExtensions:ProgressBarExtension.ProgressAnimationForeground="Green"
-                         adonisExtensions:ProgressBarExtension.Foreground="#0a944e" BorderBrush="#FF15181C"
-                         Grid.ColumnSpan="2" Height="3" />
 
             <Grid>
                 <StackPanel VerticalAlignment="Center">
@@ -79,13 +83,11 @@
                 </StackPanel>
             </Grid>
 
-            <Button Content="Запустить" Width="180" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Background="#066133" BorderBrush="#0a944e" Foreground="White" FontSize="24"
-                    FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
+            <Button x:Name="LaunchButton" Content="Запустить" Width="180" Height="50" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Background="#066133" BorderBrush="#0a944e" Foreground="White"
+                    FontSize="24" FontFamily="./Fonts/#Monocraft" Click="OnLaunchButtonClick" Panel.ZIndex="1"
                     adonisExtensions:CursorSpotlightExtension.BackgroundBrush="#0a944e"
                     adonisExtensions:CursorSpotlightExtension.BorderBrush="#0a944e" Grid.Column="1" />
-            <Label x:Name="CurrentlyDownloadedFileLabel" Content="" Margin="485,0,0,15" VerticalAlignment="Bottom"
-                   HorizontalAlignment="Left" Grid.Column="1" Height="16" Width="0" />
         </Grid>
     </Grid>
 </adonisControls:AdonisWindow>

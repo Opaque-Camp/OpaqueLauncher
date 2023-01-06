@@ -13,8 +13,7 @@
                Source="/Icons/minecraft-crash.png" />
         <Label Content="Minecraft завершился аварийно" HorizontalAlignment="Left" Margin="89,33,0,0"
                VerticalAlignment="Top" FontSize="16" FontFamily="./Fonts/#Monocraft" FontWeight="Normal" />
-        <TextBlock x:Name="errorBox" Margin="10,85,10,55" TextWrapping="Wrap"
-                   Text="{Binding Path=JoinedLogs, Mode=OneWay}"
+        <TextBlock x:Name="CrashTextBlock" Margin="10,85,10,55" TextWrapping="Wrap"
                    Background="{DynamicResource {x:Static adonisUi:Brushes.Layer1BackgroundBrush}}" />
 
         <Grid Width="200" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,10">

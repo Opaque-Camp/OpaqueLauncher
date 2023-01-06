@@ -43,6 +43,6 @@ public sealed class BundledZipModsInstaller : IModsInstaller
 
     private bool IsModFolderEmpty()
     {
-        return _fileSystem.IsDirectoryEmpty(_minecraftFilesDirProvider.ModsPath);
+        return _fileSystem.IsDirectoryEmptyOrMissing(_minecraftFilesDirProvider.ModsPath);
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net;
 using System.Windows;
 using System.Windows.Threading;
+using CmlLib.Core.Installer.FabricMC;
+using CmlLib.Core.VersionLoader;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpaqueCamp.Launcher.Core;
@@ -19,6 +22,9 @@ public partial class App
 
     public App()
     {
+        // This will speed up the download process
+        ServicePointManager.DefaultConnectionLimit = 256;
+
         _host = new HostBuilder()
             .ConfigureServices((_, services) =>
             {
@@ -28,11 +34,17 @@ public partial class App
                     .AddTransient<ISystemMemoryDetector, WindowsSystemMemoryDetector>()
                     .AddTransient<IJvmMemorySettings, JvmMemorySettings>()
                     .AddTransient<IJvmMemorySettingsStorage, JvmMemorySettingsStorage>()
-                    .AddTransient<IDownloadSpeedupService, DownloadSpeedupService>()
                     .AddTransient<IServerConfigProvider, ServerConfigProvider>()
                     .AddTransient<IMinecraftFilesDirProvider, MinecraftFilesDirProvider>()
-                    .AddTransient<CmlLibMinecraftRunner>()
+                    .AddTransient<IMinecraftLauncherFactory, CmlLibMinecraftLauncherFactory>()
+                    .AddTransient<IVersionLoader, MojangAndFabricVersionLoader>()
+                    .AddTransient<MojangVersionLoader>()
+                    .AddTransient<FabricVersionLoader>()
+                    .AddTransient<IMinecraftInstallerAndRunner, MinecraftInstallerAndRunner>()
+                    .AddTransient<IMinecraftLaunchOptionsProvider, MinecraftLaunchOptionsProvider>()
+                    .AddTransient<IMinecraftVersionMetadataProvider, MinecraftVersionMetadataProvider>()
                     .AddTransient<MinecraftCrashHandler>()
+                    .AddTransient<IMinecraftCrashReportReader, MinecraftCrashReportReader>()
                     .AddTransient<MainWindow>()
                     .AddTransient<AboutWindowFactory>()
                     .AddTransient<AccountsWindowFactory>()

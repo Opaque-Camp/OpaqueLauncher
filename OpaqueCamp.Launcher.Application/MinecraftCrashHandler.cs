@@ -1,10 +1,8 @@
-﻿using OpaqueCamp.Launcher.Core;
-
-namespace OpaqueCamp.Launcher.Application;
+﻿namespace OpaqueCamp.Launcher.Application;
 
 public sealed class MinecraftCrashHandler
 {
-    public void HandleCrash(MinecraftCrashLogs crashLogs)
+    public void HandleCrash(string crashLogs)
     {
         new MinecraftCrashWindow(crashLogs).ShowDialog();
     }

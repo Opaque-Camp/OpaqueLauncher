@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using CmlLib.Core.Downloader;
+using CommunityToolkit.Mvvm.ComponentModel;
 using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Application;
@@ -8,6 +10,7 @@ namespace OpaqueCamp.Launcher.Application;
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
+[ObservableObject]
 public partial class MainWindow
 {
     private readonly AboutWindowFactory _aboutWindowFactory;
@@ -15,13 +18,13 @@ public partial class MainWindow
     private readonly AccountsWindowFactory _accountsWindowFactory;
     private readonly MinecraftCrashHandler _crashHandler;
     private readonly ICurrentAccountProvider _currentAccountProvider;
-    private readonly CmlLibMinecraftRunner _minecraftRunner;
+    private readonly IMinecraftInstallerAndRunner _minecraftInstallerAndRunner;
 
-    public MainWindow(CmlLibMinecraftRunner minecraftRunner, MinecraftCrashHandler crashHandler,
+    public MainWindow(IMinecraftInstallerAndRunner minecraftInstallerAndRunner, MinecraftCrashHandler crashHandler,
         AccountsWindowFactory accountsWindowFactory, ICurrentAccountProvider currentAccountProvider,
         IAccountRepository accountRepository, AboutWindowFactory aboutWindowFactory)
     {
-        _minecraftRunner = minecraftRunner;
+        _minecraftInstallerAndRunner = minecraftInstallerAndRunner;
         _crashHandler = crashHandler;
         _accountsWindowFactory = accountsWindowFactory;
         _currentAccountProvider = currentAccountProvider;
@@ -48,14 +51,22 @@ public partial class MainWindow
         CurrentAccountComboBox.SelectedItem = _currentAccountProvider.CurrentAccount;
     }
 
-    private async void OnLaunchButtonClick(object sender, RoutedEventArgs e)
+    [ObservableProperty] private string downloadProgressString = "";
+
+    private async void OnLaunchButtonClick(object sender, RoutedEventArgs _)
     {
-        DownloadFileChangedHandler downloadProgressHandler = e => CurrentlyDownloadedFileLabel.Content =
+        void DownloadProgressHandler(DownloadFileChangedEventArgs e) => DownloadProgressString =
             $"[{e.FileKind}] {e.FileName} - {e.ProgressedFileCount}/{e.TotalFileCount}";
-        MinecraftCrashLogs? crashLogs;
+
+        string? crashLogs;
+
+        MainGrid.RowDefinitions[1].Height = new GridLength(20);
+        LaunchButton.IsEnabled = false;
+
         try
         {
-            crashLogs = await _minecraftRunner.RunMinecraftAsync(downloadProgressHandler, OnDownloadPercentageChange);
+            crashLogs = await _minecraftInstallerAndRunner.InstallAndRunAsync(DownloadProgressHandler,
+                OnDownloadPercentageChange, HideDownloadProgressBar);
         }
         catch (CurrentAccountIsNullException)
         {
@@ -63,14 +74,20 @@ public partial class MainWindow
                 MessageBoxImage.Information);
             return;
         }
+        finally
+        {
+            HideDownloadProgressBar();
+            LaunchButton.IsEnabled = true;
+        }
 
         if (crashLogs != null) _crashHandler.HandleCrash(crashLogs);
     }
 
-    private void OnDownloadPercentageChange(int i)
+    private void HideDownloadProgressBar() => MainGrid.RowDefinitions[1].Height = new GridLength(0);
+
+    private void OnDownloadPercentageChange(object? _, ProgressChangedEventArgs e)
     {
-        DownloadProgressBar.Visibility = i == 100 ? Visibility.Hidden : Visibility.Visible;
-        DownloadProgressBar.Value = i;
+        DownloadProgressBar.Value = e.ProgressPercentage;
     }
 
     private void OpenAboutWindow(object sender, RoutedEventArgs e)
