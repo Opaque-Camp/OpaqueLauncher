@@ -6,7 +6,7 @@ namespace OpaqueCamp.Launcher.Application;
 /// <summary>
 ///     Логика взаимодействия для AboutWindow.xaml
 /// </summary>
-public partial class AboutWindow
+public sealed partial class AboutWindow
 {
     public AboutWindow(LauncherVersionProvider versionProvider)
     {

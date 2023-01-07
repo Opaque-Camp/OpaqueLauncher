@@ -13,8 +13,8 @@ public sealed partial class AccountsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAccountSelected))]
-    [NotifyPropertyChangedFor(nameof(SelectAccountHintLabelVisiblilty))]
-    [NotifyPropertyChangedFor(nameof(AccountEditorVisiblilty))]
+    [NotifyPropertyChangedFor(nameof(SelectAccountHintLabelVisibility))]
+    [NotifyPropertyChangedFor(nameof(AccountEditorVisibility))]
     [NotifyPropertyChangedFor(nameof(SelectedAccountViewModel))]
     [NotifyCanExecuteChangedFor(nameof(DeleteSelectedAccountCommand))]
     private Account? _selectedAccount;
@@ -28,22 +28,18 @@ public sealed partial class AccountsViewModel : ObservableObject
 
     public bool IsAccountSelected => SelectedAccount is not null;
 
-    public Visibility SelectAccountHintLabelVisiblilty => IsAccountSelected ? Visibility.Collapsed : Visibility.Visible;
+    public Visibility SelectAccountHintLabelVisibility => IsAccountSelected ? Visibility.Collapsed : Visibility.Visible;
 
-    public Visibility AccountEditorVisiblilty => IsAccountSelected ? Visibility.Visible : Visibility.Collapsed;
+    public Visibility AccountEditorVisibility => IsAccountSelected ? Visibility.Visible : Visibility.Collapsed;
 
     public AccountViewModel? SelectedAccountViewModel
     {
         get
         {
-            if (SelectedAccount is not null)
-            {
-                var viewModel = new AccountViewModel(SelectedAccount);
-                viewModel.PropertyChanged += OnSelectedAccountViewModelPropertyChanged;
-                return viewModel;
-            }
-
-            return null;
+            if (SelectedAccount is null) return null;
+            var viewModel = new AccountViewModel(SelectedAccount);
+            viewModel.PropertyChanged += OnSelectedAccountViewModelPropertyChanged;
+            return viewModel;
         }
     }
 
@@ -60,7 +56,7 @@ public sealed partial class AccountsViewModel : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(IsAccountSelected))]
-    public void DeleteSelectedAccount()
+    private void DeleteSelectedAccount()
     {
         _accountRepository.DeleteAccount(SelectedAccount!);
         OnPropertyChanged(nameof(Accounts));

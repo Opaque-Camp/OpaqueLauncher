@@ -3,7 +3,7 @@ using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Infrastructure.Tests;
 
-public class JsonAccountRepositoryTest
+public sealed class JsonAccountRepositoryTest
 {
     private readonly Mock<IFileSystem> _fs = new();
     private readonly Mock<IAccountJsonPathProvider> _pathProvider = new();

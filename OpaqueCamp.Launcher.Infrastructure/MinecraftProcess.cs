@@ -23,6 +23,4 @@ public sealed class MinecraftProcess : IMinecraftProcess
     }
 
     public int ExitCode => _process.ExitCode;
-    public StreamReader StandardOutput => _process.StandardOutput;
-    public StreamReader StandardError => _process.StandardError;
 }

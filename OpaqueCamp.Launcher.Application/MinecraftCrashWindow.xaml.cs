@@ -2,7 +2,7 @@
 
 namespace OpaqueCamp.Launcher.Application;
 
-public partial class MinecraftCrashWindow
+public sealed partial class MinecraftCrashWindow
 {
     public MinecraftCrashWindow(string crashLogs)
     {
@@ -10,12 +10,12 @@ public partial class MinecraftCrashWindow
         CrashTextBlock.Text = crashLogs;
     }
 
-    private void OnOkClick(object sender, RoutedEventArgs e)
+    private void OnOkButtonClick(object sender, RoutedEventArgs e)
     {
         Close();
     }
 
-    private void copy_Click(object sender, RoutedEventArgs e)
+    private void OnCopyButtonClick(object sender, RoutedEventArgs e)
     {
         Clipboard.SetText(CrashTextBlock.Text);
     }

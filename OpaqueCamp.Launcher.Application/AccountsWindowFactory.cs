@@ -11,8 +11,5 @@ public sealed class AccountsWindowFactory
         _accountRepository = accountRepository;
     }
 
-    public AccountsWindow Create()
-    {
-        return new(new AccountsViewModel(_accountRepository));
-    }
+    public AccountsWindow Create() => new(new AccountsViewModel(_accountRepository));
 }

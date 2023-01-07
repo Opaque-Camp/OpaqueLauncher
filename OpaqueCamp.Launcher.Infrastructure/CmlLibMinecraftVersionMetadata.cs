@@ -1,5 +1,4 @@
 ﻿using CmlLib.Core;
-using CmlLib.Core.Version;
 using CmlLib.Core.VersionMetadata;
 using OpaqueCamp.Launcher.Core;
 

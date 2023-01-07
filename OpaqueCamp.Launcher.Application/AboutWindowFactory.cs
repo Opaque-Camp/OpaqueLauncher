@@ -11,8 +11,5 @@ public sealed class AboutWindowFactory
         _launcherVersionProvider = launcherVersionProvider;
     }
 
-    public AboutWindow Create()
-    {
-        return new(_launcherVersionProvider);
-    }
+    public AboutWindow Create() => new(_launcherVersionProvider);
 }

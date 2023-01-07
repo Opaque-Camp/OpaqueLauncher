@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace OpaqueCamp.Launcher.Application;
 
-public partial class AccountsWindow
+public sealed partial class AccountsWindow
 {
     public AccountsWindow(AccountsViewModel viewModel)
     {
@@ -21,10 +21,5 @@ public partial class AccountsWindow
     private void OnAddSimpleAccountMenuItemClick(object sender, RoutedEventArgs e)
     {
         ViewModel.AddAccount();
-    }
-
-    private void OnRemoveAccountButtonClick(object sender, RoutedEventArgs e)
-    {
-        ViewModel.DeleteSelectedAccount();
     }
 }
