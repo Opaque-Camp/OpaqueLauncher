@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using CmlLib.Core.Downloader;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -72,6 +73,14 @@ public partial class MainWindow
         {
             MessageBox.Show(this, "Сначала создайте хотя бы одну учетную запись.", "", MessageBoxButton.OK,
                 MessageBoxImage.Information);
+            return;
+        }
+        catch (WebException)
+        {
+            MessageBox.Show(this,
+                "Не удалось подготовить игру к запуску из-за проблем с сетью. Проверьте наличие доступа к Интернету или повторите позже.",
+                "Не удалось запустить игру", MessageBoxButton.OK,
+                MessageBoxImage.Error);
             return;
         }
         finally
