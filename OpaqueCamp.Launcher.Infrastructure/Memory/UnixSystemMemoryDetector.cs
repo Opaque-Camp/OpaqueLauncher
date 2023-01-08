@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.Versioning;
 using OpaqueCamp.Launcher.Core.Memory;
 
@@ -21,6 +22,11 @@ public sealed class UnixSystemMemoryDetector : ISystemMemoryDetector
 
         using (var process = Process.Start(info))
         {
+            if (process == null)
+            {
+                throw new SystemMemoryDetectionException("\"free -m\" command failed to start.");
+            }
+
             output = process.StandardOutput.ReadToEnd();
             Console.WriteLine(output);
         }
@@ -28,6 +34,6 @@ public sealed class UnixSystemMemoryDetector : ISystemMemoryDetector
         var lines = output.Split("\n");
         var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-        return (int)long.Parse(memory[1]);
+        return int.Parse(memory[1], NumberStyles.Integer, CultureInfo.InvariantCulture);
     }
 }

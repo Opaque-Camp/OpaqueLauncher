@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Management;
 using System.Runtime.Versioning;
 using OpaqueCamp.Launcher.Core.Memory;
@@ -23,7 +24,7 @@ public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector
         var searcher = new ManagementObjectSearcher("select * from Win32_ComputerSystem");
         var searcherEnumerator = searcher.Get().GetEnumerator();
         searcherEnumerator.MoveNext();
-        return (int)(Convert.ToInt64(searcherEnumerator.Current["TotalPhysicalMemory"]) / (1024 * 1024));
+        return (int)((ulong)searcherEnumerator.Current["TotalPhysicalMemory"] / (1024 * 1024));
     }
 
     private int GetMemoryForWindows7()
@@ -40,12 +41,18 @@ public sealed class WindowsSystemMemoryDetector : ISystemMemoryDetector
 
         using (var process = Process.Start(info))
         {
+            if (process == null)
+            {
+                throw new SystemMemoryDetectionException("wmic process is null");
+            }
+
             output = process.StandardOutput.ReadToEnd();
         }
 
         var lines = output.Trim().Split("\n");
-        var memory = lines[1].Split("=", StringSplitOptions.RemoveEmptyEntries);
+        var memoryAsString = lines.First(l => l.StartsWith("TotalVisibleMemorySize", StringComparison.Ordinal))
+            .Split("=", StringSplitOptions.RemoveEmptyEntries).Last();
 
-        return (int)(Math.Round(double.Parse(memory[1])) / 1024);
+        return (int)(ulong.Parse(memoryAsString, NumberStyles.Integer, CultureInfo.InvariantCulture) / 1024);
     }
 }
