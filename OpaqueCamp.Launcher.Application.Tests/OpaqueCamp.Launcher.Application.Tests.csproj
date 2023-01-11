@@ -23,4 +23,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\OpaqueCamp.Launcher.Application\OpaqueCamp.Launcher.Application.csproj" />
+    </ItemGroup>
+
 </Project>
