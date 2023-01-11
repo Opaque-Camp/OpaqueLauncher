@@ -5,6 +5,14 @@ namespace OpaqueCamp.Launcher.Application.Tests;
 
 public sealed class AccountsViewModelTest
 {
+    private readonly IAccountRepository _accountRepository = Mock.Of<IAccountRepository>();
+    private readonly AccountsViewModel _viewModel;
+
+    public AccountsViewModelTest()
+    {
+        _viewModel = new AccountsViewModel(_accountRepository);
+    }
+
     [Fact]
     public void AccountsProperty_TakesAccountsFromRepository()
     {
@@ -23,12 +31,8 @@ public sealed class AccountsViewModelTest
     [Fact]
     public void SelectedAccountProperty_NullByDefault()
     {
-        // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
-        var viewModel = new AccountsViewModel(accountRepository);
-
         // When
-        var selectedAccount = viewModel.SelectedAccount;
+        var selectedAccount = _viewModel.SelectedAccount;
 
         // Then
         selectedAccount.Should().BeNull();
@@ -37,14 +41,10 @@ public sealed class AccountsViewModelTest
     [Fact]
     public void IsAccountSelectedProperty_UpdatesAfterAccountSelection()
     {
-        // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
-        var viewModel = new AccountsViewModel(accountRepository);
-
         // When
-        var before = viewModel.IsAccountSelected;
-        viewModel.SelectedAccount = new Account("User1");
-        var after = viewModel.IsAccountSelected;
+        var before = _viewModel.IsAccountSelected;
+        _viewModel.SelectedAccount = new Account("User1");
+        var after = _viewModel.IsAccountSelected;
 
         // Then
         before.Should().BeFalse();
@@ -54,13 +54,9 @@ public sealed class AccountsViewModelTest
     [Fact]
     public void SelectedAccountProperty_FiresPropertyChangedEventForDependentProperties()
     {
-        // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
-        var viewModel = new AccountsViewModel(accountRepository);
-
         // When
         var changedProperties = new List<string>();
-        viewModel.PropertyChanged += (_, args) =>
+        _viewModel.PropertyChanged += (_, args) =>
         {
             if (args.PropertyName == null)
             {
@@ -69,29 +65,25 @@ public sealed class AccountsViewModelTest
 
             changedProperties.Add(args.PropertyName);
         };
-        viewModel.SelectedAccount = new Account("User1");
+        _viewModel.SelectedAccount = new Account("User1");
 
         // Then
         changedProperties.Should().Equal(
-            nameof(viewModel.SelectedAccount),
-            nameof(viewModel.IsAccountSelected),
-            nameof(viewModel.SelectAccountHintLabelVisibility),
-            nameof(viewModel.AccountEditorVisibility),
-            nameof(viewModel.SelectedAccountViewModel)
+            nameof(_viewModel.SelectedAccount),
+            nameof(_viewModel.IsAccountSelected),
+            nameof(_viewModel.SelectAccountHintLabelVisibility),
+            nameof(_viewModel.AccountEditorVisibility),
+            nameof(_viewModel.SelectedAccountViewModel)
         );
     }
 
     [Fact]
     public void SelectedAccountViewModelProperty_ReturnsCorrectViewModel()
     {
-        // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
-        var viewModel = new AccountsViewModel(accountRepository);
-
         // When
-        var before = viewModel.SelectedAccountViewModel;
-        viewModel.SelectedAccount = new Account("User1");
-        var after = viewModel.SelectedAccountViewModel;
+        var before = _viewModel.SelectedAccountViewModel;
+        _viewModel.SelectedAccount = new Account("User1");
+        var after = _viewModel.SelectedAccountViewModel;
 
         // Then
         before.Should().BeNull();
@@ -103,47 +95,38 @@ public sealed class AccountsViewModelTest
     public void AccountsViewModel_SelectedAccountViewModelChanged_ShouldUpdateSelectedAccount()
     {
         // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
         var account = new Account("User1");
-        var viewModel = new AccountsViewModel(accountRepository)
-        {
-            SelectedAccount = account
-        };
+        _viewModel.SelectedAccount = account;
 
         // When
-        var selectedAccountViewModel = viewModel.SelectedAccountViewModel;
+        var selectedAccountViewModel = _viewModel.SelectedAccountViewModel;
         selectedAccountViewModel!.Username = "User2";
 
         // Then
         account.Username.Should().Be("User2");
-        Mock.Get(accountRepository).Verify(r => r.UpdateAccount(account));
+        Mock.Get(_accountRepository).Verify(r => r.UpdateAccount(account));
     }
     
     [Fact]
     public void DeleteAccountCommand_DeletesSelectedAccount()
     {
         // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
         var account = new Account("User1");
-        var viewModel = new AccountsViewModel(accountRepository)
-        {
-            SelectedAccount = account
-        };
+        _viewModel.SelectedAccount = account;
         
         // When
-        viewModel.DeleteSelectedAccountCommand.Execute(null);
+        _viewModel.DeleteSelectedAccountCommand.Execute(null);
         
         // Then
-        Mock.Get(accountRepository).Verify(r => r.DeleteAccount(account));
+        Mock.Get(_accountRepository).Verify(r => r.DeleteAccount(account));
     }
     
     [Fact]
     public void DeleteAccountCommand_CanExecute_AllowsExecutionIfAccountIsSelected()
     {
         // Given
-        var accountRepository = Mock.Of<IAccountRepository>();
         var account = new Account("User1");
-        var viewModel = new AccountsViewModel(accountRepository);
+        var viewModel = new AccountsViewModel(_accountRepository);
         
         // When
         var before = viewModel.DeleteSelectedAccountCommand.CanExecute(null);
