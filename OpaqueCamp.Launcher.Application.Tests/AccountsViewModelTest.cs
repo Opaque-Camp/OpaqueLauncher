@@ -106,33 +106,43 @@ public sealed class AccountsViewModelTest
         account.Username.Should().Be("User2");
         Mock.Get(_accountRepository).Verify(r => r.UpdateAccount(account));
     }
-    
+
+    [Fact]
+    public void AddAccount_AddsSimpleAccountWithUsernameTest()
+    {
+        // When
+        _viewModel.AddAccount();
+
+        // Then
+        Mock.Get(_accountRepository).Verify(r => r.AddAccount(It.Is<Account>(a => a.Username == "Test")));
+    }
+
     [Fact]
     public void DeleteAccountCommand_DeletesSelectedAccount()
     {
         // Given
         var account = new Account("User1");
         _viewModel.SelectedAccount = account;
-        
+
         // When
         _viewModel.DeleteSelectedAccountCommand.Execute(null);
-        
+
         // Then
         Mock.Get(_accountRepository).Verify(r => r.DeleteAccount(account));
     }
-    
+
     [Fact]
     public void DeleteAccountCommand_CanExecute_AllowsExecutionIfAccountIsSelected()
     {
         // Given
         var account = new Account("User1");
         var viewModel = new AccountsViewModel(_accountRepository);
-        
+
         // When
         var before = viewModel.DeleteSelectedAccountCommand.CanExecute(null);
         viewModel.SelectedAccount = account;
         var after = viewModel.DeleteSelectedAccountCommand.CanExecute(null);
-        
+
         // Then
         before.Should().BeFalse();
         after.Should().BeTrue();
