@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using OpaqueCamp.Launcher.Core;
 
 namespace OpaqueCamp.Launcher.Infrastructure;
@@ -29,7 +30,8 @@ public sealed class JsonAccountRepository : IAccountRepository
         var json = _fileSystem.ReadAllText(path);
         try
         {
-            return JsonSerializer.Deserialize<IEnumerable<Account>>(json) ??
+            return JsonSerializer.Deserialize<IEnumerable<Account>>(json,
+                       new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } }) ??
                    throw new AccountRepositoryException("Deserialized accounts list is null.");
         }
         catch (JsonException e)
@@ -71,7 +73,8 @@ public sealed class JsonAccountRepository : IAccountRepository
 
     private void SaveAccounts(IEnumerable<Account> accounts)
     {
-        var json = JsonSerializer.Serialize(accounts);
+        var json = JsonSerializer.Serialize(accounts,
+            new JsonSerializerOptions { Converters = { new JsonStringEnumConverter() } });
         _fileSystem.WriteAllText(_accountJsonPathProvider.AccountJsonPath, json);
     }
 }

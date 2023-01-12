@@ -26,7 +26,8 @@ public sealed class JsonAccountRepositoryTest
         [
             {
                 "Id": "{{accountId}}",
-                "Username": "User"
+                "Username": "User",
+                "Type": "Mojang"
             }
         ]
         """);
@@ -39,6 +40,7 @@ public sealed class JsonAccountRepositoryTest
         var account = accounts.First();
         account.Id.Should().Be(new Guid(accountId));
         account.Username.Should().Be("User");
+        account.Type.Should().Be(AccountType.Mojang);
     }
 
     [Fact]
@@ -92,11 +94,13 @@ public sealed class JsonAccountRepositoryTest
         [
             {
                 "Id": "{{accountId}}",
-                "Username": "User"
+                "Username": "User",
+                "Type": "Mojang"
             },
             {
-                "Id": "07bfccfb-08b8-4b79-bbf4-11a8de062692",
-                "Username": "User2"
+                "Id": "f49e2a6d-205e-459e-964a-6882d892efa7",
+                "Username": "User2",
+                "Type": "Microsoft"
             }
         ]
         """);
@@ -144,7 +148,7 @@ public sealed class JsonAccountRepositoryTest
         var account = new Account("Player", AccountType.Mojang);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(false);
         var expectedJson = JsonSerializer.Serialize(new List<Dictionary<string, string>>
-            { new() { { "Id", account.Id.ToString() }, { "Username", account.Username } } });
+            { new() { { "Id", account.Id.ToString() }, { "Username", account.Username }, { "Type", "Mojang" } } });
         _fs.Setup(f => f.WriteAllText(AccountJsonPath, expectedJson)).Verifiable();
 
         // When
@@ -163,11 +167,25 @@ public sealed class JsonAccountRepositoryTest
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
-                { new() { { "Id", oldAccount.Id.ToString() }, { "Username", oldAccount.Username } } }));
+            {
+                new()
+                {
+                    { "Id", oldAccount.Id.ToString() }, { "Username", oldAccount.Username },
+                    { "Type", oldAccount.Type.ToString() }
+                }
+            }));
         var expectedJson = JsonSerializer.Serialize(new List<Dictionary<string, string>>
         {
-            new() { { "Id", oldAccount.Id.ToString() }, { "Username", oldAccount.Username } },
-            new() { { "Id", newAccount.Id.ToString() }, { "Username", newAccount.Username } }
+            new()
+            {
+                { "Id", oldAccount.Id.ToString() }, { "Username", oldAccount.Username },
+                { "Type", oldAccount.Type.ToString() }
+            },
+            new()
+            {
+                { "Id", newAccount.Id.ToString() }, { "Username", newAccount.Username },
+                { "Type", newAccount.Type.ToString() }
+            }
         });
         _fs.Setup(f => f.WriteAllText(AccountJsonPath, expectedJson)).Verifiable();
 
@@ -209,7 +227,7 @@ public sealed class JsonAccountRepositoryTest
         // Then
         action.Should().Throw<AccountAlreadyExistsException>();
     }
-    
+
     [Fact]
     public void UpdateAccount_ExistingAccount_Updated()
     {
@@ -218,9 +236,9 @@ public sealed class JsonAccountRepositoryTest
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
-                { new() { { "Id", account.Id.ToString() }, { "Username", account.Username } } }));
+                { new() { { "Id", account.Id.ToString() }, { "Username", account.Username }, { "Type", "Mojang" } } }));
         var expectedJson = JsonSerializer.Serialize(new List<Dictionary<string, string>>
-            { new() { { "Id", account.Id.ToString() }, { "Username", "NewPlayer" } } });
+            { new() { { "Id", account.Id.ToString() }, { "Username", "NewPlayer" }, { "Type", "Microsoft" } } });
         _fs.Setup(f => f.WriteAllText(AccountJsonPath, expectedJson)).Verifiable();
 
         // When
