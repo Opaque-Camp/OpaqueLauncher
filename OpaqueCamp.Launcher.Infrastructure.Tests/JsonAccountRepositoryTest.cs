@@ -141,7 +141,7 @@ public sealed class JsonAccountRepositoryTest
     public void AddAccount_FirstAccount_AddedToNewFile()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Mojang);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(false);
         var expectedJson = JsonSerializer.Serialize(new List<Dictionary<string, string>>
             { new() { { "Id", account.Id.ToString() }, { "Username", account.Username } } });
@@ -158,8 +158,8 @@ public sealed class JsonAccountRepositoryTest
     public void AddAccount_SecondAccount_AddedToExistingFile()
     {
         // Given
-        var oldAccount = new Account("Oldie");
-        var newAccount = new Account("Player");
+        var oldAccount = new Account("Oldie", AccountType.Offline);
+        var newAccount = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
@@ -182,7 +182,7 @@ public sealed class JsonAccountRepositoryTest
     public void AddAccount_CorruptedJson_ThrowAccountRepositoryException()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns("[");
 
@@ -192,12 +192,12 @@ public sealed class JsonAccountRepositoryTest
         // Then
         action.Should().Throw<AccountRepositoryException>();
     }
-    
+
     [Fact]
     public void AddAccount_AccountWhichAlreadyExists_ThrowAccountAlreadyExistsException()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
@@ -214,7 +214,7 @@ public sealed class JsonAccountRepositoryTest
     public void UpdateAccount_ExistingAccount_Updated()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
@@ -230,12 +230,12 @@ public sealed class JsonAccountRepositoryTest
         // Then
         _fs.Verify();
     }
-    
+
     [Fact]
     public void UpdateAccount_NoSuchAccount_ThrowAccountNotFoundException()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(false);
 
         // When
@@ -244,12 +244,12 @@ public sealed class JsonAccountRepositoryTest
         // Then
         action.Should().Throw<AccountNotFoundException>();
     }
-    
+
     [Fact]
     public void DeleteAccount_ExistingAccount_Deleted()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
         _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns(JsonSerializer.Serialize(
             new List<Dictionary<string, string>>
@@ -262,12 +262,12 @@ public sealed class JsonAccountRepositoryTest
         // Then
         _fs.Verify();
     }
-    
+
     [Fact]
     public void DeleteAccount_NonExistingAccount_ThrowAccountNotFoundException()
     {
         // Given
-        var account = new Account("Player");
+        var account = new Account("Player", AccountType.Microsoft);
         _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(false);
 
         // When

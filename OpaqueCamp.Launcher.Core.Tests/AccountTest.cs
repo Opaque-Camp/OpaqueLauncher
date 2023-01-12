@@ -78,8 +78,8 @@ public sealed class AccountTest
     public void DictionaryWithAccounts_CorrectlyHashable()
     {
         // Given
-        var acc1 = new Account("P1");
-        var acc2 = new Account("P2");
+        var acc1 = new Account("P1", AccountType.Offline);
+        var acc2 = new Account("P2", AccountType.Microsoft);
         var dict = new Dictionary<Account, int> { { acc1, 1 }, { acc2, 2 } };
         
         // When

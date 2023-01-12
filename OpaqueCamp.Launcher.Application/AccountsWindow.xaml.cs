@@ -15,17 +15,12 @@ public sealed partial class AccountsWindow
 
     private void OnAddAccountButtonClick(object sender, RoutedEventArgs e)
     {
-        ((Button)sender).ContextMenu.IsOpen = true;
+        ((Button)sender).ContextMenu!.IsOpen = true;
     }
 
     private void OnAddSimpleAccountMenuItemClick(object sender, RoutedEventArgs e)
     {
         ViewModel.AddSimpleAccount();
-    }
-
-    private void OnRemoveAccountButtonClick(object sender, RoutedEventArgs e)
-    {
-        ViewModel.DeleteSelectedAccount();
     }
 
     private void OnAddMicrosoftAccountMenuItemClick(object sender, RoutedEventArgs e)

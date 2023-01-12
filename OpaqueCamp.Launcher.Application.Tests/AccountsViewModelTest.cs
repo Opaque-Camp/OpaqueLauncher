@@ -17,7 +17,8 @@ public sealed class AccountsViewModelTest
     public void AccountsProperty_TakesAccountsFromRepository()
     {
         // Given
-        var expectedAccounts = new Account[] { new("User1"), new("User2") };
+        var expectedAccounts = new Account[]
+            { new("User1", AccountType.Microsoft), new("User2", AccountType.Microsoft) };
         var accountRepository = Mock.Of<IAccountRepository>(r => r.GetAccounts() == expectedAccounts);
         var viewModel = new AccountsViewModel(accountRepository);
 
@@ -43,7 +44,7 @@ public sealed class AccountsViewModelTest
     {
         // When
         var before = _viewModel.IsAccountSelected;
-        _viewModel.SelectedAccount = new Account("User1");
+        _viewModel.SelectedAccount = new Account("User1", AccountType.Microsoft);
         var after = _viewModel.IsAccountSelected;
 
         // Then
@@ -65,14 +66,15 @@ public sealed class AccountsViewModelTest
 
             changedProperties.Add(args.PropertyName);
         };
-        _viewModel.SelectedAccount = new Account("User1");
+        _viewModel.SelectedAccount = new Account("User1", AccountType.Microsoft);
 
         // Then
         changedProperties.Should().Equal(
             nameof(_viewModel.SelectedAccount),
             nameof(_viewModel.IsAccountSelected),
             nameof(_viewModel.SelectAccountHintLabelVisibility),
-            nameof(_viewModel.AccountEditorVisibility),
+            nameof(_viewModel.OfflineAccountEditorVisibility),
+            nameof(_viewModel.MicrosoftAccountEditorVisibility),
             nameof(_viewModel.SelectedAccountViewModel)
         );
     }
@@ -82,7 +84,7 @@ public sealed class AccountsViewModelTest
     {
         // When
         var before = _viewModel.SelectedAccountViewModel;
-        _viewModel.SelectedAccount = new Account("User1");
+        _viewModel.SelectedAccount = new Account("User1", AccountType.Microsoft);
         var after = _viewModel.SelectedAccountViewModel;
 
         // Then
@@ -95,7 +97,7 @@ public sealed class AccountsViewModelTest
     public void AccountsViewModel_SelectedAccountViewModelChanged_ShouldUpdateSelectedAccount()
     {
         // Given
-        var account = new Account("User1");
+        var account = new Account("User1", AccountType.Microsoft);
         _viewModel.SelectedAccount = account;
 
         // When
@@ -108,20 +110,20 @@ public sealed class AccountsViewModelTest
     }
 
     [Fact]
-    public void AddAccount_AddsSimpleAccountWithUsernameTest()
+    public void AddSimpleAccount_CallsRepository()
     {
         // When
-        _viewModel.AddAccount();
+        _viewModel.AddSimpleAccount();
 
         // Then
-        Mock.Get(_accountRepository).Verify(r => r.AddAccount(It.Is<Account>(a => a.Username == "Test")));
+        Mock.Get(_accountRepository).Verify(r => r.AddAccount(It.Is<Account>(a => a.Username == "New account")));
     }
 
     [Fact]
     public void DeleteAccountCommand_DeletesSelectedAccount()
     {
         // Given
-        var account = new Account("User1");
+        var account = new Account("User1", AccountType.Microsoft);
         _viewModel.SelectedAccount = account;
 
         // When
@@ -135,7 +137,7 @@ public sealed class AccountsViewModelTest
     public void DeleteAccountCommand_CanExecute_AllowsExecutionIfAccountIsSelected()
     {
         // Given
-        var account = new Account("User1");
+        var account = new Account("User1", AccountType.Microsoft);
         var viewModel = new AccountsViewModel(_accountRepository);
 
         // When
