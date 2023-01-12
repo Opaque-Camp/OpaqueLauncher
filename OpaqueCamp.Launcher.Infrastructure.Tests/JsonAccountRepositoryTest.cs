@@ -83,6 +83,33 @@ public sealed class JsonAccountRepositoryTest
         // Then
         action.Should().Throw<AccountRepositoryException>();
     }
+    
+    [Fact]
+    public void GetAccounts_AccountWithInvalidType_ThrowAccountRepositoryException()
+    {
+        // Given
+        _fs.Setup(f => f.FileExists(AccountJsonPath)).Returns(true);
+        _fs.Setup(f => f.ReadAllText(AccountJsonPath)).Returns("""
+        [
+            {
+                "Id": "13fb2bec-7009-426f-9713-b2094fcd65df",
+                "Username": "User",
+                "Type": "Mojang"
+            },
+            {
+                "Id": "d688b454-9cda-40c9-811c-4d862a484c73",
+                "Username": "Ayy lmao",
+                "Type": "https://www.youtube.com/watch?v=o-YBDTqX_ZU"
+            },
+        ]
+        """);
+
+        // When
+        var action = () => _repo.GetAccounts();
+
+        // Then
+        action.Should().Throw<AccountRepositoryException>();
+    }
 
     [Fact]
     public void GetAccountById_JsonWithTwoAccounts_ReturnCorrectAccount()
